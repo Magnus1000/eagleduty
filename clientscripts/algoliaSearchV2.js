@@ -20,6 +20,14 @@ function renderResults(hits) {
         // Create the main result item div
         const resultItem = document.createElement('div');
         resultItem.classList.add('result-item'); // Add any styling classes you need
+        resultItem.setAttribute('data-object-id', hit.objectID);
+        resultItem.setAttribute('data-htsno', hit.htsno);
+        resultItem.setAttribute('data-description', hit.description);
+        resultItem.setAttribute('data-chapter-name', hit.chapterName);
+        resultItem.setAttribute('data-chapter-description', hit.chapterDescription);
+        resultItem.setAttribute('data-section-name', hit.sectionName);
+        resultItem.setAttribute('data-section-description', hit.sectionDescription);
+        
 
         // Create and append the HTS code element
         const htsCodeWrapper = document.createElement('div');
@@ -83,11 +91,17 @@ function renderResults(hits) {
 
         resultItem.appendChild(detailsElement);
 
+        // Create and append the checkbox element
+        const checkboxElement = document.createElement('input');
+        checkboxElement.type = 'checkbox';
+        checkboxElement.value = hit.htsno;
+        checkboxElement.classList.add('result-checkbox');
+        resultItem.appendChild(checkboxElement);
+
         // Append the main result item div to the results container
         resultsContainer.appendChild(resultItem);
     });
 }
-
 // Function to handle search input changes
 function handleSearchInput(event) {
   const query = event.target.value;
