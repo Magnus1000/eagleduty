@@ -27,7 +27,7 @@ function renderResults(hits) {
         resultItem.setAttribute('data-chapter-description', hit.chapterDescription);
         resultItem.setAttribute('data-section-name', hit.sectionName);
         resultItem.setAttribute('data-section-description', hit.sectionDescription);
-        
+
 
         // Create and append the HTS code element
         const htsCodeWrapper = document.createElement('div');
@@ -91,12 +91,13 @@ function renderResults(hits) {
 
         resultItem.appendChild(detailsElement);
 
-        // Create and append the checkbox element
-        const checkboxElement = document.createElement('input');
-        checkboxElement.type = 'checkbox';
-        checkboxElement.value = hit.htsno;
-        checkboxElement.classList.add('result-checkbox');
-        resultItem.appendChild(checkboxElement);
+        // Create and append the radio button element
+        const radioButtonElement = document.createElement('input');
+        radioButtonElement.type = 'radio';
+        radioButtonElement.name = 'htsno';
+        radioButtonElement.value = hit.htsno;
+        radioButtonElement.classList.add('result-radio');
+        resultItem.appendChild(radioButtonElement);
 
         // Append the main result item div to the results container
         resultsContainer.appendChild(resultItem);
