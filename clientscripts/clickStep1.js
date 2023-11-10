@@ -1,22 +1,26 @@
-function addCheckboxEventListener() {
-    const checkboxesContainer = document.querySelector("#resultsColumn");
+function addRadioEventListener() {
+    const radiosContainer = document.querySelector("#resultsColumn");
 
-    checkboxesContainer.addEventListener("click", (event) => {
-        const clickedCheckbox = event.target;
+    radiosContainer.addEventListener("click", (event) => {
+        const clickedRadio = event.target;
 
-        if (clickedCheckbox.classList.contains("result-checkbox")) {
-            const checkboxes = checkboxesContainer.querySelectorAll(".result-checkbox");
+        if (clickedRadio.classList.contains("result-radio")) {
+            const radios = radiosContainer.querySelectorAll(".result-radio");
 
-            checkboxes.forEach((checkbox) => {
-                if (checkbox !== clickedCheckbox) {
-                    checkbox.checked = false;
+            radios.forEach((radio) => {
+                if (radio !== clickedRadio) {
+                    radio.checked = false;
+                    radio.classList.remove("checked");
                 }
             });
 
-            if (clickedCheckbox.checked) {
+            if (clickedRadio.checked) {
                 const urlParams = new URLSearchParams(window.location.search);
-                urlParams.set("htsno", clickedCheckbox.value);
+                urlParams.set("htsno", clickedRadio.value);
                 window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+                clickedRadio.classList.add("checked");
+            } else {
+                clickedRadio.classList.remove("checked");
             }
         }
     });
@@ -31,7 +35,7 @@ function goStep2() {
 }
 
 window.addEventListener("load", () => {
-    addCheckboxEventListener();
+    addRadioEventListener();
 
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", goStep2);
