@@ -34,6 +34,15 @@ function renderResults(hits) {
         htsCodeWrapper.appendChild(htsCodeTextElement);
         resultItem.appendChild(htsCodeWrapper);
 
+        // Create and append the description element
+        const descriptionElement = document.createElement('div');
+        descriptionElement.classList.add('description');
+        const descriptionTextElement = document.createElement('span');
+        descriptionTextElement.textContent = hit.description;
+        descriptionTextElement.classList.add('description-text');
+        descriptionElement.appendChild(descriptionTextElement);
+        resultItem.appendChild(descriptionElement);
+
         // Create and append the section and chapter details element
         const detailsElement = document.createElement('div');
         detailsElement.classList.add('details');
