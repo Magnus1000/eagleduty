@@ -61,6 +61,18 @@ function goStep2() {
     selectedResultCard.setAttribute('data-other', other);
     selectedResultCard.setAttribute('data-special', special);
     selectedResultCard.setAttribute('data-units', units);
+
+    // Creating options and setting the value of an already existing select field with id = unit
+    const unitSelect = document.querySelector("#unit");
+    unitSelect.innerHTML = "";
+
+    const unitOptions = units.split(",");
+    for (let i = 0; i < unitOptions.length; i++) {
+        const option = document.createElement("option");
+        option.setAttribute("value", unitOptions[i]);
+        option.textContent = unitOptions[i];
+        unitSelect.appendChild(option);
+    }
 }
 
 // Function to hide step 2 and show step 1
