@@ -283,6 +283,7 @@ const countries = [
     ['ZWE', 'Zimbabwe', 'ZWL', 'Zimbabwean dollar']
 ];
 
+// Function to create the dropdown options
 function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
     const importingToCurrencySelect = document.getElementById('importingToCurrency');
