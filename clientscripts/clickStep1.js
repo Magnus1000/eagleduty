@@ -284,8 +284,8 @@ const countries = [
 ];
 
 function createDropdownOptions() {
-    const importingToSelect = document.getElementById('ImportingTo');
-    const importingToCurrencySelect = document.getElementById('ImportingToCurrency');
+    const importingToSelect = document.getElementById('importingTo');
+    const importingToCurrencySelect = document.getElementById('importingToCurrency');
     for (let i = 0; i < countries.length; i++) {
         const option = document.createElement('option');
         option.value = countries[i][1];
