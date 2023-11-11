@@ -289,15 +289,15 @@ function createDropdownOptions() {
     const importingToCurrencySelect = document.getElementById('importingToCurrency');
     const importingFromSelect = document.getElementById('importingFrom');
     for (let i = 0; i < countries.length; i++) {
-        const option = document.createElement('option');
+        const toOption = document.createElement('option');
+        toOption.value = countries[i][1];
+        toOption.text = countries[i][1];
+        importingToSelect.add(toOption);
 
-        option.value = countries[i][1];
-        option.text = countries[i][1];
-        importingToSelect.add(option);
-
-        option.value = countries[i][1];
-        option.text = countries[i][1];
-        importingFromSelect.add(option);
+        const fromOption = document.createElement('option');
+        fromOption.value = countries[i][1];
+        fromOption.text = countries[i][1];
+        importingFromSelect.add(fromOption);
 
         const currencyOption = document.createElement('option');
         currencyOption.value = countries[i][2];
