@@ -44,14 +44,10 @@ function goStep2() {
     const sectionDescription = selectedResult.getAttribute("data-section-description");
     const chapter = selectedResult.getAttribute("data-chapter-name");
     const section = selectedResult.getAttribute("data-section-name");
-
-    console.log("selectedResult:", selectedResult);
-    console.log("htsno:", htsno);
-    console.log("description:", description);
-    console.log("chapterDescription:", chapterDescription);
-    console.log("sectionDescription:", sectionDescription);
-    console.log("chapter:", chapter);
-    console.log("section:", section);
+    const general = selectedResult.getAttribute("data-general");
+    const other = selectedResult.getAttribute("data-other");
+    const special = selectedResult.getAttribute("data-special");
+    const units = selectedResult.getAttribute("data-units");
 
     const selectedResultCard = document.querySelector("#selectedResult");
     console.log("selectedResultCard:", selectedResultCard);
@@ -61,6 +57,10 @@ function goStep2() {
     selectedResultCard.querySelector("[data-hts-card='section-description']").textContent = sectionDescription;
     selectedResultCard.querySelector("[data-hts-card='chapter']").textContent = chapter;
     selectedResultCard.querySelector("[data-hts-card='section']").textContent = section;
+    selectedResultCard.setAttribute('data-general', general);
+    selectedResultCard.setAttribute('data-other', other);
+    selectedResultCard.setAttribute('data-special', special);
+    selectedResultCard.setAttribute('data-units', units);
 }
 
 // Function to hide step 2 and show step 1
@@ -287,15 +287,21 @@ const countries = [
 function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
     const importingToCurrencySelect = document.getElementById('importingToCurrency');
+    const importingFromSelect = document.getElementById('importingFrom');
     for (let i = 0; i < countries.length; i++) {
         const option = document.createElement('option');
         option.value = countries[i][1];
         option.text = countries[i][1];
         importingToSelect.add(option);
 
+        const option = document.createElement('option');
+        option.value = countries[i][1];
+        option.text = countries[i][1];
+        importingFromSelect.add(option);
+
         const currencyOption = document.createElement('option');
-        currencyOption.value = countries[i][3];
-        currencyOption.text = countries[i][3];
+        currencyOption.value = countries[i][2];
+        currencyOption.text = countries[i][2];
         importingToCurrencySelect.add(currencyOption);
     }
 }

@@ -27,7 +27,10 @@ function renderResults(hits) {
         resultItem.setAttribute('data-chapter-description', hit.chapterDescription);
         resultItem.setAttribute('data-section-name', hit.sectionName);
         resultItem.setAttribute('data-section-description', hit.sectionDescription);
-
+        resultItem.setAttribute('data-general', hit.general);
+        resultItem.setAttribute('data-other', hit.other);
+        resultItem.setAttribute('data-special', hit.special);
+        resultItem.setAttribute('data-units', hit.units);
 
         // Create and append the HTS code element
         const htsCodeWrapper = document.createElement('div');
