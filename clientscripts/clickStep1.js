@@ -321,8 +321,8 @@ window.addEventListener("load", () => {
         ['ZWE', 'Zimbabwe', 'ZWL', 'Zimbabwean dollar']
     ];
 
-    populateSelect('importingTo', countries);
-    populateSelect('importingToCurrency', currencies);
+    //populateSelect('importingTo', countries);
+    //populateSelect('importingToCurrency', currencies);
     
     getUserLocation();
 });
