@@ -89,7 +89,7 @@ function setSelectedOption(selectId, valueToSelect) {
     const select = document.getElementById(selectId);
     console.log("Found element:", select);
     for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].value === valueToSelect) {
+        if (select.options[i].text === valueToSelect) {
             select.selectedIndex = i;
             console.log("Set selected index to:", i);
             console.log("Selected option:", select.options[i] ? select.options[i].text : "undefined");
@@ -302,14 +302,14 @@ function createDropdownOptions() {
     const importingFromSelect = document.getElementById('importingFrom');
     for (let i = 0; i < countries.length; i++) {
         const toOption = document.createElement('option');
-        toOption.value = countries[i][1];
+        toOption.value = countries[i][0];
         toOption.text = countries[i][1];
         toOption.setAttribute('data-iso-code', countries[i][0]); // set data-country attribute
         toOption.setAttribute('data-currency-name', countries[i][2]); // set data-currency-name attribute
         importingToSelect.add(toOption);
 
         const fromOption = document.createElement('option');
-        fromOption.value = countries[i][1];
+        fromOption.value = countries[i][0];
         fromOption.text = countries[i][1];
         fromOption.setAttribute('data-iso-code', countries[i][0]); // set data-country attribute
         fromOption.setAttribute('data-currency-name', countries[i][2]); // set data-currency-name attribute
