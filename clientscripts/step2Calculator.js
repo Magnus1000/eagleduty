@@ -3,11 +3,13 @@ function calculateDutyAndTariffs() {
     const selectedResultCard = document.querySelector("#selectedResult");
     const htsno = selectedResultCard.getAttribute('data-htsno');
     const general = selectedResultCard.getAttribute('data-general');
+    const special = selectedResultCard.getAttribute('data-special');
     const additionalFees = parseFloat(selectedResultCard.getAttribute('data-other') || 0);
     const unit = selectedResultCard.getAttribute('data-units');
     const productValue = parseFloat(document.querySelector("#productValue").value);
     const quantity = parseFloat(document.querySelector("#quantity").value);
     const countryOfOrigin = document.querySelector("#importingFrom").value;
+    const isoCode = countryOfOrigin.getAttribute('data-iso-code');
 
     let duty;
     if (general.includes('/')) { // Specific duty calculation
@@ -21,7 +23,7 @@ function calculateDutyAndTariffs() {
     const totalCost = productValue + duty + additionalFees;
 
     // Logging for demonstration
-    console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Country of Origin: ${countryOfOrigin}, Duty: $${duty}, Total Cost: $${totalCost}`);
+    console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Country of Origin: ${countryOfOrigin}, Duty: $${duty}, Total Cost: $${totalCost}, ISO Code: ${isoCode}, Speacial: ${selectedResultCard.getAttribute('data-special')}`);
 
     document.querySelector("#dutyTotal").innerHTML = `Total Duty: $${duty}`;
 }
