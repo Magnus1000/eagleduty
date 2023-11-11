@@ -294,7 +294,6 @@ function createDropdownOptions() {
         option.text = countries[i][1];
         importingToSelect.add(option);
 
-        const option = document.createElement('option');
         option.value = countries[i][1];
         option.text = countries[i][1];
         importingFromSelect.add(option);
