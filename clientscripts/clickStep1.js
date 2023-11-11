@@ -80,10 +80,10 @@ function setSelectedOption(selectId, valueToSelect) {
         if (select.options[i].value === valueToSelect) {
             select.selectedIndex = i;
             console.log("Set selected index to:", i);
+            console.log("Selected option:", select.options[i] ? select.options[i].text : "undefined");
             break;
         }
     }
-    console.log("Selected option:", select.options[select.selectedIndex].text);
 }
 
 const countries = [
@@ -290,6 +290,7 @@ function createDropdownOptions() {
     const importingFromSelect = document.getElementById('importingFrom');
     for (let i = 0; i < countries.length; i++) {
         const option = document.createElement('option');
+
         option.value = countries[i][1];
         option.text = countries[i][1];
         importingToSelect.add(option);
