@@ -91,7 +91,9 @@ function populateSelect(selectId, options) {
 // Function to set the selected option based on user's location
 function setSelectedOption(selectId, valueToSelect) {
     const select = document.getElementById(selectId);
+    console.log("Found element:", select);
     select.value = valueToSelect;
+    console.log("Set value to:", valueToSelect);
 }
 
 // Function to get the user's location from their IP address
