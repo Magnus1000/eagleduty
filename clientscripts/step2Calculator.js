@@ -1,0 +1,69 @@
+// DOM Utility Functions
+function getSelectedResultAttribute(attribute) {
+    const selectedResultCard = document.querySelector("#selectedResult");
+    return selectedResultCard.getAttribute(attribute);
+}
+
+function getProductValue() {
+    return parseFloat(document.querySelector("#productValue").value);
+}
+
+function getQuantity() {
+    return parseFloat(document.querySelector("#quantity").value);
+}
+
+function getImportingFromValue() {
+    return document.querySelector("#importingFrom").value;
+}
+
+function setSelectedDutyText(duty) {
+    document.querySelector("#dutyTotal").innerHTML = `Total Duty: $${duty}`;
+}
+
+function addCalculateDutyEventListener(callback) {
+    document.querySelector("#calculateDuty").addEventListener("click", callback);
+}
+
+// Duty Calculation Logic
+function parseSpecialRates(specialJSON) {
+    const rates = JSON.parse(specialJSON).rates;
+    return rates;
+}
+
+function calculateDutyRate(isoCode, specialRates, generalRate) {
+    return specialRates[isoCode] ? specialRates[isoCode] : generalRate;
+}
+
+function calculateDuty(productValue, quantity, dutyRate, generalRate) {
+    if (isNaN(dutyRate)) { // Specific duty calculation
+        const ratePerUnit = parseFloat(generalRate.split('/')[0].replace('$', ''));
+        return quantity * ratePerUnit;
+    } else { // Ad valorem duty calculation
+        return productValue * dutyRate;
+    }
+}
+
+function calculateTotalCost(productValue, duty, additionalFees) {
+    return productValue + duty + additionalFees;
+}
+
+// Main Function
+function calculateDutyAndTariffs() {
+    const htsno = getSelectedResultAttribute('data-htsno');
+    const generalRate = getSelectedResultAttribute('data-general');
+    const specialJSON = getSelectedResultAttribute('data-special-json');
+    const additionalFees = parseFloat(getSelectedResultAttribute('data-other') || 0);
+    const productValue = getProductValue();
+    const quantity = getQuantity();
+    const isoCode = getImportingFromValue();
+
+    const specialRates = parseSpecialRates(specialJSON);
+    const dutyRate = calculateDutyRate(isoCode, specialRates, generalRate);
+    const duty = calculateDuty(productValue, quantity, dutyRate, generalRate);
+    const totalCost = calculateTotalCost(productValue, duty, additionalFees);
+
+    console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Duty: $${duty}, Total Cost: $${totalCost}, ISO Code: ${isoCode}, Special: ${specialJSON}`);
+    setSelectedDutyText(duty);
+}
+
+addCalculateDutyEventListener(calculateDutyAndTariffs);
