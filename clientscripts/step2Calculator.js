@@ -53,12 +53,26 @@ function calculateDutyAndTariffs() {
     //Step 2: Calculate the special duty rate
     function calculateSpecialDuty(isoCode, specialRates, productValue, quantity) {
         const specialDutyRate = specialRates[isoCode];
-        const duty = specialDutyRate ? productValue * quantity * specialDutyRate : "No special rate";
-        if (typeof duty === "number") {
+        if (typeof specialDutyRate === "number") {
+            const duty = productValue * quantity * specialDutyRate;
             console.log('Special Rate:', specialDutyRate);
             return duty;
-        } else {
+        } else if (typeof specialDutyRate === "string") {
+            console.log('Special Rate:', specialDutyRate);
             return null;
+        } else if (typeof specialDutyRate === "undefined") {
+            console.log('Special Rate:', specialDutyRate);
+            return null;
+        } else {
+            const specialDutyRateFloat = parseFloat(specialDutyRate);
+            if (isNaN(specialDutyRateFloat)) {
+                console.log('Special Rate:', specialDutyRate);
+                return null;
+            } else {
+                const duty = productValue * quantity * specialDutyRateFloat;
+                console.log('Special Rate:', specialDutyRateFloat);
+                return duty;
+            }
         }
     }
 
@@ -67,9 +81,11 @@ function calculateDutyAndTariffs() {
     function calculateDuty(productValue, specialRates, generalRate, quantity, isoCode) {
         duty = productValue * quantity * generalRate;
         console.log('Step 1: General Duty:', duty);
-        const specialDuty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
-        if (specialDuty !== null) {
-            duty = specialDuty;
+        if (specialRates !== null) {
+            const specialDuty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
+            if (specialDuty !== null) {
+                duty = specialDuty;
+            }
         }
         console.log('Step 2: Duty After Checking Specials', duty);
     }
