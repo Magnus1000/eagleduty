@@ -34,11 +34,11 @@ function parseSpecialRates(specialJSON) {
 function calculateDutyAndTariffs() {
     const htsno = getSelectedResultAttribute('data-htsno');
     console.log('HTSPO:', htsno);
-    const generalRate = getSelectedResultAttribute('data-general');
+    const generalRate = getSelectedResultAttribute('data-general') ? parseFloat(getSelectedResultAttribute('data-general')) / 100 : '';
     console.log('General Rate:', generalRate);
     const specialJSON = getSelectedResultAttribute('data-special-json');
     console.log('Special JSON:', specialJSON);
-    const otherRate = parseFloat(getSelectedResultAttribute('data-other') || 0);
+    const otherRate = getSelectedResultAttribute('data-other') ? parseFloat(getSelectedResultAttribute('data-other')) : '';
     console.log('Other Rate:', otherRate);
     const productValue = getProductValue();
     console.log('Product Value:', productValue);

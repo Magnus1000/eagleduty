@@ -61,6 +61,7 @@ function goStep2() {
     selectedResultCard.setAttribute('data-other', other);
     selectedResultCard.setAttribute('data-special-json', specialJSON);
     selectedResultCard.setAttribute('data-units', units);
+    selectedResultCard.setAttribute('data-htsno', htsno);
 
     // Creating options and setting the value of an already existing select field with id = unit
     const unitSelect = document.querySelector("#unit");
