@@ -30,21 +30,18 @@ function parseSpecialRates(specialJSON) {
     return rates;
 }
 
-function calculateDutyRate(isoCode, specialRates, generalRate) {
-    return specialRates[isoCode] ? specialRates[isoCode] : generalRate;
+//Step 1: Calculate the general duty
+function calculateGeneralDuty(generalRate, productValue, quantity) {
+    const ratePerUnit = parseFloat(generalRate.split('/')[0].replace('$', ''));
+    const duty = productValue * quantity * ratePerUnit;
+    return duty;
 }
 
-function calculateDuty(productValue, quantity, dutyRate, generalRate) {
-    if (isNaN(dutyRate)) { // Specific duty calculation
-        const ratePerUnit = parseFloat(generalRate.split('/')[0].replace('$', ''));
-        return quantity * ratePerUnit;
-    } else { // Ad valorem duty calculation
-        return productValue * dutyRate;
-    }
-}
-
-function calculateTotalCost(productValue, duty, additionalFees) {
-    return productValue + duty + additionalFees;
+//Step 2: Calculate the special duty
+function calculateSpecialDuty(isoCode, specialRates, productValue, quantity) {
+    const specialDutyRate = specialRates[isoCode];
+    const duty = specialDutyRate ? productValue * quantity * specialDutyRate : 0;
+    return duty;
 }
 
 // Main Function
@@ -64,10 +61,16 @@ function calculateDutyAndTariffs() {
     const isoCode = getImportingFromValue();
     console.log('ISO Code:', isoCode);
 
+    //Step 1: Calculate the general duty
+    let duty = calculateGeneralDuty(generalRate, productValue, quantity);
+    console.log('General Rate:', duty);
+
+    // Parsing the special field
     const specialRates = parseSpecialRates(specialJSON);
-    const dutyRate = calculateDutyRate(isoCode, specialRates, generalRate);
-    const duty = calculateDuty(productValue, quantity, dutyRate, generalRate);
-    const totalCost = calculateTotalCost(productValue, duty, additionalFees);
+
+    //Step 2: Calculate the special duty rate
+    let duty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
+    console.log('Special Rate:', duty);
 
     console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Duty: $${duty}, Total Cost: $${totalCost}, ISO Code: ${isoCode}, Special: ${specialJSON}`);
     setSelectedDutyText(duty);
