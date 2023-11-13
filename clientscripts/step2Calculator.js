@@ -50,12 +50,19 @@ function calculateTotalCost(productValue, duty, additionalFees) {
 // Main Function
 function calculateDutyAndTariffs() {
     const htsno = getSelectedResultAttribute('data-htsno');
+    console.log('HTSPO:', htsno);
     const generalRate = getSelectedResultAttribute('data-general');
+    console.log('General Rate:', generalRate);
     const specialJSON = getSelectedResultAttribute('data-special-json');
+    console.log('Special JSON:', specialJSON);
     const additionalFees = parseFloat(getSelectedResultAttribute('data-other') || 0);
+    console.log('Additional Fees:', additionalFees);
     const productValue = getProductValue();
+    console.log('Product Value:', productValue);
     const quantity = getQuantity();
+    console.log('Quantity:', quantity);
     const isoCode = getImportingFromValue();
+    console.log('ISO Code:', isoCode);
 
     const specialRates = parseSpecialRates(specialJSON);
     const dutyRate = calculateDutyRate(isoCode, specialRates, generalRate);
