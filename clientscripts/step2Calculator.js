@@ -22,4 +22,4 @@ function calculateDuty(productValue, specialRates, generalRate, quantity, isoCod
     return duty;
 }
 
-addCalculateDutyEventListener(calculateDutyAndTariffs);
+addCalculateDutyEventListener(calculateDuty);
