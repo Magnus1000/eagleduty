@@ -4,10 +4,10 @@ const productValue = parseFloat(document.querySelector("#productValue").value);
 const quantity = parseFloat(document.querySelector("#quantity").value);
 const isoCode = document.querySelector("#importingFrom").value;
 const dutyTotal = document.querySelector("#dutyTotal");
-const htsno = SelectedResultAttribute('data-htsno');
-const generalRate = SelectedResultAttribute('data-general') ? parseFloat(SelectedResultAttribute('data-general')) / 100 : '';
-const specialJSON = SelectedResultAttribute('data-special-json');
-const otherRate = SelectedResultAttribute('data-other') ? parseFloat(SelectedResultAttribute('data-other')) : '';
+const htsno = selectedResultCard.getAttribute('data-htsno');
+const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
+const specialJSON = selectedResultCard.getAttribute('data-special-json');
+const otherRate = selectedResultCard.getAttribute('data-other') ? parseFloat(selectedResultCard.getAttribute('data-other')) : '';
 
 // Adding Event Listeners to Calculate Duty Button
 function addCalculateDutyEventListener(callback) {
