@@ -77,7 +77,7 @@ function calculateDutyAndTariffs() {
     }
 
     //Step 1: Calculate the duty
-    function calculateDuty(productValue, specialRates) {
+    function calculateDuty(productValue, specialRates, generalRate, quantity, isoCode) {
         let duty = productValue * quantity * generalRate;
         console.log('Step 1: General Duty:', duty);
         const specialDuty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
@@ -88,7 +88,7 @@ function calculateDutyAndTariffs() {
         return duty;
     }
     // Call the calculateDuty function
-    calculateDuty(productValue, specialRates);
+    calculateDuty(productValue, specialRates, generalRate, quantity, isoCode);
 
     console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Duty: $${duty}, ISO Code: ${isoCode}, Special: ${specialJSON}`);
     setSelectedDutyText(duty);
