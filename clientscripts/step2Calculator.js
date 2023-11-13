@@ -1,6 +1,6 @@
 // Main Function
 function calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode) {
-    const specialDutyRate = specialJSON.special_json[isoCode] || "";
+    const specialDutyRate = specialJSON.special_json[isoCode];
     console.log('Special Duty Rate:',specialDutyRate);
     const duty = productValue * generalRate * quantity;
     console.log('Duty:',duty);
