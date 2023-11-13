@@ -30,20 +30,6 @@ function parseSpecialRates(specialJSON) {
     return rates;
 }
 
-//Step 1: Calculate the general duty
-function calculateGeneralDuty(generalRate, productValue, quantity) {
-    const ratePerUnit = parseFloat(generalRate.split('/')[0].replace('$', ''));
-    const duty = productValue * quantity * ratePerUnit;
-    return duty;
-}
-
-//Step 2: Calculate the special duty
-function calculateSpecialDuty(isoCode, specialRates, productValue, quantity) {
-    const specialDutyRate = specialRates[isoCode];
-    const duty = specialDutyRate ? productValue * quantity * specialDutyRate : "No special rate";
-    return duty;
-}
-
 // Main Function
 function calculateDutyAndTariffs() {
     const htsno = getSelectedResultAttribute('data-htsno');
