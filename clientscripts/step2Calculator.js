@@ -26,7 +26,7 @@ function addCalculateDutyEventListener(callback) {
 
 // Duty Calculation Logic
 function parseSpecialRates(specialJSON) {
-    const rates = JSON.parse(specialJSON).rates;
+    const rates = JSON.parse(specialJSON).rates; // Parse the JSON string
     return rates;
 }
 
