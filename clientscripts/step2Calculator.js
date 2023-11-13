@@ -83,9 +83,12 @@ function calculateDutyAndTariffs() {
         duty = productValue * quantity * generalRate;
         console.log('Step 1: General Duty:', duty);
         if (specialRates !== null) {
-            const specialDuty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
-            if (specialDuty !== null) {
-                duty = specialDuty;
+            const specialDutyRate = specialRates(isoCode);
+            console.log('Step 2: Special Duty Rate:', specialDutyRate);
+            //const specialDuty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
+            if (specialDutyRate !== null) {
+                //duty = specialDuty;
+                console.log('Placeholder');
             }
         }
         console.log('Step 2: Duty After Checking Specials', duty);
