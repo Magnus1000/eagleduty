@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Get the input values
         const selectedResultCard = document.querySelector("#selectedResult");
         const productValue = parseFloat(document.querySelector("#productValue").value);
-        const specialJSON = selectedResultCard.getAttribute('data-special-json');
+        const specialJSON = JSON.parse(selectedResultCard.getAttribute('data-special-json'));
         const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
         const quantity = parseFloat(document.querySelector("#quantity").value);
         const isoCode = document.querySelector("#importingFrom").value;
