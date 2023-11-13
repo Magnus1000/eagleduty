@@ -69,7 +69,7 @@ function calculateDutyAndTariffs() {
     const specialRates = parseSpecialRates(specialJSON);
 
     //Step 2: Calculate the special duty rate
-    let duty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
+    duty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
     console.log('Special Rate:', duty);
 
     console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Duty: $${duty}, Total Cost: $${totalCost}, ISO Code: ${isoCode}, Special: ${specialJSON}`);
