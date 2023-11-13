@@ -34,7 +34,7 @@ function parseString(str) {
             return;
         }
 
-        const countryList = countries.split(',').map(country => country.trim());
+        const countryList = countries.split(',').map(country => country.trim().replace('(', '').replace(')', ''));
         countryList.forEach(country => {
             result.special_json[country] = rate;
         });
@@ -42,5 +42,3 @@ function parseString(str) {
 
     return result;
 }
-
-
