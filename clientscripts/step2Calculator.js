@@ -52,14 +52,17 @@ function calculateDutyAndTariffs() {
     console.log('General Rate:', generalRate);
     const specialJSON = getSelectedResultAttribute('data-special-json');
     console.log('Special JSON:', specialJSON);
-    const additionalFees = parseFloat(getSelectedResultAttribute('data-other') || 0);
-    console.log('Additional Fees:', additionalFees);
+    const otherRate = parseFloat(getSelectedResultAttribute('data-other') || 0);
+    console.log('Other Rate:', otherRate);
     const productValue = getProductValue();
     console.log('Product Value:', productValue);
     const quantity = getQuantity();
     console.log('Quantity:', quantity);
     const isoCode = getImportingFromValue();
     console.log('ISO Code:', isoCode);
+
+    // Parsing the special field
+    const specialRates = parseSpecialRates(specialJSON);
 
     //Step 2: Calculate the special duty rate
     function calculateSpecialDuty(isoCode, specialRates, productValue, quantity) {
@@ -74,8 +77,7 @@ function calculateDutyAndTariffs() {
     }
 
     //Step 1: Calculate the duty
-    function calculateDuty(product, specialRates) {
-        const { isoCode, productValue, quantity } = product;
+    function calculateDuty(productValue, specialRates) {
         let duty = productValue * quantity * generalRate;
         console.log('Step 1: General Duty:', duty);
         const specialDuty = calculateSpecialDuty(isoCode, specialRates, productValue, quantity);
@@ -86,7 +88,7 @@ function calculateDutyAndTariffs() {
         return duty;
     }
     // Call the calculateDuty function
-    calculateDuty(product, specialRates);
+    calculateDuty(productValue, specialRates);
 
     console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Duty: $${duty}, ISO Code: ${isoCode}, Special: ${specialJSON}`);
     setSelectedDutyText(duty);
