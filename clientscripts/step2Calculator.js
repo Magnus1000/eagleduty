@@ -49,6 +49,7 @@ function calculateDutyAndTariffs() {
 
     // Parsing the special field
     const specialRates = parseSpecialRates(specialJSON);
+    console.log('Special Rates:', specialRates);
 
     //Step 2: Calculate the special duty rate
     function calculateSpecialDuty(isoCode, specialRates, productValue, quantity) {
