@@ -46,7 +46,7 @@ function goStep2() {
     const section = selectedResult.getAttribute("data-section-name");
     const general = selectedResult.getAttribute("data-general");
     const other = selectedResult.getAttribute("data-other");
-    const special = selectedResult.getAttribute("data-special");
+    const specialJSON = selectedResult.getAttribute("data-special-json");
     const units = selectedResult.getAttribute("data-units");
 
     const selectedResultCard = document.querySelector("#selectedResult");
@@ -59,7 +59,7 @@ function goStep2() {
     selectedResultCard.querySelector("[data-hts-card='section']").textContent = section;
     selectedResultCard.setAttribute('data-general', general);
     selectedResultCard.setAttribute('data-other', other);
-    selectedResultCard.setAttribute('data-special', special);
+    selectedResultCard.setAttribute('data-special-json', specialJSON);
     selectedResultCard.setAttribute('data-units', units);
 
     // Creating options and setting the value of an already existing select field with id = unit

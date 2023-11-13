@@ -1,9 +1,9 @@
-// Function to calculate the duty and tariffs
+// Function to calculate duty and tariffs
 function calculateDutyAndTariffs() {
     const selectedResultCard = document.querySelector("#selectedResult");
     const htsno = selectedResultCard.getAttribute('data-htsno');
     const general = selectedResultCard.getAttribute('data-general');
-    const special = selectedResultCard.getAttribute('data-special');
+    const specialJSON = selectedResultCard.getAttribute('data-special-json');
     const additionalFees = parseFloat(selectedResultCard.getAttribute('data-other') || 0);
     const unit = selectedResultCard.getAttribute('data-units');
     const productValue = parseFloat(document.querySelector("#productValue").value);
@@ -11,14 +11,9 @@ function calculateDutyAndTariffs() {
     const isoCode = document.querySelector("#importingFrom").value;
     const countryOfOrigin = getSelectedText();
 
-    // Function to parse the special field and return a map of country codes to duty rates
+    // Function to parse the special JSON and return a map of country codes to duty rates
     function parseSpecialRates(special) {
-        const rates = {};
-        const regex = /(\w+)\s+(\d+\.?\d*%?)/g; // Regex to match country codes and rates
-        let match;
-        while ((match = regex.exec(special)) !== null) {
-            rates[match[1]] = match[2];
-        }
+        const rates = JSON.parse(special).rates;
         return rates;
     }
 
@@ -41,27 +36,17 @@ function calculateDutyAndTariffs() {
         return selectedText;
     }
 
-    // Parsing the special field
-    const specialRates = parseSpecialRates(special);
+    // Parsing the special JSON
+    const specialRates = parseSpecialRates(specialJSON);
 
     // Determine the appropriate duty rate
     let dutyRate;
     if (specialRates[isoCode]) {
         // If the country code is found in the special rates
-        let rateStr = specialRates[isoCode];
-        // Check if the rate is a percentage
-        if (rateStr.includes('%')) {
-            dutyRate = parseFloat(rateStr) / 100; // Convert percentage to decimal
-        } else {
-            dutyRate = parseFloat(rateStr); // Specific duty
-        }
+        dutyRate = specialRates[isoCode];
     } else {
         // Default to the general rate
-        if (general.includes('%')) {
-            dutyRate = parseFloat(general) / 100; // Convert percentage to decimal
-        } else {
-            dutyRate = parseFloat(general); // Specific duty
-        }
+        dutyRate = general;
     }
 
     let duty;
@@ -75,7 +60,7 @@ function calculateDutyAndTariffs() {
     const totalCost = productValue + duty + additionalFees;
 
     // Logging for demonstration
-    console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Country of Origin: ${countryOfOrigin}, Duty: $${duty}, Total Cost: $${totalCost}, ISO Code: ${isoCode}, Special: ${special}`);
+    console.log(`HTS Number: ${htsno}, Product Value: $${productValue}, Country of Origin: ${countryOfOrigin}, Duty: $${duty}, Total Cost: $${totalCost}, ISO Code: ${isoCode}, Special: ${specialJSON}`);
 
     document.querySelector("#dutyTotal").innerHTML = `Total Duty: $${duty}`;
 }
