@@ -11,7 +11,7 @@ module.exports = (req, res) => {
 };
 
 function parseString(str) {
-    const result = { special_json: {}, rates: {} };
+    const result = { special_json: {} };
 
     // Splitting the string by ')' to get each section
     const sections = str.split(')').map(section => section.trim());
@@ -20,15 +20,15 @@ function parseString(str) {
         // Skip empty sections
         if (!section) return;
 
-        let special_json, countries;
+        let rate, countries;
         if (section.includes('Free')) {
             // Handling 'Free' countries
-            special_json = 0;
+            rate = 0;
             countries = section.replace('Free ', '').trim();
         } else if (section.includes('%') || section.includes('See')) {
             // Handling percentages or specific text instructions
-            [special_json, countries] = section.split(' (');
-            special_json = special_json.trim();
+            [rate, countries] = section.split(' (');
+            rate = rate.trim();
         } else {
             // Skip sections that don't match the expected format
             return;
@@ -36,7 +36,7 @@ function parseString(str) {
 
         const countryList = countries.split(',').map(country => country.trim());
         countryList.forEach(country => {
-            result.rates[country] = special_json;
+            result.special_json[country] = rate;
         });
     });
 
