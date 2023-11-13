@@ -11,7 +11,7 @@ module.exports = (req, res) => {
 };
 
 function parseString(str) {
-    const result = { rates: {}, special_json: {} };
+    const result = { special_json: {}, rates: {} };
 
     // Splitting the string by ')' to get each section
     const sections = str.split(')').map(section => section.trim());
