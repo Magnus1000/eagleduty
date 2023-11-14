@@ -57,13 +57,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const aStar = {
-    ["AF", "AL", "AM", "AO", "AR", "AZ", "BA", "BF", "BI", "BJ", "BO", "BR", "BT", "BW", "BZ", "CD", "CF", "CG", "CI", "CM", "CV", "DJ", "DM", "DZ", "EC", "EG", "ER", "ET", "FJ", "GA", "GD", "GE", "GH", "GM", "GN", "GW", "GY", "HT", "ID", "IQ", "JM", "JO", "KE", "KG", "KH", "KI", "KM", "KV", "KZ", "LB", "LC", "LK", "LR", "LS", "MD", "ME", "MG", "MK", "ML", "MN", "MR", "MU", "MV", "MW", "MZ", "NA", "NE", "NG", "NP", "PG", "PH", "PK", "PY", "RS", "RW", "SB", "SL", "SN", "SO", "SR", "SS", "ST", "TD", "TG", "TH", "TL", "TN", "TO", "TV", "TZ", "UA", "UG", "UZ", "VC", "VU", "WS", "YE", "ZA", "ZM", "ZW"]
+    'AF': true, 'AL': true, 'AM': true, 'AO': true, 'AR': true, 'AZ': true, 'BA': true, 'BF': true, 'BI': true, 'BJ': true, 'BO': true, 'BR': true, 'BT': true, 'BW': true, 'BZ': true, 'CD': true, 'CF': true, 'CG': true, 'CI': true, 'CM': true, 'CV': true, 'DJ': true, 'DM': true, 'DZ': true, 'EC': true, 'EG': true, 'ER': true, 'ET': true, 'FJ': true, 'GA': true, 'GD': true, 'GE': true, 'GH': true, 'GM': true, 'GN': true, 'GW': true, 'GY': true, 'HT': true, 'ID': true, 'IQ': true, 'JM': true, 'JO': true, 'KE': true, 'KG': true, 'KH': true, 'KI': true, 'KM': true, 'KV': true, 'KZ': true, 'LB': true, 'LC': true, 'LK': true, 'LR': true, 'LS': true, 'MD': true, 'ME': true, 'MG': true, 'MK': true, 'ML': true, 'MN': true, 'MR': true, 'MU': true, 'MV': true, 'MW': true, 'MZ': true, 'NA': true, 'NE': true, 'NG': true, 'NP': true, 'PG': true, 'PH': true, 'PK': true, 'PY': true, 'RS': true, 'RW': true, 'SB': true, 'SL': true, 'SN': true, 'SO': true, 'SR': true, 'SS': true, 'ST': true, 'TD': true, 'TG': true, 'TH': true, 'TL': true, 'TN': true, 'TO': true, 'TV': true, 'TZ': true, 'UA': true, 'UG': true, 'UZ': true, 'VC': true, 'VU': true, 'WS': true, 'YE': true, 'ZA': true, 'ZM': true, 'ZW': true
 };
 
 const aPlus = {
-    ["AF", "AO", "BF", "BI", "BJ", "BT", "BU", "CD", "CF", "DJ", "ET", "GM", "GN", "GW", "HT", "KH", "KI", "KM", "LR", "LS", "MG", "ML", "MR", "MW", "MZ", "NE", "NP", "RW", "SB", "SL", "SN", "SO", "SS", "ST", "TD", "TG", "TL", "TV", "TZ", "UG", "VU", "WS", "YE", "ZM"]
+    'AF': true, 'AO': true, 'BF': true, 'BI': true, 'BJ': true, 'BT': true, 'BU': true, 'CD': true, 'CF': true, 'DJ': true, 'ET': true, 'GM': true, 'GN': true, 'GW': true, 'HT': true, 'KH': true, 'KI': true, 'KM': true, 'LR': true, 'LS': true, 'MG': true, 'ML': true, 'MR': true, 'MW': true, 'MZ': true, 'NE': true, 'NP': true, 'RW': true, 'SB': true, 'SL': true, 'SN': true, 'SO': true, 'SS': true, 'ST': true, 'TD': true, 'TG': true, 'TL': true, 'TV': true, 'TZ': true, 'UG': true, 'VU': true, 'WS': true, 'YE': true, 'ZM': true
 };
 
 const usmca = {
-    ["CA", "MX"]
+    'CA': true, 'MX': true
 };
