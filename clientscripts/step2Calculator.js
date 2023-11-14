@@ -8,15 +8,18 @@ function calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode
     function getSpecialDutyRate(specialJSON, isoCode) {
         // Step 2.1: Get the special duty rate
         let specialDutyRate = specialJSON.special_json[isoCode];
-        console.log('Special Duty Rate:', specialDutyRate);
+        console.log('First Check Special Duty Rate:', specialDutyRate);
         // Step 2.2: If special duty rate is null, check if the country is A+, A* or USMCA
         if (specialDutyRate === null) {
             if (aStar[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A*'];
+                console.log('A+ Special Duty Rate:', specialDutyRate);
             } else if (aPlus[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A+'];
+                console.log('A* Special Duty Rate:', specialDutyRate);
             } else if (usmca[isoCode]) {
                 specialDutyRate = specialJSON.special_json['S'];
+                console.log('S Special Duty Rate:', specialDutyRate);
             }
         }
         return specialDutyRate;
