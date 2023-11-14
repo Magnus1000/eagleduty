@@ -20,8 +20,11 @@ function calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode
             } else if (usmca[isoCode]) {
                 specialDutyRate = specialJSON.special_json['S'];
                 console.log('S Special Duty Rate:', specialDutyRate);
+            } else {
+                console.log('Else Special Rate:', specialDutyRate);
+                specialDutyRate = null;
             }
-        }
+        } 
         return specialDutyRate;
     }
 
