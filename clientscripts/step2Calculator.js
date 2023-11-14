@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Call the calculateDuty function with the input values
         calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode);
+        addLoadingClass();
     });
 });
 
@@ -73,3 +74,29 @@ const aPlus = {
 const usmca = {
     'CA': true, 'MX': true
 };
+
+// Function to animate the loading field
+function addLoadingClass() {
+    const calculatorSteps = [
+        document.querySelector("#calculatorStep1"),
+        document.querySelector("#calculatorStep2"),
+        document.querySelector("#calculatorStep3"),
+        document.querySelector("#calculatorStep4")
+    ];
+
+    let i = 0;
+    const addLoadingClassToNextStep = () => {
+        if (i < calculatorSteps.length) {
+            const currentStep = calculatorSteps[i];
+            currentStep.classList.add("loading");
+            setTimeout(() => {
+                currentStep.classList.remove("loading");
+                currentStep.classList.add("loaded");
+                i++;
+                addLoadingClassToNextStep();
+            }, 3000);
+        }
+    };
+
+    addLoadingClassToNextStep();
+}
