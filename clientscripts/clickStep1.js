@@ -116,9 +116,17 @@ function goStep2() {
     // Hide step 1 and show step 2
     gridStep1Wrapper.style.display = "none";
     gridStep2Wrapper.style.display = "flex";
-    flowStep1.classList.remove("active");
-    flowStep1.classList.add("complete");
-    flowStep2.classList.add("active");
+
+    // Remove "active" class and add "complete" class to children of flowStep1
+    Array.from(flowStep1.children).forEach(child => {
+        child.classList.remove("active");
+        child.classList.add("complete");
+    });
+
+    // Add "active" class to children of flowStep2
+    Array.from(flowStep2.children).forEach(child => {
+        child.classList.add("active");
+    });
 
     // Creating options and setting the value of an already existing select field with id = unit
     const unitSelect = document.querySelector("#unit");
@@ -144,9 +152,17 @@ function backStep1() {
 
     gridStep1Wrapper.style.display = "flex";
     gridStep2Wrapper.style.display = "none";
-    flowStep1.classList.remove("complete");
-    flowStep1.classList.add("active");
-    flowStep2.classList.remove("active");
+
+    // Remove "complete" class and add "active" class to children of flowStep1
+    Array.from(flowStep1.children).forEach(child => {
+        child.classList.remove("complete");
+        child.classList.add("active");
+    });
+
+    // Remove "active" class from children of flowStep2
+    Array.from(flowStep2.children).forEach(child => {
+        child.classList.remove("active");
+    });
 }
 
 // Function to set the selected option in a dropdown
