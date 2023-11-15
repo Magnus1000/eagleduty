@@ -148,7 +148,7 @@ function rotateIcons() {
       const refreshTime = document.querySelector('#refreshTime');
       const refreshTimeWrapper = document.querySelector('#refreshTimeWrapper');
       refreshTimeWrapper.style.display = 'flex';
-      refreshTime.textContent = new Date().toLocaleString();
+      refreshTime.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second: '2-digit'});
     }
   }, 10);
 }
