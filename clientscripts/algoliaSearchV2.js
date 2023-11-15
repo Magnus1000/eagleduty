@@ -149,8 +149,14 @@ function rotateIcons() {
       const refreshTimeWrapper = document.querySelector('#refreshTimeWrapper');
       refreshTimeWrapper.style.display = 'flex';
       refreshTime.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second: '2-digit', hour12: true});
+      const fxText = document.querySelector('#fxText');
+      const htsText = document.querySelector('#htsText');
+      const dutyText = document.querySelector('#dutyText');
+      fxText.textContent = 'Fetched exchanged rates';
+      htsText.textContent = 'Fetched HTS codes';
+      dutyText.textContent = 'Fetched duty rates';
     }
-  }, 10);
+  }, 20);
 }
 
 // Initialize the results container with 0 results
