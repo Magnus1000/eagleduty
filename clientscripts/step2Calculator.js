@@ -105,6 +105,7 @@ function addLoadingClass() {
 document.addEventListener("DOMContentLoaded", () => {
     const expandAdditionalInfoBtn = document.querySelector("#expandAdditionalInfo");
     const additionalFields = document.querySelector("#additionalFields");
+    console.log(expandAdditionalInfoBtn, additionalFields);
 
     expandAdditionalInfoBtn.addEventListener("click", () => {
         additionalFields.classList.toggle("hidden");
