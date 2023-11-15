@@ -60,6 +60,23 @@ function goStep2() {
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
 
+    // Function to display the right unit field
+    function displayUnitFields(units) {
+        const valueUnitWrapper = document.querySelector("#valueUnitWrapper");
+        const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
+
+        if (units === "No." || units === "") {
+            valueUnitWrapper.style.display = "flex";
+            quantityUnitWrapper.style.display = "none";
+        } else {
+            valueUnitWrapper.style.display = "none";
+            quantityUnitWrapper.style.display = "flex";
+        }
+    }
+
+    // Call the displayUnitFields function
+    displayUnitFields(units);
+
     // Animate the arrow to expand to the right
     function animateArrow1() {
         const arrow1Wrapper = document.querySelector("#arrow1wrapper");
@@ -337,6 +354,8 @@ function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
     const CurrencySelect = document.getElementById('Currency');
     const importingFromSelect = document.getElementById('importingFrom');
+    const shippingCurrencySelect = document.getElementById('shippingCurrency');
+    const insuranceCurrencySelect = document.getElementById('insuranceCurrency');
 
     for (let i = 0; i < shortCountryList.length; i++) {
         const toOption = document.createElement('option');
@@ -359,6 +378,16 @@ function createDropdownOptions() {
         currencyOption.value = countries[i][2];
         currencyOption.text = countries[i][2];
         CurrencySelect.add(currencyOption);
+
+        const shippingCurrencyOption = document.createElement('option');
+        shippingCurrencyOption.value = countries[i][2];
+        shippingCurrencyOption.text = countries[i][2];
+        shippingCurrencySelect.add(shippingCurrencyOption);
+
+        const insuranceCurrencyOption = document.createElement('option');
+        insuranceCurrencyOption.value = countries[i][2];
+        insuranceCurrencyOption.text = countries[i][2];
+        insuranceCurrencySelect.add(insuranceCurrencyOption);
     }
 }
 
