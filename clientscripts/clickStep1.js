@@ -28,14 +28,9 @@ function addRadioEventListener() {
 
 // Function to hide step 1 and show step 2
 function goStep2() {
+    // Find the current step and new step
     const gridStep1Wrapper = document.querySelector(".gridstep1wrapper");
     const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
-
-    console.log("gridStep1Wrapper:", gridStep1Wrapper);
-    console.log("gridStep2Wrapper:", gridStep2Wrapper);
-
-    gridStep1Wrapper.style.display = "none";
-    gridStep2Wrapper.style.display = "flex";
 
     const selectedResult = document.querySelector(".result-radio.checked").parentNode;
     const htsno = selectedResult.getAttribute("data-htsno");
@@ -62,6 +57,37 @@ function goStep2() {
     selectedResultCard.setAttribute('data-special-json', specialJSON);
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
+
+    // Animate the arrow to expand to the right
+    function animateArrow1() {
+        const arrow1Wrapper = document.querySelector("#arrow1wrapper");
+        let width = 0;
+        let speed = 1;
+        const maxSpeed = 10;
+        const intervalTime = 10;
+        const maxWidth = 100;
+      
+        const interval = setInterval(() => {
+          width += speed;
+          arrow1Wrapper.style.width = `${width}%`;
+      
+          if (width >= maxWidth) {
+            speed = Math.max(speed - 1, 1);
+          } else if (speed < maxSpeed) {
+            speed++;
+          }
+      
+          if (width >= maxWidth && speed === 1) {
+            clearInterval(interval);
+          }
+        }, intervalTime);
+    }
+
+    // Call the animateArrow1 function
+    animateArrow1();
+    // Hide step 1 and show step 2
+    gridStep1Wrapper.style.display = "none";
+    gridStep2Wrapper.style.display = "flex";
 
     // Creating options and setting the value of an already existing select field with id = unit
     const unitSelect = document.querySelector("#unit");
@@ -296,17 +322,22 @@ const countries = [
     ['ZW', 'Zimbabwe', 'ZWL', 'Zimbabwean dollar']
 ];
 
+const shortCountryList = [
+    ['CA', 'Canada', 'CAD', 'Canadian dollar'],
+    ['US', 'United States', 'USD', 'United States dollar']
+];
+
 // Function to create dropdown options
 function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
-    const importingToCurrencySelect = document.getElementById('importingToCurrency');
+    const CurrencySelect = document.getElementById('Currency');
     const importingFromSelect = document.getElementById('importingFrom');
     for (let i = 0; i < countries.length; i++) {
         const toOption = document.createElement('option');
-        toOption.value = countries[i][0];
-        toOption.text = countries[i][1];
-        toOption.setAttribute('data-iso-code', countries[i][0]); // set data-country attribute
-        toOption.setAttribute('data-currency-name', countries[i][2]); // set data-currency-name attribute
+        toOption.value = shortCountryList[i][0];
+        toOption.text = shortCountryList[i][1];
+        toOption.setAttribute('data-iso-code', shortCountryList[i][0]); // set data-country attribute
+        toOption.setAttribute('data-currency-name', shortCountryList[i][2]); // set data-currency-name attribute
         importingToSelect.add(toOption);
 
         const fromOption = document.createElement('option');
@@ -319,7 +350,7 @@ function createDropdownOptions() {
         const currencyOption = document.createElement('option');
         currencyOption.value = countries[i][2];
         currencyOption.text = countries[i][2];
-        importingToCurrencySelect.add(currencyOption);
+        CurrencySelect.add(currencyOption);
     }
 }
 
@@ -336,11 +367,14 @@ function getUserLocation() {
     .then(data => {
         // Assuming the API returns an object with "country_name" and "currency" properties
         setSelectedOption('importingTo', data.country_name);
-        setSelectedOption('importingToCurrency', data.currency);
+        setSelectedOption('Currency', data.currency);
         console.log('Success:', data.country_name, data.currency);
     })
     .catch(error => {
         console.error('Error:', error);
+        setSelectedOption('importingTo', 'United States');
+        setSelectedOption('Currency', 'US');
+        console.log('Defaulting to United States and US');
     });
 }
 
