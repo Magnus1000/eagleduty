@@ -108,7 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(expandAdditionalInfoBtn, additionalFields);
 
     expandAdditionalInfoBtn.addEventListener("click", () => {
+        console.log("Additional Info Click");
         additionalFields.classList.toggle("hidden");
+        console.log("Class Hidden applied to additionalFields");
     });
 });
 
