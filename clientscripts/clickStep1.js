@@ -31,6 +31,8 @@ function goStep2() {
     // Find the current step and new step
     const gridStep1Wrapper = document.querySelector(".gridstep1wrapper");
     const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
+    const flowStep1 = document.querySelector("#flowStep1");
+    const flowStep2 = document.querySelector("#flowStep2");
 
     const selectedResult = document.querySelector(".result-radio.checked").parentNode;
     const htsno = selectedResult.getAttribute("data-htsno");
@@ -64,7 +66,7 @@ function goStep2() {
         let width = 0;
         let speed = 1;
         const maxSpeed = 10;
-        const intervalTime = 10;
+        const intervalTime = 20;
         const maxWidth = 100;
       
         const interval = setInterval(() => {
@@ -88,6 +90,8 @@ function goStep2() {
     // Hide step 1 and show step 2
     gridStep1Wrapper.style.display = "none";
     gridStep2Wrapper.style.display = "flex";
+    flowStep1.classList.remove("active");
+    flowStep2.classList.add("complete");
 
     // Creating options and setting the value of an already existing select field with id = unit
     const unitSelect = document.querySelector("#unit");
