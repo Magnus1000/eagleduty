@@ -26,6 +26,38 @@ function addRadioEventListener() {
     });
 }
 
+// Animate the arrow to expand to the right
+function animateArrow(id, direction) {
+    const arrowWrapper = document.querySelector(`#${id}`);
+    let width = direction === "forward" ? 0 : 100;
+    let speed = 1;
+    const maxSpeed = 10;
+    const intervalTime = 20;
+    const maxWidth = 100;
+
+    const interval = setInterval(() => {
+        if (direction === "forward") {
+            width += speed;
+        } else {
+            width -= speed;
+        }
+        arrowWrapper.style.width = `${width}%`;
+
+        if (direction === "forward" && width >= maxWidth) {
+            speed = Math.max(speed - 1, 1);
+        } else if (direction === "back" && width <= 0) {
+            speed = Math.max(speed - 1, 1);
+        } else if (speed < maxSpeed) {
+            speed++;
+        }
+
+        if ((direction === "forward" && width >= maxWidth && speed === 1) ||
+                (direction === "back" && width <= 0 && speed === 1)) {
+            clearInterval(interval);
+        }
+    }, intervalTime);
+}
+
 // Function to hide step 1 and show step 2
 function goStep2() {
     // Find the current step and new step
@@ -78,38 +110,6 @@ function goStep2() {
 
     // Call the displayUnitFields function
     displayUnitFields(units, matchValues);
-
-    // Animate the arrow to expand to the right
-    function animateArrow(id, direction) {
-        const arrowWrapper = document.querySelector(`#${id}`);
-        let width = direction === "forward" ? 0 : 100;
-        let speed = 1;
-        const maxSpeed = 10;
-        const intervalTime = 20;
-        const maxWidth = 100;
-
-        const interval = setInterval(() => {
-            if (direction === "forward") {
-                width += speed;
-            } else {
-                width -= speed;
-            }
-            arrowWrapper.style.width = `${width}%`;
-
-            if (direction === "forward" && width >= maxWidth) {
-                speed = Math.max(speed - 1, 1);
-            } else if (direction === "back" && width <= 0) {
-                speed = Math.max(speed - 1, 1);
-            } else if (speed < maxSpeed) {
-                speed++;
-            }
-
-            if ((direction === "forward" && width >= maxWidth && speed === 1) ||
-                    (direction === "back" && width <= 0 && speed === 1)) {
-                clearInterval(interval);
-            }
-        }, intervalTime);
-    }
 
     // Call the animateArrow1 function
     animateArrow("arrow1wrapper", "forward");
