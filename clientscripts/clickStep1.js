@@ -118,6 +118,7 @@ function goStep2() {
     gridStep2Wrapper.style.display = "flex";
     flowStep1.classList.remove("active");
     flowStep1.classList.add("complete");
+    flowStep2.classList.add("active");
 
     // Remove "active" class and add "complete" class to children of flowStep1
     Array.from(flowStep1.children).forEach(child => {
