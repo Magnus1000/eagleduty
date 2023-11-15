@@ -116,6 +116,8 @@ function goStep2() {
     // Hide step 1 and show step 2
     gridStep1Wrapper.style.display = "none";
     gridStep2Wrapper.style.display = "flex";
+    flowStep1.classList.remove("active");
+    flowStep1.classList.add("complete");
 
     // Remove "active" class and add "complete" class to children of flowStep1
     Array.from(flowStep1.children).forEach(child => {
@@ -147,6 +149,10 @@ function backStep1() {
     const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
     const flowStep1 = document.querySelector("#flowStep1");
     const flowStep2 = document.querySelector("#flowStep2");
+
+    flowStep2.classList.remove("active");
+    flowStep1.classList.add("active");
+    flowStep1.classList.remove("complete");
 
     animateArrow("arrow1wrapper", "back");
 
