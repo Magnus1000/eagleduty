@@ -131,5 +131,30 @@ function handleSearchInput(event) {
 const searchInput = document.querySelector('#htsSearch');
 searchInput.addEventListener('input', handleSearchInput);
 
+// Function to Animate the Data Refresh icons
+function rotateIcons() {
+  const fxIcon = document.querySelector('#fxRefreshIcon');
+  const htsIcon = document.querySelector('#htsRefreshIcon');
+  const dutyIcon = document.querySelector('#dutyRefreshIcon');
+  let rotation = 0;
+  const start = Date.now();
+  const interval = setInterval(() => {
+    rotation += 10;
+    fxIcon.style.transform = `rotate(${rotation}deg)`;
+    htsIcon.style.transform = `rotate(${rotation}deg)`;
+    dutyIcon.style.transform = `rotate(${rotation}deg)`;
+    if (Date.now() - start > 3000) {
+      clearInterval(interval);
+      const refreshTime = document.querySelector('#refreshTime');
+      const refreshTimeWrapper = document.querySelector('#refreshTimeWrapper');
+      refreshTimeWrapper.style.display = 'flex';
+      refreshTime.textContent = new Date().toLocaleString();
+    }
+  }, 10);
+}
+
 // Initialize the results container with 0 results
 renderResults([]);
+
+// Initialize the refresh icons
+rotateIcons();
