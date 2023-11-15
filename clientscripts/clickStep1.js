@@ -34,6 +34,7 @@ function goStep2() {
     const flowStep1 = document.querySelector("#flowStep1");
     const flowStep2 = document.querySelector("#flowStep2");
 
+    // Get the attributes of the selected result
     const selectedResult = document.querySelector(".result-radio.checked").parentNode;
     const htsno = selectedResult.getAttribute("data-htsno");
     const description = selectedResult.getAttribute("data-description");
@@ -45,7 +46,9 @@ function goStep2() {
     const other = selectedResult.getAttribute("data-other");
     const specialJSON = selectedResult.getAttribute("data-special-json");
     const units = selectedResult.getAttribute("data-units");
+    const matchValues = ["No.", ""]; // The units where the calculation field is value not quantity
 
+    // Set the values of the selected result card on screen 2
     const selectedResultCard = document.querySelector("#selectedResult");
     console.log("selectedResultCard:", selectedResultCard);
     selectedResultCard.querySelector("[data-hts-card='htsno']").textContent = htsno;
@@ -60,12 +63,11 @@ function goStep2() {
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
 
-    // Function to display the right unit field
-    function displayUnitFields(units) {
+    // Function to display the correct unit field – value or quantity
+    function displayUnitFields(units, matchValues) {
         const valueUnitWrapper = document.querySelector("#valueUnitWrapper");
         const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
-
-        if (units === "No." || units === "") {
+        if (matchValues.includes(units)) {
             valueUnitWrapper.style.display = "flex";
             quantityUnitWrapper.style.display = "none";
         } else {
@@ -75,35 +77,42 @@ function goStep2() {
     }
 
     // Call the displayUnitFields function
-    displayUnitFields(units);
+    displayUnitFields(units, matchValues);
 
     // Animate the arrow to expand to the right
-    function animateArrow1() {
-        const arrow1Wrapper = document.querySelector("#arrow1wrapper");
-        let width = 0;
+    function animateArrow1(id, direction) {
+        const arrowWrapper = document.querySelector(`#${id}`);
+        let width = direction === "forward" ? 0 : 100;
         let speed = 1;
         const maxSpeed = 10;
         const intervalTime = 20;
         const maxWidth = 100;
-      
+
         const interval = setInterval(() => {
-          width += speed;
-          arrow1Wrapper.style.width = `${width}%`;
-      
-          if (width >= maxWidth) {
-            speed = Math.max(speed - 1, 1);
-          } else if (speed < maxSpeed) {
-            speed++;
-          }
-      
-          if (width >= maxWidth && speed === 1) {
-            clearInterval(interval);
-          }
+            if (direction === "forward") {
+                width += speed;
+            } else {
+                width -= speed;
+            }
+            arrowWrapper.style.width = `${width}%`;
+
+            if (direction === "forward" && width >= maxWidth) {
+                speed = Math.max(speed - 1, 1);
+            } else if (direction === "back" && width <= 0) {
+                speed = Math.max(speed - 1, 1);
+            } else if (speed < maxSpeed) {
+                speed++;
+            }
+
+            if ((direction === "forward" && width >= maxWidth && speed === 1) ||
+                    (direction === "back" && width <= 0 && speed === 1)) {
+                clearInterval(interval);
+            }
         }, intervalTime);
     }
 
     // Call the animateArrow1 function
-    animateArrow1();
+    animateArrow("arrow1wrapper", "forward");
     // Hide step 1 and show step 2
     gridStep1Wrapper.style.display = "none";
     gridStep2Wrapper.style.display = "flex";
@@ -128,9 +137,16 @@ function goStep2() {
 function backStep1() {
     const gridStep1Wrapper = document.querySelector(".gridstep1wrapper");
     const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
+    const flowStep1 = document.querySelector("#flowStep1");
+    const flowStep2 = document.querySelector("#flowStep2");
+
+    animateArrow("arrow1wrapper", "back");
 
     gridStep1Wrapper.style.display = "flex";
     gridStep2Wrapper.style.display = "none";
+    flowStep1.classList.remove("complete");
+    flowStep1.classList.add("active");
+    flowStep2.classList.remove("active");
 }
 
 // Function to set the selected option in a dropdown
