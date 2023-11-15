@@ -120,15 +120,23 @@ function goStep2() {
     flowStep1.classList.add("complete");
     flowStep2.classList.add("active");
 
-    // Remove "active" class and add "complete" class to children of flowStep1
+    // Remove "active" class and add "complete" class to children and grandchildren of flowStep1
     Array.from(flowStep1.children).forEach(child => {
         child.classList.remove("active");
         child.classList.add("complete");
+        Array.from(child.children).forEach(grandchild => {
+            grandchild.classList.remove("active");
+            grandchild.classList.add("complete");
+        });
     });
 
-    // Add "active" class to children of flowStep2
+    // Add "active" class to children and grandchildren of flowStep2
     Array.from(flowStep2.children).forEach(child => {
         child.classList.add("active");
+        Array.from(child.children).forEach(grandchild => {
+            grandchild.classList.add("active");
+            grandchild.classList.remove("complete");
+        });
     });
 
     // Creating options and setting the value of an already existing select field with id = unit
@@ -160,15 +168,24 @@ function backStep1() {
     gridStep1Wrapper.style.display = "flex";
     gridStep2Wrapper.style.display = "none";
 
-    // Remove "complete" class and add "active" class to children of flowStep1
+    // Remove "complete" class and add "active" class to children and grandchildren of flowStep1
     Array.from(flowStep1.children).forEach(child => {
         child.classList.remove("complete");
         child.classList.add("active");
+        Array.from(child.children).forEach(grandchild => {
+            grandchild.classList.remove("complete");
+            grandchild.classList.add("active");
+        });
     });
 
-    // Remove "active" class from children of flowStep2
+    // Remove "active" class and add "complete" class to children and grandchildren of flowStep2
     Array.from(flowStep2.children).forEach(child => {
         child.classList.remove("active");
+        child.classList.add("complete");
+        Array.from(child.children).forEach(grandchild => {
+            grandchild.classList.remove("active");
+            grandchild.classList.add("complete");
+        });
     });
 }
 
