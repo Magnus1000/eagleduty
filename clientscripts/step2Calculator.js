@@ -101,3 +101,12 @@ function addLoadingClass() {
     addLoadingClassToNextStep();
 }
 
+// Add event listener to Additioanl Info button
+document.addEventListener("DOMContentLoaded", () => {
+    const expandAdditionalInfoBtn = document.querySelector("#expandAdditionalInfo");
+    const additionalFields = document.querySelector("#additionalFields");
+
+    expandAdditionalInfoBtn.addEventListener("click", () => {
+        additionalFields.classList.toggle("hidden");
+    });
+});
