@@ -110,3 +110,34 @@ document.addEventListener("DOMContentLoaded", () => {
         additionalFields.classList.toggle("hidden");
     });
 });
+
+
+// Function to add the parent class to the children
+document.addEventListener("DOMContentLoaded", () => {
+    // Get all elements with data-inherit-class attribute
+    const elementsWithInheritClass = document.querySelectorAll("[data-inherit-class]");
+
+    // Loop through each element and add event listeners for class changes
+    elementsWithInheritClass.forEach(element => {
+        // If the element is a parent, add an event listener for class additions
+        if (element.dataset.inheritClass === "parent") {
+            element.addEventListener("classadd", () => {
+                // Get all child elements with data-inherit-class attribute
+                const childElements = element.querySelectorAll("[data-inherit-class='child']");
+                // Loop through each child element and add the parent's class
+                childElements.forEach(childElement => {
+                    childElement.classList.add(...element.classList);
+                });
+            });
+            // Add an event listener for class removals
+            element.addEventListener("classremove", () => {
+                // Get all child elements with data-inherit-class attribute
+                const childElements = element.querySelectorAll("[data-inherit-class='child']");
+                // Loop through each child element and remove the parent's class
+                childElements.forEach(childElement => {
+                    childElement.classList.remove(...element.classList);
+                });
+            });
+        }
+    });
+});
