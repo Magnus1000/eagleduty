@@ -91,7 +91,8 @@ function goStep2() {
     gridStep1Wrapper.style.display = "none";
     gridStep2Wrapper.style.display = "flex";
     flowStep1.classList.remove("active");
-    flowStep2.classList.add("complete");
+    flowStep1.classList.add("complete");
+    flowStep2.classList.add("active");
 
     // Creating options and setting the value of an already existing select field with id = unit
     const unitSelect = document.querySelector("#unit");
