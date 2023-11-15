@@ -80,7 +80,7 @@ function goStep2() {
     displayUnitFields(units, matchValues);
 
     // Animate the arrow to expand to the right
-    function animateArrow1(id, direction) {
+    function animateArrow(id, direction) {
         const arrowWrapper = document.querySelector(`#${id}`);
         let width = direction === "forward" ? 0 : 100;
         let speed = 1;
