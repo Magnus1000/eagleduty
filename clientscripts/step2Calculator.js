@@ -111,36 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Additional Info Click");
         additionalFields.classList.toggle("hidden");
         console.log("Class Hidden applied to additionalFields");
-    });
-});
 
-
-// Function to add the parent class to the children
-document.addEventListener("DOMContentLoaded", () => {
-    // Get all elements with data-inherit-class attribute
-    const elementsWithInheritClass = document.querySelectorAll("[data-inherit-class]");
-
-    // Loop through each element and add event listeners for class changes
-    elementsWithInheritClass.forEach(element => {
-        // If the element is a parent, add an event listener for class additions
-        if (element.dataset.inheritClass === "parent") {
-            element.addEventListener("classadd", () => {
-                // Get all child elements with data-inherit-class attribute
-                const childElements = element.querySelectorAll("[data-inherit-class='child']");
-                // Loop through each child element and add the parent's class
-                childElements.forEach(childElement => {
-                    childElement.classList.add(...element.classList);
-                });
-            });
-            // Add an event listener for class removals
-            element.addEventListener("classremove", () => {
-                // Get all child elements with data-inherit-class attribute
-                const childElements = element.querySelectorAll("[data-inherit-class='child']");
-                // Loop through each child element and remove the parent's class
-                childElements.forEach(childElement => {
-                    childElement.classList.remove(...element.classList);
-                });
-            });
-        }
+        // Get all children of additionalFields
+        const childElements = additionalFields.querySelectorAll("*");
+        // Loop through each child element and toggle the hidden class
+        childElements.forEach(childElement => {
+            childElement.classList.toggle("hidden");
+        });
     });
 });
