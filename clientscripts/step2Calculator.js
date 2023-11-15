@@ -120,3 +120,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Handle radio button behaviour
+document.addEventListener('DOMContentLoaded', () => {
+    const radioButtons = document.querySelectorAll('.radiowrapper .w-form-formradioinput');
+
+    // Set the default selected radio button
+    radioButtons.forEach(radio => {
+        if (radio.getAttribute('data-default-select') === 'true') {
+            radio.checked = true;
+        }
+
+        // Add click event listener to each radio button
+        radio.addEventListener('click', (event) => {
+            // Uncheck all other radio buttons
+            radioButtons.forEach(rb => rb.checked = false);
+            
+            // Check the clicked radio button
+            event.target.checked = true;
+        });
+    });
+});
