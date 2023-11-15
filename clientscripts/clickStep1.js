@@ -332,14 +332,17 @@ function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
     const CurrencySelect = document.getElementById('Currency');
     const importingFromSelect = document.getElementById('importingFrom');
-    for (let i = 0; i < countries.length; i++) {
+
+    for (let i = 0; i < shortCountryList.length; i++) {
         const toOption = document.createElement('option');
         toOption.value = shortCountryList[i][0];
         toOption.text = shortCountryList[i][1];
         toOption.setAttribute('data-iso-code', shortCountryList[i][0]); // set data-country attribute
         toOption.setAttribute('data-currency-name', shortCountryList[i][2]); // set data-currency-name attribute
         importingToSelect.add(toOption);
+    }
 
+    for (let i = 0; i < countries.length; i++) {
         const fromOption = document.createElement('option');
         fromOption.value = countries[i][0];
         fromOption.text = countries[i][1];
