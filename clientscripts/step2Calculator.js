@@ -148,12 +148,17 @@ function addLoadingClass() {
             const currentStep = calculatorSteps[i];
             removeLoadingClassesFromElementAndDescendants(currentStep);
             addLoadingClassToElementAndDescendants(currentStep);
+            const duration = Math.floor(Math.random() * 1000) + 2000; // Generate a random number between 2000-3000
             setTimeout(() => {
                 currentStep.classList.remove("loading");
                 currentStep.classList.add("loaded");
+                const descendants = currentStep.querySelectorAll("*");
+                for (let j = 0; j < descendants.length; j++) {
+                    descendants[j].classList.add("loaded");
+                }
                 i++;
                 addLoadingClassToNextStep();
-            }, 3000);
+            }, duration);
         }
     };
 
