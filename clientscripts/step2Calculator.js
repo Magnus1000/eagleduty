@@ -125,11 +125,29 @@ function addLoadingClass() {
         document.querySelector("#calculatorStep4")
     ];
 
+    const removeLoadingClassesFromElementAndDescendants = (element) => {
+        element.classList.remove("loading");
+        element.classList.remove("loaded");
+        const children = element.children;
+        for (let i = 0; i < children.length; i++) {
+            removeLoadingClassesFromElementAndDescendants(children[i]);
+        }
+    };
+
+    const addLoadingClassToElementAndDescendants = (element) => {
+        element.classList.add("loading");
+        const children = element.children;
+        for (let i = 0; i < children.length; i++) {
+            addLoadingClassToElementAndDescendants(children[i]);
+        }
+    };
+
     let i = 0;
     const addLoadingClassToNextStep = () => {
         if (i < calculatorSteps.length) {
             const currentStep = calculatorSteps[i];
-            currentStep.classList.add("loading");
+            removeLoadingClassesFromElementAndDescendants(currentStep);
+            addLoadingClassToElementAndDescendants(currentStep);
             setTimeout(() => {
                 currentStep.classList.remove("loading");
                 currentStep.classList.add("loaded");
