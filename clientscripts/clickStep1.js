@@ -411,7 +411,7 @@ const shortCountryList = [
 // Function to create dropdown options
 function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
-    const CurrencySelect = document.getElementById('Currency');
+    const CurrencySelect = document.getElementById('currencySelect');
     const importingFromSelect = document.getElementById('importingFrom');
     const shippingCurrencySelect = document.getElementById('shippingCurrency');
     const insuranceCurrencySelect = document.getElementById('insuranceCurrency');
@@ -497,13 +497,13 @@ function getUserLocation() {
     .then(data => {
         // Assuming the API returns an object with "country_name" and "currency" properties
         setSelectedOption('importingTo', data.country_name);
-        setSelectedOption('Currency', data.currency);
+        setSelectedOption('currencySelect', data.currency);
         console.log('Success:', data.country_name, data.currency);
     })
     .catch(error => {
         console.error('Error:', error);
         setSelectedOption('importingTo', 'United States');
-        setSelectedOption('Currency', 'US');
+        setSelectedOption('currencySelect', 'US');
         console.log('Defaulting to United States and US');
     });
 }
