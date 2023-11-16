@@ -103,7 +103,7 @@ function goStep2() {
         const quantityQuantityUnitText = document.querySelector("#quantityQuantityUnitText");
         const unitValueSelect = document.querySelector("quantityValueUnitDropdown");
         const unitQuantitySelect = document.querySelector("quantityQuantityUnitDropdown");
-        unitSelect.innerHTML = "";
+        unitQuantitySelect.innerHTML = "";
         const unitOptions = units.split(",");
 
         if (matchValues.includes(units)) {
