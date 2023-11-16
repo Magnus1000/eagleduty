@@ -101,6 +101,10 @@ function goStep2() {
         const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
         const quantityValueUnitText = document.querySelector("#quantityValueUnitText");
         const quantityQuantityUnitText = document.querySelector("#quantityQuantityUnitText");
+        const unitValueSelect = document.querySelector("quantityValueUnitDropdown");
+        const unitQuantitySelect = document.querySelector("quantityQuantityUnitDropdown");
+        unitSelect.innerHTML = "";
+        const unitOptions = units.split(",");
 
         if (matchValues.includes(units)) {
             valueUnitWrapper.style.display = "flex";
@@ -109,7 +113,13 @@ function goStep2() {
         } else {
             valueUnitWrapper.style.display = "none";
             quantityUnitWrapper.style.display = "flex";
-            quantityQuantityUnitText.textContent = units;
+            quantityQuantityUnitText.textContent = unitOptions[0];
+            for (let i = 0; i < unitOptions.length; i++) {
+                const option = document.createElement("option");
+                option.setAttribute("value", unitOptions[i]);
+                option.textContent = unitOptions[i];
+                unitSelect.appendChild(option);
+            }        
         }
     }
 
@@ -143,18 +153,6 @@ function goStep2() {
             grandchild.classList.remove("complete");
         });
     });
-
-    // Creating options and setting the value of an already existing select field with id = unit
-    const unitSelect = document.querySelector("#unit");
-    unitSelect.innerHTML = "";
-
-    const unitOptions = units.split(",");
-    for (let i = 0; i < unitOptions.length; i++) {
-        const option = document.createElement("option");
-        option.setAttribute("value", unitOptions[i]);
-        option.textContent = unitOptions[i];
-        unitSelect.appendChild(option);
-    }
 }
 
 // Function to hide step 2 and show step 1
