@@ -101,7 +101,6 @@ function goStep2() {
         const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
         const quantityValueUnitText = document.querySelector("#quantityValueUnitText");
         const quantityQuantityUnitText = document.querySelector("#quantityQuantityUnitText");
-        const unitValueSelect = document.querySelector("quantityValueUnitDropdown");
         const unitQuantitySelect = document.querySelector("quantityQuantityUnitDropdown");
         unitQuantitySelect.innerHTML = "";
         const unitOptions = units.split(",");
