@@ -450,6 +450,13 @@ function createDropdownOptions() {
         }
     });
 
+    // Add options for importingTo from the shortCountryList
+    shortCountryList.forEach(country => {
+        const option = addOption(importingToSelect, country[0], country[1]);
+        option.setAttribute('data-iso-code', country[0]);
+        option.setAttribute('data-currency-name', country[2]);
+    });
+
     // A set to keep track of added currencies to avoid duplicates
     const addedCurrencies = new Set();
 
