@@ -477,7 +477,6 @@ function createDropdownOptions() {
     });
 }
 
-
 // Function to get the user's location from their IP address
 function getUserLocation() {
     fetch('https://ipapi.co/json/')
