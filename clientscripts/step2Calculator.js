@@ -1,14 +1,14 @@
 // Main Function to calculate the duty
-function calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode, amount, amountUnit) {
+function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit) {
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
-    if (productValue !== null && amount === null) {
-        const duty = productValue * generalRate * valueQuantity;
+    if (value !== null && amount === null) {
+        const duty = value * generalRate * quantity;
         console.log('Duty (value):', duty);
     }
 
     // Step 1.2: Calculate the duty for products where duty is calculated on amount
-    if (amount !== null && amountUnit !== null && productValue === null) {
+    if (amount !== null && amountUnit !== null && value === null) {
         const amountQuantity = parseFloat(amount);
         const duty = generalRate * amountQuantity;
         console.log('Duty (amount):', duty);
@@ -51,13 +51,13 @@ function calculateDuty(productValue, specialJSON, generalRate, valueQuantity, is
 
     // Step 2.3: Calculate the special duty amount
     // Step 2.3.1: Calculate the special duty amount for products where duty is calculated on value
-    if (productValue !== null && amount === null) {
-        const specialDuty = productValue * specialDutyRate * valueQuantity;
+    if (value !== null && amount === null) {
+        const specialDuty = value * specialDutyRate * quantity;
         console.log('Duty (value):', duty);
     }
 
     // Step 1.2: Calculate the special duty amount for products where duty is calculated on amount
-    if (amount !== null && amountUnit !== null && productValue === null) {
+    if (amount !== null && amountUnit !== null && value === null) {
         const amountQuantity = parseFloat(amount);
         const specialDuty = specialDutyRate * amountQuantity;
         console.log('Duty (amount):', duty);
@@ -81,18 +81,18 @@ document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener("click", function() {
         // Get the input values
         const selectedResultCard = document.querySelector("#selectedResult");
-        const productValue = parseFloat(document.querySelector("#productValue").value);
+        const value = parseFloat(document.querySelector("#valueField").value);
         const specialJSON = JSON.parse(selectedResultCard.getAttribute('data-special-json'));
         const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
-        const valueQuantity = parseFloat(document.querySelector("#valueQuantityInput").value);
+        const quantity = parseFloat(document.querySelector("#quantityField").value);
         const isoCode = document.querySelector("#importingFrom").value;
-        const amount = parseFloat(document.querySelector("#amount").value);
-        const amountUnit = document.querySelector("#amountUnit").value;
+        const amount = parseFloat(document.querySelector("#amountField").value);
+        const amountUnit = document.querySelector("#amountUnitSelect").value;
 
-        console.log('Product Value:',productValue,'Quantity:',valueQuantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
+        console.log('Value:',value,'Quantity:',quantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
         
         // Call the calculateDuty function with the input values
-        calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode, amount, amountUnit);
+        calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
         addLoadingClass();
     });
 });

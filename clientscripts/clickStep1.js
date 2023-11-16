@@ -97,29 +97,29 @@ function goStep2() {
 
     // Function to display the correct unit field – value or quantity
     function displayUnitFields(units, matchValues) {
-        const valueUnitWrapper = document.querySelector("#valueUnitWrapper");
-        const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
-        const quantityValueUnitText = document.querySelector("#quantityValueUnitText");
-        const quantityQuantityUnitText = document.querySelector("#quantityQuantityUnitText");
-        const unitQuantitySelect = document.querySelector("#quantityQuantityUnitDropdown");
-        unitQuantitySelect.innerHTML = "";
+        const valueWrapper = document.querySelector("#valueWrapper");
+        const amountWrapper = document.querySelector("#amountWrapper");
+        const valueUnitText = document.querySelector("#valueUnitText");
+        const amountUnitText = document.querySelector("#amountUnitText");
+        const amountUnitSelect = document.querySelector("#amountUnit");
+        amountUnitSelect.innerHTML = "";
         const unitOptions = units.split(",");
 
         if (matchValues.includes(units)) {
-            valueUnitWrapper.style.display = "flex";
-            quantityUnitWrapper.style.display = "none";
-            quantityValueUnitText.textContent = "$";
+            valueWrapper.style.display = "flex";
+            amountWrapper.style.display = "none";
+            valueUnitText.textContent = "$";
         } else {
-            valueUnitWrapper.style.display = "none";
-            quantityUnitWrapper.style.display = "flex";
-            quantityQuantityUnitText.textContent = unitOptions[0];
+            valueWrapper.style.display = "none";
+            amountWrapper.style.display = "flex";
+            amountUnitText.textContent = unitOptions[0];
             for (let i = 0; i < unitOptions.length; i++) {
                 const option = document.createElement("option");
                 option.setAttribute("value", unitOptions[i]);
                 option.textContent = unitOptions[i];
                 unitQuantitySelect.appendChild(option);
             }
-            unitQuantitySelect.selectedIndex = 0;        
+            amountUnitSelect.selectedIndex = 0;        
         }
     }
 
