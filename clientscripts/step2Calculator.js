@@ -4,6 +4,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     let specialDuty = null;
     let duty = null;
 
+    console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
+
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
     if (value !== null && amount === null) {
