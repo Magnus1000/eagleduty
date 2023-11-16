@@ -1,22 +1,33 @@
 // Main Function to calculate the duty
-function calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode) {
-    // Step 1: Calculate the duty
-    const duty = productValue * generalRate * valueQuantity;
-    console.log('Duty:', duty);
+function calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode, amount, amountUnit) {
+    // Step 1: Calculate the general duty
+    // Step 1.1: Calculate the duty for products where duty is calculated on value
+    if (productValue !== null && amount === null) {
+        const duty = productValue * generalRate * valueQuantity;
+        console.log('Duty (value):', duty);
+    }
+
+    // Step 1.2: Calculate the duty for products where duty is calculated on amount
+    if (amount !== null && amountUnit !== null && productValue === null) {
+        const amountQuantity = parseFloat(amount);
+        const duty = generalRate * amountQuantity;
+        console.log('Duty (amount):', duty);
+    }
 
     // Step 2: Calculate the special duty
+    // Step 2.1: Get the special duty rate
     function getSpecialDutyRate(specialJSON, isoCode) {
-        // Check if specialJSON is null or undefined
+        // Step 2.1.1: Check if specialJSON is null or undefined
         if (!specialJSON || !specialJSON.special_json) {
             console.log('specialJSON is null or undefined');
             return null;
         }
 
-        // Step 2.1: Get the special duty rate
+        // Step 2.1.2: Get the special duty rate
         let specialDutyRate = specialJSON.special_json[isoCode];
         console.log('First Check Special Duty Rate:', specialDutyRate);
 
-        // Step 2.2: If special duty rate is null or undefined, check if the country is A+, A* or USMCA
+        // Step 2.2.3: If special duty rate is null or undefined, check if the country is A+, A* or USMCA
         if (specialDutyRate == null) {
             if (aStar[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A*'];
@@ -35,11 +46,23 @@ function calculateDuty(productValue, specialJSON, generalRate, valueQuantity, is
 
         return specialDutyRate;
     }
-
+    // Call the getSpecialDutyRate function
     const specialDutyRate = getSpecialDutyRate(specialJSON, isoCode);
 
-    // Step 2.3: Calculate the special duty
-    const specialDuty = productValue * specialDutyRate * valueQuantity;
+    // Step 2.3: Calculate the special duty amount
+    // Step 2.3.1: Calculate the special duty amount for products where duty is calculated on value
+    if (productValue !== null && amount === null) {
+        const specialDuty = productValue * specialDutyRate * valueQuantity;
+        console.log('Duty (value):', duty);
+    }
+
+    // Step 1.2: Calculate the special duty amount for products where duty is calculated on amount
+    if (amount !== null && amountUnit !== null && productValue === null) {
+        const amountQuantity = parseFloat(amount);
+        const specialDuty = specialDutyRate * amountQuantity;
+        console.log('Duty (amount):', duty);
+    }
+
     console.log('Special Duty:', specialDuty);
 
     // Step 3: Calculate the total duty
@@ -63,10 +86,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
         const valueQuantity = parseFloat(document.querySelector("#valueQuantityInput").value);
         const isoCode = document.querySelector("#importingFrom").value;
+        const amount = parseFloat(document.querySelector("#amount").value);
+        const amountUnit = document.querySelector("#amountUnit").value;
+
         console.log('Product Value:',productValue,'Quantity:',valueQuantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
         
         // Call the calculateDuty function with the input values
-        calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode);
+        calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode, amount, amountUnit);
         addLoadingClass();
     });
 });
