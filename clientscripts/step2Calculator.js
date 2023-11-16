@@ -8,7 +8,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
-    if (value !== null && amount === null) {
+    if (value !== null && isNaN(amount)) {
         duty = value * generalRate * quantity;
         console.log('Duty (value):', duty);
     }
