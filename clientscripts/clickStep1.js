@@ -433,10 +433,26 @@ function createDropdownOptions() {
         fromOption.setAttribute('data-currency-name', countries[i][2]); // set data-currency-name attribute
         importingFromSelect.add(fromOption);
 
-        const currencyOption = document.createElement('option');
-        currencyOption.value = countries[i][2];
-        currencyOption.text = countries[i][2];
-        CurrencySelect.add(currencyOption);
+        // Create an array of currency names
+        const currencyNames = countries.map(country => country[2]);
+
+        // Sort the currency names alphabetically
+        currencyNames.sort();
+
+        const commonCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF', 'HKD', 'NZD', 'SGD'];
+
+        // Create options for each currency name
+        for (let j = 0; j < currencyNames.length; j++) {
+            const currencyOption = document.createElement('option');
+            currencyOption.value = currencyNames[j];
+            currencyOption.text = currencyNames[j];
+            if (commonCurrencies.includes(currencyNames[j])) {
+                // Add "Common" currencies at the start of the list
+                CurrencySelect.add(currencyOption, 0);
+            } else {
+                CurrencySelect.add(currencyOption);
+            }
+        }
 
         const shippingCurrencyOption = document.createElement('option');
         shippingCurrencyOption.value = countries[i][2];
