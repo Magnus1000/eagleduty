@@ -416,54 +416,49 @@ function createDropdownOptions() {
     const shippingCurrencySelect = document.getElementById('shippingCurrency');
     const insuranceCurrencySelect = document.getElementById('insuranceCurrency');
 
-    for (let i = 0; i < shortCountryList.length; i++) {
-        const toOption = document.createElement('option');
-        toOption.value = shortCountryList[i][0];
-        toOption.text = shortCountryList[i][1];
-        toOption.setAttribute('data-iso-code', shortCountryList[i][0]); // set data-country attribute
-        toOption.setAttribute('data-currency-name', shortCountryList[i][2]); // set data-currency-name attribute
-        importingToSelect.add(toOption);
-    }
+    // Adding options for 'importing to' dropdown
+    shortCountryList.forEach(country => {
+        const option = new Option(country[1], country[0]);
+        option.setAttribute('data-iso-code', country[0]);
+        option.setAttribute('data-currency-name', country[3]);
+        importingToSelect.add(option);
+    });
 
-    for (let i = 0; i < countries.length; i++) {
-        const fromOption = document.createElement('option');
-        fromOption.value = countries[i][0];
-        fromOption.text = countries[i][1];
-        fromOption.setAttribute('data-iso-code', countries[i][0]); // set data-country attribute
-        fromOption.setAttribute('data-currency-name', countries[i][2]); // set data-currency-name attribute
-        importingFromSelect.add(fromOption);
+    // A set to keep track of added currencies to avoid duplicates
+    const addedCurrencies = new Set();
 
-        // Create an array of currency names
-        const currencyNames = countries.map(country => country[2]);
+    // Adding options for 'importing from' dropdown
+    countries.forEach(country => {
+        const option = new Option(country[1], country[0]);
+        option.setAttribute('data-iso-code', country[0]);
+        option.setAttribute('data-currency-name', country[3]);
+        importingFromSelect.add(option);
 
-        // Sort the currency names alphabetically
-        currencyNames.sort();
-
-        const commonCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF', 'HKD', 'NZD', 'SGD'];
-
-        // Create options for each currency name
-        for (let j = 0; j < currencyNames.length; j++) {
-            const currencyOption = document.createElement('option');
-            currencyOption.value = currencyNames[j];
-            currencyOption.text = currencyNames[j];
-            if (commonCurrencies.includes(currencyNames[j])) {
-                // Add "Common" currencies at the start of the list
-                CurrencySelect.add(currencyOption, 0);
-            } else {
-                CurrencySelect.add(currencyOption);
-            }
+        // Only add currency if it hasn't been added yet
+        if (!addedCurrencies.has(country[2])) {
+            addedCurrencies.add(country[2]);
+            const currencyOption = new Option(country[2], country[2]);
+            CurrencySelect.add(currencyOption);
         }
 
-        const shippingCurrencyOption = document.createElement('option');
-        shippingCurrencyOption.value = countries[i][2];
-        shippingCurrencyOption.text = countries[i][2];
-        shippingCurrencySelect.add(shippingCurrencyOption);
+        // Assuming you want to add all currencies to shipping and insurance dropdowns
+        shippingCurrencySelect.add(new Option(country[2], country[2]));
+        insuranceCurrencySelect.add(new Option(country[2], country[2]));
+    });
 
-        const insuranceCurrencyOption = document.createElement('option');
-        insuranceCurrencyOption.value = countries[i][2];
-        insuranceCurrencyOption.text = countries[i][2];
-        insuranceCurrencySelect.add(insuranceCurrencyOption);
-    }
+    // Sort the currency dropdown options alphabetically, after adding all currencies
+    Array.from(CurrencySelect.options)
+         .sort((a, b) => a.text.localeCompare(b.text))
+         .forEach(option => CurrencySelect.add(option));
+
+    // Move common currencies to the top of the dropdown
+    const commonCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF', 'HKD', 'NZD', 'SGD'];
+    commonCurrencies.reverse().forEach(currency => {
+        const option = Array.from(CurrencySelect.options).find(opt => opt.value === currency);
+        if (option) {
+            CurrencySelect.prepend(option);
+        }
+    });
 }
 
 // Function to get the user's location from their IP address
