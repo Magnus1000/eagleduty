@@ -101,7 +101,7 @@ function goStep2() {
         const amountWrapper = document.querySelector("#amountWrapper");
         const valueUnitText = document.querySelector("#valueUnitText");
         const amountUnitText = document.querySelector("#amountUnitText");
-        const amountUnitSelect = document.querySelector("#amountUnit");
+        const amountUnitSelect = document.querySelector("#amountUnitSelect");
         amountUnitSelect.innerHTML = "";
         const unitOptions = units.split(",");
 
