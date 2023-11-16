@@ -416,64 +416,67 @@ function createDropdownOptions() {
     const shippingCurrencySelect = document.getElementById('shippingCurrency');
     const insuranceCurrencySelect = document.getElementById('insuranceCurrency');
 
-    // Adding options for 'importing to' dropdown
-    shortCountryList.forEach(country => {
-        const option = new Option(country[1], country[0]);
-        option.setAttribute('data-iso-code', country[0]);
-        option.setAttribute('data-currency-name', country[3]);
-        importingToSelect.add(option);
+    // Define common countries and currencies
+    const commonCountries = ['CN', 'MX', 'CA', 'JP', 'DE']; // ISO codes of common countries
+    const commonCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF', 'HKD', 'NZD', 'SGD'];
+
+    // Helper function to add an option to a select
+    function addOption(select, value, text) {
+        const option = new Option(text, value);
+        select.add(option);
+        return option;
+    }
+
+    // Add common countries to 'importing from' dropdown
+    commonCountries.forEach(isoCode => {
+        const country = countries.find(country => country[0] === isoCode);
+        if (country) {
+            const option = addOption(importingFromSelect, country[0], country[1]);
+            option.setAttribute('data-iso-code', country[0]);
+            option.setAttribute('data-currency-name', country[2]);
+        }
+    });
+
+    // Add a divider
+    const fromDivider = addOption(importingFromSelect, '', '---');
+    fromDivider.setAttribute('disabled', 'true');
+
+    // Add all countries to 'importing from' dropdown
+    countries.forEach(country => {
+        if (!commonCountries.includes(country[0])) { // Skip if it's a common country
+            const option = addOption(importingFromSelect, country[0], country[1]);
+            option.setAttribute('data-iso-code', country[0]);
+            option.setAttribute('data-currency-name', country[2]);
+        }
     });
 
     // A set to keep track of added currencies to avoid duplicates
     const addedCurrencies = new Set();
 
-    // Adding options for 'importing from' dropdown
-    countries.forEach(country => {
-        const option = new Option(country[1], country[0]);
-        option.setAttribute('data-iso-code', country[0]);
-        option.setAttribute('data-currency-name', country[3]);
-        importingFromSelect.add(option);
+    // Add common currencies to the top of the 'Currency' dropdown
+    commonCurrencies.forEach(currency => {
+        if (!addedCurrencies.has(currency)) {
+            addedCurrencies.add(currency);
+            addOption(CurrencySelect, currency, currency);
+        }
+    });
 
-        // Only add currency if it hasn't been added yet
+    // Add a divider for currencies
+    const currencyDivider = addOption(CurrencySelect, '', '---');
+    currencyDivider.setAttribute('disabled', 'true');
+
+    // Add the rest of the currencies to the 'Currency' dropdown
+    countries.forEach(country => {
         if (!addedCurrencies.has(country[2])) {
             addedCurrencies.add(country[2]);
-            const currencyOption = new Option(country[2], country[2]);
-            CurrencySelect.add(currencyOption);
+            addOption(CurrencySelect, country[2], country[2]);
         }
-
-        // Assuming you want to add all currencies to shipping and insurance dropdowns
-        shippingCurrencySelect.add(new Option(country[2], country[2]));
-        insuranceCurrencySelect.add(new Option(country[2], country[2]));
-    });
-
-    // Sort the currency dropdown options alphabetically, after adding all currencies
-    const sortedCurrencies = Array.from(CurrencySelect.options)
-         .sort((a, b) => a.text.localeCompare(b.text));
-
-    // Clear the dropdown before re-adding sorted options
-    CurrencySelect.innerHTML = '';
-
-    // Add common currencies to the top of the dropdown
-    const commonCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF', 'HKD', 'NZD', 'SGD'];
-    commonCurrencies.forEach(currency => {
-        if (addedCurrencies.has(currency)) {
-            const currencyOption = new Option(currency, currency);
-            CurrencySelect.add(currencyOption);
-        }
-    });
-
-    // Add a divider
-    const divider = new Option('---', '');
-    divider.setAttribute('disabled', 'true');
-    CurrencySelect.add(divider);
-
-    // Add the rest of the sorted currencies
-    sortedCurrencies.forEach(option => {
-        if (!commonCurrencies.includes(option.value)) {
-            CurrencySelect.add(option);
-        }
+        // Add currencies to 'shipping' and 'insurance' dropdowns
+        addOption(shippingCurrencySelect, country[2], country[2]);
+        addOption(insuranceCurrencySelect, country[2], country[2]);
     });
 }
+
 
 // Function to get the user's location from their IP address
 function getUserLocation() {
