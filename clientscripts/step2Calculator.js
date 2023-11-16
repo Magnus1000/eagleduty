@@ -31,7 +31,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
         // Step 2.1.2: Get the special duty rate
         let specialDutyRate = specialJSON.special_json[isoCode];
-        console.log('First Check Special Duty Rate:', specialDutyRate);
+        console.log('Country Level Special Duty Rate:', specialDutyRate);
 
         // Step 2.2.3: If special duty rate is null or undefined, check if the country is A+, A* or USMCA
         if (specialDutyRate == null) {
@@ -45,7 +45,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 specialDutyRate = specialJSON.special_json['S'];
                 console.log('S Special Duty Rate:', specialDutyRate);
             } else {
-                console.log('Else Special Rate:', specialDutyRate);
+                console.log('No Special Duty Rate Found');
                 specialDutyRate = null;
             }
         }
@@ -54,19 +54,20 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     }
     // Call the getSpecialDutyRate function
     const specialDutyRate = getSpecialDutyRate(specialJSON, isoCode);
+    console.log('Special Duty Rate:', specialDutyRate);
 
     // Step 2.3: Calculate the special duty amount
     // Step 2.3.1: Calculate the special duty amount for products where duty is calculated on value
-    if (value !== null && isNaN(amount)) {
+    if (value !== null && isNaN(amount) && isNaN(specialDutyRate)) {
         specialDuty = value * specialDutyRate * quantity;
-        console.log('Duty (value):', duty);
+        console.log('Special duty (value):', specialDuty);
     }
 
-    // Step 1.2: Calculate the special duty amount for products where duty is calculated on amount
-    if (amount !== null && amountUnit !== null && value === null) {
+    // Step 2.3.2: Calculate the special duty amount for products where duty is calculated on amount
+    if (amount !== null && amountUnit !== null && value === null && isNaN(specialDutyRate)) {
         const amountQuantity = parseFloat(amount);
         specialDuty = specialDutyRate * amountQuantity;
-        console.log('Duty (amount):', duty);
+        console.log('Special duty (amount):', specialDuty);
     }
 
     console.log('Special Duty:', specialDuty);
