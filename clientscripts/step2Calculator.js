@@ -1,22 +1,29 @@
 // Main Function to calculate the duty
-function calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode) {
+function calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode) {
     // Step 1: Calculate the duty
-    const duty = productValue * generalRate * quantity;
+    const duty = productValue * generalRate * valueQuantity;
     console.log('Duty:', duty);
 
     // Step 2: Calculate the special duty
     function getSpecialDutyRate(specialJSON, isoCode) {
+        // Check if specialJSON is null or undefined
+        if (!specialJSON || !specialJSON.special_json) {
+            console.log('specialJSON is null or undefined');
+            return null;
+        }
+
         // Step 2.1: Get the special duty rate
         let specialDutyRate = specialJSON.special_json[isoCode];
         console.log('First Check Special Duty Rate:', specialDutyRate);
+
         // Step 2.2: If special duty rate is null or undefined, check if the country is A+, A* or USMCA
         if (specialDutyRate == null) {
             if (aStar[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A*'];
-                console.log('A+ Special Duty Rate:', specialDutyRate);
+                console.log('A* Special Duty Rate:', specialDutyRate);
             } else if (aPlus[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A+'];
-                console.log('A* Special Duty Rate:', specialDutyRate);
+                console.log('A+ Special Duty Rate:', specialDutyRate);
             } else if (usmca[isoCode]) {
                 specialDutyRate = specialJSON.special_json['S'];
                 console.log('S Special Duty Rate:', specialDutyRate);
@@ -24,14 +31,15 @@ function calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode
                 console.log('Else Special Rate:', specialDutyRate);
                 specialDutyRate = null;
             }
-        } 
+        }
+
         return specialDutyRate;
     }
 
     const specialDutyRate = getSpecialDutyRate(specialJSON, isoCode);
 
     // Step 2.3: Calculate the special duty
-    const specialDuty = productValue * specialDutyRate * quantity;
+    const specialDuty = productValue * specialDutyRate * valueQuantity;
     console.log('Special Duty:', specialDuty);
 
     // Step 3: Calculate the total duty
@@ -53,12 +61,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const productValue = parseFloat(document.querySelector("#productValue").value);
         const specialJSON = JSON.parse(selectedResultCard.getAttribute('data-special-json'));
         const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
-        const quantity = parseFloat(document.querySelector("#quantity").value);
+        const valueQuantity = parseFloat(document.querySelector("#valueQuantityInput").value);
         const isoCode = document.querySelector("#importingFrom").value;
-        console.log('Product Value:',productValue,'Quantity:',quantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
+        console.log('Product Value:',productValue,'Quantity:',valueQuantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
         
         // Call the calculateDuty function with the input values
-        calculateDuty(productValue, specialJSON, generalRate, quantity, isoCode);
+        calculateDuty(productValue, specialJSON, generalRate, valueQuantity, isoCode);
         addLoadingClass();
     });
 });
