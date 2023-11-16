@@ -447,16 +447,30 @@ function createDropdownOptions() {
     });
 
     // Sort the currency dropdown options alphabetically, after adding all currencies
-    Array.from(CurrencySelect.options)
-         .sort((a, b) => a.text.localeCompare(b.text))
-         .forEach(option => CurrencySelect.add(option));
+    const sortedCurrencies = Array.from(CurrencySelect.options)
+         .sort((a, b) => a.text.localeCompare(b.text));
 
-    // Move common currencies to the top of the dropdown
+    // Clear the dropdown before re-adding sorted options
+    CurrencySelect.innerHTML = '';
+
+    // Add common currencies to the top of the dropdown
     const commonCurrencies = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF', 'HKD', 'NZD', 'SGD'];
-    commonCurrencies.reverse().forEach(currency => {
-        const option = Array.from(CurrencySelect.options).find(opt => opt.value === currency);
-        if (option) {
-            CurrencySelect.prepend(option);
+    commonCurrencies.forEach(currency => {
+        if (addedCurrencies.has(currency)) {
+            const currencyOption = new Option(currency, currency);
+            CurrencySelect.add(currencyOption);
+        }
+    });
+
+    // Add a divider
+    const divider = new Option('---', '');
+    divider.setAttribute('disabled', 'true');
+    CurrencySelect.add(divider);
+
+    // Add the rest of the sorted currencies
+    sortedCurrencies.forEach(option => {
+        if (!commonCurrencies.includes(option.value)) {
+            CurrencySelect.add(option);
         }
     });
 }
