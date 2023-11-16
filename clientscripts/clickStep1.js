@@ -99,12 +99,17 @@ function goStep2() {
     function displayUnitFields(units, matchValues) {
         const valueUnitWrapper = document.querySelector("#valueUnitWrapper");
         const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
+        const quantityValueUnitText = document.querySelector("#quantityValueUnitText");
+        const quantityQuantityUnitText = document.querySelector("#quantityQuantityUnitText");
+
         if (matchValues.includes(units)) {
             valueUnitWrapper.style.display = "flex";
             quantityUnitWrapper.style.display = "none";
+            quantityValueUnitText.value = "$";
         } else {
             valueUnitWrapper.style.display = "none";
             quantityUnitWrapper.style.display = "flex";
+            quantityQuantityUnitText.value = units;
         }
     }
 
