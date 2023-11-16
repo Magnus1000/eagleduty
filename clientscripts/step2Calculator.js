@@ -154,6 +154,7 @@ function addLoadingClass() {
                 currentStep.classList.add("loaded");
                 const descendants = currentStep.querySelectorAll("*");
                 for (let j = 0; j < descendants.length; j++) {
+                    descendants[j].classList.remove("loading");
                     descendants[j].classList.add("loaded");
                 }
                 i++;
