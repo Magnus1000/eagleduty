@@ -101,7 +101,7 @@ function goStep2() {
         const quantityUnitWrapper = document.querySelector("#quantityUnitWrapper");
         const quantityValueUnitText = document.querySelector("#quantityValueUnitText");
         const quantityQuantityUnitText = document.querySelector("#quantityQuantityUnitText");
-        const unitQuantitySelect = document.querySelector("quantityQuantityUnitDropdown");
+        const unitQuantitySelect = document.querySelector("#quantityQuantityUnitDropdown");
         unitQuantitySelect.innerHTML = "";
         const unitOptions = units.split(",");
 
@@ -117,8 +117,9 @@ function goStep2() {
                 const option = document.createElement("option");
                 option.setAttribute("value", unitOptions[i]);
                 option.textContent = unitOptions[i];
-                unitSelect.appendChild(option);
-            }        
+                unitQuantitySelect.appendChild(option);
+            }
+            unitQuantitySelect.selectedIndex = 0;        
         }
     }
 
