@@ -105,11 +105,11 @@ function goStep2() {
         if (matchValues.includes(units)) {
             valueUnitWrapper.style.display = "flex";
             quantityUnitWrapper.style.display = "none";
-            quantityValueUnitText.value = "$";
+            quantityValueUnitText.textContent = "$";
         } else {
             valueUnitWrapper.style.display = "none";
             quantityUnitWrapper.style.display = "flex";
-            quantityQuantityUnitText.value = units;
+            quantityQuantityUnitText.textContent = units;
         }
     }
 
