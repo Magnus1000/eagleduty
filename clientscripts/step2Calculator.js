@@ -1,5 +1,6 @@
 // Main Function to calculate the duty
 function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit) {
+    console.log('Calculating Duty...');
     // Define Special Duty and Duty variables
     let specialDuty = null;
     let duty = null;
