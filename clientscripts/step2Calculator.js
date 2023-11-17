@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Watch the calculation fields for changes to enable the calculate duty button
 function watchFieldsForCalculation() {
+    console.log('Started watching calculation fields...');
     const selectedResult = document.getElementById('selectedResult');
     const calculationType = selectedResult.getAttribute('data-calculation-type');
 
