@@ -224,9 +224,11 @@ function watchFieldsForCalculation() {
         const importingFrom = document.getElementById('importingFrom');
         const valueField = document.getElementById('valueField');
         const currencySelect = document.getElementById('currencySelect');
+        const quantityField = document.getElementById('quantityField');
+        console.log('Calculation type is value. Found fields: importingTo, importingFrom, valueField, currencySelect, quantityField');
 
         const checkFields = () => {
-            if (importingTo.value && importingFrom.value && valueField.value && currencySelect.value) {
+            if (importingTo.value && importingFrom.value && valueField.value && currencySelect.value && quantityField.value) {
                 setButtonState('calculateDuty', 'enable');
                 console.log('Required fields are filled. Calculate button enabled.');
             }
@@ -249,6 +251,8 @@ function watchFieldsForCalculation() {
                 console.log('Required fields are filled. Calculate button enabled.');
             }
         };
+
+        console.log('Calculation type is amount. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
 
         importingTo.addEventListener('input', checkFields);
         importingFrom.addEventListener('input', checkFields);
