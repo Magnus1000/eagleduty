@@ -418,7 +418,7 @@ const shortCountryList = [
 // Function to create dropdown options
 function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
-    const CurrencySelect = document.getElementById('currencySelect');
+    const currencySelect = document.getElementById('currencySelect');
     const importingFromSelect = document.getElementById('importingFrom');
     const shippingCurrencySelect = document.getElementById('shippingCurrency');
     const insuranceCurrencySelect = document.getElementById('insuranceCurrency');
@@ -471,23 +471,24 @@ function createDropdownOptions() {
     commonCurrencies.forEach(currency => {
         if (!addedCurrencies.has(currency)) {
             addedCurrencies.add(currency);
-            addOption(CurrencySelect, currency, currency);
+            addOption(currencySelect, currency, currency);
+            addOption(shippingCurrencySelect, currency, currency);
+            addOption(insuranceCurrencySelect, currency, currency);
         }
     });
 
     // Add a divider for currencies
-    const currencyDivider = addOption(CurrencySelect, '', '---');
+    const currencyDivider = addOption(currencySelect, '', '---');
     currencyDivider.setAttribute('disabled', 'true');
 
     // Add the rest of the currencies to the 'Currency' dropdown
     countries.forEach(country => {
         if (!addedCurrencies.has(country[2])) {
             addedCurrencies.add(country[2]);
-            addOption(CurrencySelect, country[2], country[2]);
+            addOption(currencySelect, country[2], country[2]);
+            addOption(shippingCurrencySelect, country[2], country[2]);
+            addOption(insuranceCurrencySelect, country[2], country[2]);
         }
-        // Add currencies to 'shipping' and 'insurance' dropdowns
-        addOption(shippingCurrencySelect, country[2], country[2]);
-        addOption(insuranceCurrencySelect, country[2], country[2]);
     });
 }
 
@@ -505,6 +506,8 @@ function getUserLocation() {
         // Assuming the API returns an object with "country_name" and "currency" properties
         setSelectedOption('importingTo', data.country_name);
         setSelectedOption('currencySelect', data.currency);
+        setSelectedOption('shippingCurrencySelect', data.currency);
+        setSelectedOption('insuranceCurrencySelect', data.currency);
         console.log('Success:', data.country_name, data.currency);
     })
     .catch(error => {
