@@ -546,12 +546,12 @@ function setButtonState(id, enableOrDisable) {
     const element = document.querySelector(`#${id}`);
     if (enableOrDisable === "disable") {
         element.setAttribute("data-disabled", true);
-        element.setAttribute("disabled", true);
+        element.disabled = true;
         element.classList.remove("clickable");
         element.classList.add("unclickable");
     } else if (enableOrDisable === "enable") {
         element.setAttribute("data-disabled", false);
-        element.setAttribute("disabled", false);
+        element.disabled = false;
         element.classList.add("clickable");
         element.classList.remove("unclickable");
     }
