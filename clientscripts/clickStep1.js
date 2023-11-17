@@ -420,8 +420,8 @@ function createDropdownOptions() {
     const importingToSelect = document.getElementById('importingTo');
     const currencySelect = document.getElementById('currencySelect');
     const importingFromSelect = document.getElementById('importingFrom');
-    const shippingCurrencySelect = document.getElementById('shippingCurrency');
-    const insuranceCurrencySelect = document.getElementById('insuranceCurrency');
+    const shippingCurrencySelect = document.getElementById('shippingCurrencySelect');
+    const insuranceCurrencySelect = document.getElementById('insuranceCurrencySelect');
 
     // Define common countries and currencies
     const commonCountries = ['CN', 'MX', 'CA', 'JP', 'DE']; // ISO codes of common countries
