@@ -520,7 +520,7 @@ window.addEventListener("load", () => {
 
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", function() {
-        if (!button.classList.contains("unclickable") && button.getAttribute("data-disabled") !== "true") {
+        if (!nextStep1Button.classList.contains("unclickable") && nextStep1Button.getAttribute("data-disabled") !== "true") {
             goStep2();
         }
     });
