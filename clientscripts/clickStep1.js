@@ -511,12 +511,38 @@ function getUserLocation() {
 window.addEventListener("load", () => {
     addRadioEventListener();
 
+    // Event listener for the next button
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", goStep2);
 
+    // Event listener for the back button
     const backStep1Button = document.querySelector("#backStep1");
     backStep1Button.addEventListener("click", backStep1);
 
+    // Event listener for the radio buttons to change the next button state
+    const resultRadios = document.querySelectorAll(".result-radio");
+    resultRadios.forEach((radio) => {
+        radio.addEventListener("change", () => {
+            setButtonState(nextStep1, "enable");
+        });
+    });
+    
+    setButtonState(nextStep1, disable);
     createDropdownOptions();
     getUserLocation();
 });
+
+// Function to set the state of the buttons
+function setButtonState(id, enableOrDisable) {
+    const element = document.querySelector(`#${id}`);
+    if (enableOrDisable === "disable") {
+        element.setAttribute("disabled", true);
+        element.classList.remove("clickable");
+        element.classList.add("unclickable");
+    } else if (enableOrDisable === "enable") {
+        element.removeAttribute("disabled");
+        element.classList.add("clickable");
+        element.classList.remove("unclickable");
+    }
+}
+
