@@ -538,6 +538,7 @@ window.addEventListener("load", () => {
     setButtonState('calculateDuty', 'disable');
     createDropdownOptions();
     getUserLocation();
+    setQuantityFieldToOne();
 });
 
 // Function to set the state of the buttons
@@ -545,12 +546,19 @@ function setButtonState(id, enableOrDisable) {
     const element = document.querySelector(`#${id}`);
     if (enableOrDisable === "disable") {
         element.setAttribute("data-disabled", true);
+        element.setAttribute("disabled", true);
         element.classList.remove("clickable");
         element.classList.add("unclickable");
     } else if (enableOrDisable === "enable") {
         element.setAttribute("data-disabled", false);
+        element.setAttribute("disabled", false);
         element.classList.add("clickable");
         element.classList.remove("unclickable");
     }
 }
 
+// Set the value of the quantity field to 1
+function setQuantityFieldToOne() {
+    const quantityField = document.querySelector('#quantityField');
+    quantityField.value = '1';
+}

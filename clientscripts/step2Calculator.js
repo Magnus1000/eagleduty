@@ -320,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Call setButtonState if valueTotalRadio is checked
             if (radioButton.id === 'valueTotalRadio' && radioButton.checked) {
                 setButtonState('quantityField', 'disable');
+                setQuantityFieldToOne();
             } else if (radioButton.id === 'valueUnitRadio' && radioButton.checked) {
                 setButtonState('quantityField', 'enable');
             }
