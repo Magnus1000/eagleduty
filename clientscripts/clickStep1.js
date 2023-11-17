@@ -522,6 +522,7 @@ window.addEventListener("load", () => {
     nextStep1Button.addEventListener("click", function() {
         if (!nextStep1Button.classList.contains("unclickable") && nextStep1Button.getAttribute("data-disabled") !== "true") {
             goStep2();
+            watchFieldsForCalculation();
         }
     });
 
@@ -532,7 +533,6 @@ window.addEventListener("load", () => {
     setButtonState('nextStep1', 'disable');
     setButtonState('nextStep2', 'disable');
     setButtonState('calculateDuty', 'disable');
-    watchFieldsForCalculation();
     createDropdownOptions();
     getUserLocation();
 });
