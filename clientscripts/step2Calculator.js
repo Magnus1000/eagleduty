@@ -92,8 +92,10 @@ document.addEventListener("DOMContentLoaded", function() {
             // Get the input values
             const selectedResultCard = document.querySelector("#selectedResult");
             const value = parseFloat(document.querySelector("#valueField").value);
-            const specialJSON = JSON.parse(selectedResultCard.getAttribute('data-special-json'));
-            const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
+            const specialJSONAttr = selectedResultCard.getAttribute('data-special-json');
+            const specialJSON = specialJSONAttr ? JSON.parse(specialJSONAttr) : null;
+            // If the general rate is Free, set it to 0, otherwise parse the value to a number and divide by 100 to get $/unit (for amount) or a decimal (for value)
+            const generalRate = selectedResultCard.getAttribute('data-general') === 'Free' ? 0 : (selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '');
             const quantity = parseFloat(document.querySelector("#quantityField").value);
             const isoCode = document.querySelector("#importingFrom").value;
             const amount = parseFloat(document.querySelector("#amountField").value);
