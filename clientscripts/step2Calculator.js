@@ -218,45 +218,43 @@ function watchFieldsForCalculation() {
     const selectedResult = document.getElementById('selectedResult');
     const calculationType = selectedResult.getAttribute('data-calculation-type');
 
-    // If the calculation type is value, watch the value field and currency select
+    // Common function to check fields
+    const checkFields = (fields) => {
+        const allFilled = fields.every(field => field.value.trim() !== '');
+        setButtonState('calculateDuty', allFilled ? 'enable' : 'disable');
+        console.log(`Required fields are ${allFilled ? 'filled' : 'not filled'}. Calculate button ${allFilled ? 'enabled' : 'disabled'}.`);
+    };
+
     if (calculationType === 'value') {
-        const importingTo = document.getElementById('importingTo');
-        const importingFrom = document.getElementById('importingFrom');
-        const valueField = document.getElementById('valueField');
-        const currencySelect = document.getElementById('currencySelect');
-        const quantityField = document.getElementById('quantityField');
+        const fields = [
+            document.getElementById('importingTo'),
+            document.getElementById('importingFrom'),
+            document.getElementById('valueField'),
+            document.getElementById('currencySelect'),
+            document.getElementById('quantityField')
+        ];
+
         console.log('Calculation type is value. Found fields: importingTo, importingFrom, valueField, currencySelect, quantityField');
 
-        const checkFields = () => {
-            if (importingTo.value && importingFrom.value && valueField.value && currencySelect.value && quantityField.value) {
-                setButtonState('calculateDuty', 'enable');
-                console.log('Required fields are filled. Calculate button enabled.');
-            }
-        };
+        // Initial check for pre-populated fields
+        checkFields(fields);
 
-        importingTo.addEventListener('input', checkFields);
-        importingFrom.addEventListener('input', checkFields);
-        valueField.addEventListener('input', checkFields);
-        currencySelect.addEventListener('input', checkFields);
-    // If the calculation type is amount, watch the amount field and amount unit select    
+        fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
+        fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
     } else if (calculationType === 'amount') {
-        const importingTo = document.getElementById('importingTo');
-        const importingFrom = document.getElementById('importingFrom');
-        const amountField = document.getElementById('amountField');
-        const amountUnitSelect = document.getElementById('amountUnitSelect');
-
-        const checkFields = () => {
-            if (importingTo.value && importingFrom.value && amountField.value && amountUnitSelect.value) {
-                setButtonState('calculateDuty', 'enable');
-                console.log('Required fields are filled. Calculate button enabled.');
-            }
-        };
+        const fields = [
+            document.getElementById('importingTo'),
+            document.getElementById('importingFrom'),
+            document.getElementById('amountField'),
+            document.getElementById('amountUnitSelect')
+        ];
 
         console.log('Calculation type is amount. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
 
-        importingTo.addEventListener('input', checkFields);
-        importingFrom.addEventListener('input', checkFields);
-        amountField.addEventListener('input', checkFields);
-        amountUnitSelect.addEventListener('input', checkFields);
+        // Initial check for pre-populated fields
+        checkFields(fields);
+
+        fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
+        fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
     }
 }
