@@ -86,7 +86,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         currencyDiv.textContent = currency;
     }
 
-    updateTotalDuty(totalDuty);
+    updateTotalDuty(totalDuty, currency);
     return totalDuty;
 }
 
