@@ -96,8 +96,9 @@ function goStep2() {
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
 
-    // Function to display the correct unit field – value or quantity
+    // Function to display the correct unit field – value or amount
     function displayUnitFields(units, matchValues) {
+        const selectedResultCard = document.querySelector("#selectedResult");
         const valueWrapper = document.querySelector("#valueWrapper");
         const amountWrapper = document.querySelector("#amountWrapper");
         const valueUnitText = document.querySelector("#valueUnitText");
@@ -107,13 +108,17 @@ function goStep2() {
         const unitOptions = units.split(",");
 
         if (matchValues.includes(units)) {
+            //Show value fields
             valueWrapper.style.display = "flex";
             amountWrapper.style.display = "none";
             valueUnitText.textContent = "$";
+            selectedResultCard.setAttribute('data-calculation-type', 'value');
         } else {
+            // Show amount fields
             valueWrapper.style.display = "none";
             amountWrapper.style.display = "flex";
             amountUnitText.textContent = unitOptions[0];
+            selectedResultCard.setAttribute('data-calculation-type', 'amount');
             for (let i = 0; i < unitOptions.length; i++) {
                 const option = document.createElement("option");
                 option.setAttribute("value", unitOptions[i]);
@@ -512,9 +517,12 @@ function getUserLocation() {
 window.addEventListener("load", () => {
     addRadioEventListener();
 
-    // Event listener for the next button
     const nextStep1Button = document.querySelector("#nextStep1");
-    nextStep1Button.addEventListener("click", goStep2);
+    nextStep1Button.addEventListener("click", function() {
+        if (!nextStep1Button.disabled) {
+            goStep2();
+        }
+    });
 
     // Event listener for the back button
     const backStep1Button = document.querySelector("#backStep1");
@@ -523,6 +531,7 @@ window.addEventListener("load", () => {
     setButtonState('nextStep1', 'disable');
     setButtonState('nextStep2', 'disable');
     setButtonState('calculateDuty', 'disable');
+    watchFieldsForCalculation();
     createDropdownOptions();
     getUserLocation();
 });

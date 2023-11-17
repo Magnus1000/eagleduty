@@ -86,21 +86,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Attach the event listener to the button
     button.addEventListener("click", function() {
-        // Get the input values
-        const selectedResultCard = document.querySelector("#selectedResult");
-        const value = parseFloat(document.querySelector("#valueField").value);
-        const specialJSON = JSON.parse(selectedResultCard.getAttribute('data-special-json'));
-        const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
-        const quantity = parseFloat(document.querySelector("#quantityField").value);
-        const isoCode = document.querySelector("#importingFrom").value;
-        const amount = parseFloat(document.querySelector("#amountField").value);
-        const amountUnit = document.querySelector("#amountUnitSelect").value;
+        if (!button.disabled) {
+            // Get the input values
+            const selectedResultCard = document.querySelector("#selectedResult");
+            const value = parseFloat(document.querySelector("#valueField").value);
+            const specialJSON = JSON.parse(selectedResultCard.getAttribute('data-special-json'));
+            const generalRate = selectedResultCard.getAttribute('data-general') ? parseFloat(selectedResultCard.getAttribute('data-general')) / 100 : '';
+            const quantity = parseFloat(document.querySelector("#quantityField").value);
+            const isoCode = document.querySelector("#importingFrom").value;
+            const amount = parseFloat(document.querySelector("#amountField").value);
+            const amountUnit = document.querySelector("#amountUnitSelect").value;
 
-        console.log('Value:',value,'Quantity:',quantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
-        
-        // Call the calculateDuty function with the input values
-        calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
-        addLoadingClass();
+            console.log('Value:',value,'Quantity:',quantity,'ISO Code:',isoCode,'General Rate:',generalRate,'Special JSON:',specialJSON);
+
+            // Call the calculateDuty function with the input values
+            calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
+            addLoadingClass();
+        }
     });
 });
 
@@ -207,3 +209,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Watch the calculation fields for changes to enable the calculate duty button
+function watchFieldsForCalculation() {
+    const selectedResult = document.getElementById('selectedResult');
+    const calculationType = selectedResult.getAttribute('data-calculation-type');
+
+    // If the calculation type is value, watch the value field and currency select
+    if (calculationType === 'value') {
+        const importingTo = document.getElementById('importingTo');
+        const importingFrom = document.getElementById('importingFrom');
+        const valueField = document.getElementById('valueField');
+        const currencySelect = document.getElementById('currencySelect');
+
+        const checkFields = () => {
+            if (importingTo.value && importingFrom.value && valueField.value && currencySelect.value) {
+                setButtonState('calculateDuty', 'enable');
+            }
+        };
+
+        importingTo.addEventListener('input', checkFields);
+        importingFrom.addEventListener('input', checkFields);
+        valueField.addEventListener('input', checkFields);
+        currencySelect.addEventListener('input', checkFields);
+    // If the calculation type is amount, watch the amount field and amount unit select    
+    } else if (calculationType === 'amount') {
+        const importingTo = document.getElementById('importingTo');
+        const importingFrom = document.getElementById('importingFrom');
+        const amountField = document.getElementById('amount');
+        const amountUnitSelect = document.getElementById('amountUnit');
+
+        const checkFields = () => {
+            if (importingTo.value && importingFrom.value && amountField.value && amountUnitSelect.value) {
+                setButtonState('calculateDuty', 'enable');
+            }
+        };
+
+        importingTo.addEventListener('input', checkFields);
+        importingFrom.addEventListener('input', checkFields);
+        amountField.addEventListener('input', checkFields);
+        amountUnitSelect.addEventListener('input', checkFields);
+    }
+}
