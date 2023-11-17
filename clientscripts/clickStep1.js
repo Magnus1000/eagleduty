@@ -19,6 +19,7 @@ function addRadioEventListener() {
                 urlParams.set("htsno", clickedRadio.value);
                 window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
                 clickedRadio.classList.add("checked");
+                setButtonState('nextStep1', 'enable');
             } else {
                 clickedRadio.classList.remove("checked");
             }
@@ -518,14 +519,6 @@ window.addEventListener("load", () => {
     // Event listener for the back button
     const backStep1Button = document.querySelector("#backStep1");
     backStep1Button.addEventListener("click", backStep1);
-
-    // Event listener for the radio buttons to change the next button state
-    const resultRadios = document.querySelectorAll(".result-radio");
-    resultRadios.forEach((radio) => {
-        radio.addEventListener("change", () => {
-            setButtonState('nextStep1', 'enable');
-        });
-    });
     
     setButtonState('nextStep1', 'disable');
     setButtonState('nextStep2', 'disable');
