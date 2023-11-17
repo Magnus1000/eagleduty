@@ -527,7 +527,9 @@ window.addEventListener("load", () => {
         });
     });
     
-    setButtonState(nextStep1, "disable");
+    setButtonState('nextStep1', 'disable');
+    setButtonState('nextStep2', 'disable');
+    setButtonState('calculateDuty', 'disable');
     createDropdownOptions();
     getUserLocation();
 });
