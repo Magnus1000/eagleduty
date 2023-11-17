@@ -520,9 +520,7 @@ window.addEventListener("load", () => {
 
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", function() {
-        if (!nextStep1Button.disabled) {
             goStep2();
-        }
     });
 
     // Event listener for the back button
