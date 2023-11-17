@@ -61,6 +61,7 @@ function animateArrow(id, direction) {
 
 // Function to hide step 1 and show step 2
 function goStep2() {
+    console.log("goStep2 called");
     // Find the current step and new step
     const gridStep1Wrapper = document.querySelector(".gridstep1wrapper");
     const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
