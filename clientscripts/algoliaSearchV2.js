@@ -157,7 +157,7 @@ function refreshData() {
           const currentStep = calculatorSteps[i];
           removeLoadingClassesFromElementAndDescendants(currentStep);
           addLoadingClassToElementAndDescendants(currentStep);
-          const duration = Math.floor(Math.random() * 1000) + 2000; // Generate a random number between 2000-3000
+          const duration = Math.floor(Math.random() * 1000) + 1000; // Generate a random duration between 1 and 2 seconds
           setTimeout(() => {
               currentStep.classList.remove("loading");
               currentStep.classList.add("loaded");
