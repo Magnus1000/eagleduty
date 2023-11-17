@@ -80,7 +80,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     return totalDuty;
 }
 
-// Wait for the DOM to load
+// Calculate duty button
 document.addEventListener("DOMContentLoaded", function() {
     // Get the button element
     const button = document.querySelector("#calculateDuty");
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const amount = parseFloat(document.querySelector("#amountField").value);
             const amountUnit = document.querySelector("#amountUnitSelect").value;
 
-            console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON);
+            console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
 
             // Call the calculateDuty function with the input values
             calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
@@ -188,7 +188,7 @@ function addLoadingClass() {
     addLoadingClassToNextStep();
 }
 
-// Add event listener to Additioanl Info button
+// Add event listener to Additioanal Info button
 document.addEventListener("DOMContentLoaded", () => {
     const expandAdditionalInfoBtn = document.querySelector("#expandAdditionalInfo");
     const additionalFields = document.querySelector("#additionalFields");
