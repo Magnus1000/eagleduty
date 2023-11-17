@@ -527,7 +527,7 @@ window.addEventListener("load", () => {
         });
     });
     
-    setButtonState(nextStep1, disable);
+    setButtonState(nextStep1, "disable");
     createDropdownOptions();
     getUserLocation();
 });
