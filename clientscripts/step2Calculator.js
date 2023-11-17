@@ -195,6 +195,7 @@ function addLoadingClass() {
                     // Reveal the duty rate wrapper
                     const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
                     dutyRateWrapper.classList.remove('hidden');
+                    setButtonState('nextStep2', 'enable');
                 } else {
                     addLoadingClassToNextStep();
                 }
