@@ -108,6 +108,8 @@ function handleSearchInput(event) {
       .then(({ hits }) => {
         console.log(`Search results for query "${query}":`, hits);
         renderResults(hits);
+        const placeholderWrapper = document.querySelector('#placeholderWrapper');
+        placeholderWrapper.classList.add('hidden');
       })
       .catch(err => {
         console.error(err);
