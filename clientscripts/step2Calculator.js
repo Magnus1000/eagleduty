@@ -15,7 +15,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     }
 
     // Step 1.2: Calculate the duty for products where duty is calculated on amount
-    if (amount !== null && amountUnit !== null && value === null) {
+    if ((isNaN(value) || value == null) && !isNaN(amount) && amountUnit != null) {
         const amountQuantity = parseFloat(amount);
         duty = generalRate * amountQuantity;
         console.log('Duty (amount):', duty);
