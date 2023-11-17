@@ -124,7 +124,7 @@ function goStep2() {
                 const option = document.createElement("option");
                 option.setAttribute("value", unitOptions[i]);
                 option.textContent = unitOptions[i];
-                unitQuantitySelect.appendChild(option);
+                amountUnitSelect.appendChild(option);
             }
             amountUnitSelect.selectedIndex = 0;        
         }
