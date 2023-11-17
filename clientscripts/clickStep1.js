@@ -523,7 +523,7 @@ window.addEventListener("load", () => {
     const resultRadios = document.querySelectorAll(".result-radio");
     resultRadios.forEach((radio) => {
         radio.addEventListener("change", () => {
-            setButtonState(nextStep1, "enable");
+            setButtonState('nextStep1', 'enable');
         });
     });
     
