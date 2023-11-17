@@ -81,9 +81,6 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     function updateTotalDuty(totalDuty) {
         const totalDutyDiv = document.querySelector('#totalDuty');
         totalDutyDiv.textContent = totalDuty;
-        
-        const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
-        dutyRateWrapper.classList.remove('hidden');
     }
 
     updateTotalDuty(totalDuty);
@@ -190,7 +187,13 @@ function addLoadingClass() {
                     descendants[j].classList.add("loaded");
                 }
                 i++;
-                addLoadingClassToNextStep();
+                if (i === calculatorSteps.length) {
+                    // Reveal the duty rate wrapper
+                    const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
+                    dutyRateWrapper.classList.remove('hidden');
+                } else {
+                    addLoadingClassToNextStep();
+                }
             }, duration);
         }
     };
