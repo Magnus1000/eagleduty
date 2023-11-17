@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Attach the event listener to the button
     button.addEventListener("click", function() {
+        console.log('Button clicked. Disabled:', button.disabled);
         if (!button.disabled) {
             // Get the input values
             const selectedResultCard = document.querySelector("#selectedResult");
