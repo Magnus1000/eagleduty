@@ -10,14 +10,14 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
     if (value !== null && isNaN(amount)) {
-        duty = value * generalRate * quantity;
+        duty = parseFloat((value * generalRate * quantity).toFixed(2));
         console.log('Duty (value):', duty);
     }
 
     // Step 1.2: Calculate the duty for products where duty is calculated on amount
     if ((isNaN(value) || value == null) && !isNaN(amount) && amountUnit != null) {
         const amountQuantity = parseFloat(amount);
-        duty = generalRate * amountQuantity;
+        duty = parseFloat((generalRate * amountQuantity).toFixed(2));
         console.log('Duty (amount):', duty);
     }
 
@@ -60,14 +60,14 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Step 2.3: Calculate the special duty amount
     // Step 2.3.1: Calculate the special duty amount for products where duty is calculated on value
     if (value !== null && isNaN(amount) && specialDutyRate != null) {
-        specialDuty = value * specialDutyRate * quantity;
+        specialDuty = parseFloat((value * specialDutyRate * quantity).toFixed(2));
         console.log('Special duty (value):', specialDuty);
     }
 
     // Step 2.3.2: Calculate the special duty amount for products where duty is calculated on amount
     if (amount !== null && amountUnit !== null && value === null && specialDutyRate != null) {
         const amountQuantity = parseFloat(amount);
-        specialDuty = specialDutyRate * amountQuantity;
+        specialDuty = parseFloat((value * specialDutyRate * quantity).toFixed(2));
         console.log('Special duty (amount):', specialDuty);
     }
 
