@@ -123,36 +123,64 @@ function handleSearchInput(event) {
 const searchInput = document.querySelector('#htsSearch');
 searchInput.addEventListener('input', handleSearchInput);
 
-// Function to Animate the Data Refresh icons
-function rotateIcons() {
-  const fxIcon = document.querySelector('#fxRefreshIcon');
-  const htsIcon = document.querySelector('#htsRefreshIcon');
-  const dutyIcon = document.querySelector('#dutyRefreshIcon');
-  let rotation = 0;
-  const start = Date.now();
-  const interval = setInterval(() => {
-    rotation += 10;
-    fxIcon.style.transform = `rotate(${rotation}deg)`;
-    htsIcon.style.transform = `rotate(${rotation}deg)`;
-    dutyIcon.style.transform = `rotate(${rotation}deg)`;
-    if (Date.now() - start > 3000) {
-      clearInterval(interval);
-      const refreshTime = document.querySelector('#refreshTime');
-      const refreshTimeWrapper = document.querySelector('#refreshTimeWrapper');
-      refreshTimeWrapper.style.display = 'flex';
-      refreshTime.textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second: '2-digit', hour12: true});
-      const fxText = document.querySelector('#fxText');
-      const htsText = document.querySelector('#htsText');
-      const dutyText = document.querySelector('#dutyText');
-      fxText.textContent = 'Fetched exchanged rates';
-      htsText.textContent = 'Fetched HTS codes';
-      dutyText.textContent = 'Fetched duty rates';
-    }
-  }, 20);
-}
-
 // Initialize the results container with 0 results
 renderResults([]);
 
-// Initialize the refresh icons
-rotateIcons();
+// Function to animate the loading field
+function refreshData() {
+  const calculatorSteps = [
+      document.querySelector("#refreshHTSCodes"),
+      document.querySelector("#refreshDutyRates"),
+      document.querySelector("#refreshFXRates")
+  ];
+
+  const removeLoadingClassesFromElementAndDescendants = (element) => {
+      element.classList.remove("loading");
+      element.classList.remove("loaded");
+      const children = element.children;
+      for (let i = 0; i < children.length; i++) {
+          removeLoadingClassesFromElementAndDescendants(children[i]);
+      }
+  };
+
+  const addLoadingClassToElementAndDescendants = (element) => {
+      element.classList.add("loading");
+      const children = element.children;
+      for (let i = 0; i < children.length; i++) {
+          addLoadingClassToElementAndDescendants(children[i]);
+      }
+  };
+
+  let i = 0;
+  const addLoadingClassToNextStep = () => {
+      if (i < calculatorSteps.length) {
+          const currentStep = calculatorSteps[i];
+          removeLoadingClassesFromElementAndDescendants(currentStep);
+          addLoadingClassToElementAndDescendants(currentStep);
+          const duration = Math.floor(Math.random() * 1000) + 2000; // Generate a random number between 2000-3000
+          setTimeout(() => {
+              currentStep.classList.remove("loading");
+              currentStep.classList.add("loaded");
+              const descendants = currentStep.querySelectorAll("*");
+              for (let j = 0; j < descendants.length; j++) {
+                  descendants[j].classList.remove("loading");
+                  descendants[j].classList.add("loaded");
+              }
+              i++;
+              if (i === calculatorSteps.length) {
+                  // Reveal the duty rate wrapper
+                  const refreshingWrapper = document.querySelector('#refreshingWrapper');
+                  refreshingWrapper.classList.add('loaded');
+                  const refreshedWrapper = document.querySelector('#refreshedWrapper');
+                  refreshedWrapper.classList.add('loaded');
+              } else {
+                  addLoadingClassToNextStep();
+              }
+          }, duration);
+      }
+  };
+
+  addLoadingClassToNextStep();
+}
+
+refreshData();
