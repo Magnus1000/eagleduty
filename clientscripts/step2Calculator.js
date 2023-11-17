@@ -4,7 +4,6 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Define Special Duty and Duty variables
     let specialDuty = null;
     let duty = null;
-    let currency = currency;
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
