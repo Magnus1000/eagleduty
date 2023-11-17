@@ -77,6 +77,15 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const totalDuty = specialDuty !== null ? specialDuty : duty;
     console.log('Total Duty:', totalDuty);
 
+    // Function to reveal duty
+    function updateTotalDuty(totalDuty) {
+        const totalDutyDiv = document.querySelector('#totalDuty');
+        totalDutyDiv.textContent = total;
+        
+        const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
+        dutyRateWrapper.classList.remove('hidden');
+    }
+
     updateTotalDuty(totalDuty);
     return totalDuty;
 }
@@ -275,13 +284,4 @@ function watchFieldsForCalculation() {
         fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
     }
-}
-
-// Function to reveal duty
-function updateTotalDuty(totalDuty) {
-    const totalDutyDiv = document.querySelector('#totalDuty');
-    totalDutyDiv.textContent = total;
-    
-    const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
-    dutyRateWrapper.classList.remove('hidden');
 }
