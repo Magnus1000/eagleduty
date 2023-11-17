@@ -242,7 +242,7 @@ function watchFieldsForCalculation() {
     } else if (calculationType === 'amount') {
         const importingTo = document.getElementById('importingTo');
         const importingFrom = document.getElementById('importingFrom');
-        const amountField = document.getElementById('amount');
+        const amountField = document.getElementById('amountField');
         const amountUnitSelect = document.getElementById('amountUnit');
 
         const checkFields = () => {
