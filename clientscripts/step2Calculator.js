@@ -89,8 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener("click", function() {
         // Check if the button is clickable
         if (!button.classList.contains("unclickable") && button.getAttribute("data-disabled") !== "true") {
-            console.log('Button clicked. Disabled:', button.disabled);
-
             // Get the input values
             const selectedResultCard = document.querySelector("#selectedResult");
             const value = parseFloat(document.querySelector("#valueField").value);
@@ -229,6 +227,7 @@ function watchFieldsForCalculation() {
         const checkFields = () => {
             if (importingTo.value && importingFrom.value && valueField.value && currencySelect.value) {
                 setButtonState('calculateDuty', 'enable');
+                console.log('Required fields are filled. Calculate button enabled.');
             }
         };
 
@@ -246,6 +245,7 @@ function watchFieldsForCalculation() {
         const checkFields = () => {
             if (importingTo.value && importingFrom.value && amountField.value && amountUnitSelect.value) {
                 setButtonState('calculateDuty', 'enable');
+                console.log('Required fields are filled. Calculate button enabled.');
             }
         };
 
