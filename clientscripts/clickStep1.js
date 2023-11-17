@@ -520,7 +520,9 @@ window.addEventListener("load", () => {
 
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", function() {
+        if (!button.classList.contains("unclickable") && button.getAttribute("data-disabled") !== "true") {
             goStep2();
+        }
     });
 
     // Event listener for the back button
@@ -539,11 +541,11 @@ window.addEventListener("load", () => {
 function setButtonState(id, enableOrDisable) {
     const element = document.querySelector(`#${id}`);
     if (enableOrDisable === "disable") {
-        element.setAttribute("disabled", true);
+        element.setAttribute("data-disabled", true);
         element.classList.remove("clickable");
         element.classList.add("unclickable");
     } else if (enableOrDisable === "enable") {
-        element.removeAttribute("disabled");
+        element.setAttribute("data-disabled", false);
         element.classList.add("clickable");
         element.classList.remove("unclickable");
     }

@@ -87,8 +87,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Attach the event listener to the button
     button.addEventListener("click", function() {
-        console.log('Button clicked. Disabled:', button.disabled);
-        if (!button.disabled) {
+        // Check if the button is clickable
+        if (!button.classList.contains("unclickable") && button.getAttribute("data-disabled") !== "true") {
+            console.log('Button clicked. Disabled:', button.disabled);
+
             // Get the input values
             const selectedResultCard = document.querySelector("#selectedResult");
             const value = parseFloat(document.querySelector("#valueField").value);
