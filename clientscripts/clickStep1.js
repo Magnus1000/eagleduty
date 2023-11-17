@@ -519,6 +519,7 @@ window.addEventListener("load", () => {
     setButtonState('calculateDuty', 'disable');
     createDropdownOptions();
     getUserLocation();
+    setButtonState('quantityField', 'disable');
     setQuantityFieldToOne();
 });
 
