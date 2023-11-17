@@ -80,7 +80,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Function to reveal duty
     function updateTotalDuty(totalDuty) {
         const totalDutyDiv = document.querySelector('#totalDuty');
-        totalDutyDiv.textContent = total;
+        totalDutyDiv.textContent = totalDuty;
         
         const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
         dutyRateWrapper.classList.remove('hidden');
