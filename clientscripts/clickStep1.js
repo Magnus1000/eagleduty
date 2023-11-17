@@ -27,36 +27,17 @@ function addRadioEventListener() {
     });
 }
 
-// Animate the arrow to expand to the right
+// Animate the flow arrows
 function animateArrow(id, direction) {
     const arrowWrapper = document.querySelector(`#${id}`);
-    let width = direction === "forward" ? 0 : 100;
-    let speed = 1;
-    const maxSpeed = 10;
-    const intervalTime = 20;
-    const maxWidth = 100;
-
-    const interval = setInterval(() => {
-        if (direction === "forward") {
-            width += speed;
-        } else {
-            width -= speed;
-        }
-        arrowWrapper.style.width = `${width}%`;
-
-        if (direction === "forward" && width >= maxWidth) {
-            speed = Math.max(speed - 1, 1);
-        } else if (direction === "back" && width <= 0) {
-            speed = Math.max(speed - 1, 1);
-        } else if (speed < maxSpeed) {
-            speed++;
-        }
-
-        if ((direction === "forward" && width >= maxWidth && speed === 1) ||
-                (direction === "back" && width <= 0 && speed === 1)) {
-            clearInterval(interval);
-        }
-    }, intervalTime);
+    
+    if (direction === "forward") {
+        arrowWrapper.classList.remove("closed");
+        arrowWrapper.classList.add("open");
+    } else {
+        arrowWrapper.classList.remove("open");
+        arrowWrapper.classList.add("closed");
+    }
 }
 
 // Function to hide step 1 and show step 2
