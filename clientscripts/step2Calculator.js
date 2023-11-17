@@ -1,11 +1,12 @@
 // Main Function to calculate the duty
-function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit) {
+function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency) {
     console.log('Calculating Duty...');
     // Define Special Duty and Duty variables
     let specialDuty = null;
     let duty = null;
+    let currency = currency;
 
-    console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
+    console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
@@ -74,13 +75,16 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     console.log('Special Duty:', specialDuty);
 
     // Step 3: Calculate the total duty
-    const totalDuty = specialDuty !== null ? specialDuty : duty;
+    const totalDuty = specialDuty !== null ? parseFloat(specialDuty.toFixed(2)) : parseFloat(duty.toFixed(2)); // Total duty rounded to 2 decimal places
     console.log('Total Duty:', totalDuty);
 
     // Function to reveal duty
-    function updateTotalDuty(totalDuty) {
+    function updateTotalDuty(totalDuty, currency) {
         const totalDutyDiv = document.querySelector('#totalDuty');
         totalDutyDiv.textContent = totalDuty;
+
+        const currencyDiv = document.querySelector('#dutyCurrency');
+        currencyDiv.textContent = currency;
     }
 
     updateTotalDuty(totalDuty);
@@ -121,11 +125,12 @@ document.addEventListener("DOMContentLoaded", function() {
             const isoCode = document.querySelector("#importingFrom").value;
             const amount = parseFloat(document.querySelector("#amountField").value);
             const amountUnit = document.querySelector("#amountUnitSelect").value;
+            const currency = document.querySelector("#currencySelect").value;
 
             console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
 
             // Call the calculateDuty function with the input values
-            calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit);
+            calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
             addLoadingClass();
         }
     });
