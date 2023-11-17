@@ -5,6 +5,12 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     let specialDuty = null;
     let duty = null;
 
+    // Additional Info fields
+    const shippingCost = parseFloat(document.querySelector("#shippingCostField").value);
+    const shippingCostCurrency = document.querySelector("#shippingCurrencySelect").value;
+    const insuranceCost = parseFloat(document.querySelector("#insuranceCostField").value);
+    const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
+
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
     // Step 1: Calculate the general duty
@@ -293,3 +299,34 @@ function watchFieldsForCalculation() {
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
     }
 }
+
+// Find the standard radio buttons add event listeners to them
+document.addEventListener('DOMContentLoaded', () => {
+    // Get all radio buttons with class "standard-radio-button"
+    const radioButtons = document.querySelectorAll('.standard-radio-button');
+
+    // Add event listener to each radio button
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('click', () => {
+            // Uncheck all other radio buttons
+            radioButtons.forEach(otherRadioButton => {
+                if (otherRadioButton !== radioButton) {
+                    otherRadioButton.checked = false;
+                }
+            });
+            // Check the clicked radio button
+            radioButton.checked = true;
+
+            // Call setButtonState if valueTotalRadio is checked
+            if (radioButton.id === 'valueTotalRadio' && radioButton.checked) {
+                setButtonState('quantityField', 'disable');
+            } else if (radioButton.id === 'valueUnitRadio' && radioButton.checked) {
+                setButtonState('quantityField', 'enable');
+            }
+        });
+        // Pre-check the radio button with ID = valueTotalRadio
+        if (radioButton.id === 'valueTotalRadio') {
+            radioButton.checked = true;
+        }
+    });
+});
