@@ -122,7 +122,8 @@ function addLoadingClass() {
         document.querySelector("#calculatorStep1"),
         document.querySelector("#calculatorStep2"),
         document.querySelector("#calculatorStep3"),
-        document.querySelector("#calculatorStep4")
+        document.querySelector("#calculatorStep4"),
+        document.querySelector("#calculatorStep5")
     ];
 
     const removeLoadingClassesFromElementAndDescendants = (element) => {
