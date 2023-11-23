@@ -1,5 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
-const cors = require('@vercel/node-cors');
+const cors = require('cors');
 
 const supabaseUrl = 'https://esdqgomknfbxfsqxumjt.supabase.co';
 const supabaseKey = 'https://esdqgomknfbxfsqxumjt.supabase.co';
