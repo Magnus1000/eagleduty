@@ -5,6 +5,10 @@ const supabaseUrl = 'https://esdqgomknfbxfsqxumjt.supabase.co';
 const supabaseKey = 'https://esdqgomknfbxfsqxumjt.supabase.co';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+const corsOptions = {
+    origin: true, // Set this to the desired origin or a function that returns the origin
+};
+
 const handler = async (req, res) => {
     const { uuid, action } = req.query;
 
@@ -44,4 +48,4 @@ const handler = async (req, res) => {
     }
 };
 
-module.exports = cors()(handler);
+module.exports = cors(corsOptions)(handler);
