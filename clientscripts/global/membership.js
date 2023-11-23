@@ -37,7 +37,7 @@ window.$memberstackDom.getCurrentMember().then((member) => {
                             callVercelServerlessFunction(uuid, 'fetch');
                         } else {
                             objectStore.add({ uuid: uuid });
-                            callVercelServerlessFunction(uuid, 'create');
+                            //callVercelServerlessFunction(uuid, 'create');
                         }
                     };
                 };
@@ -55,7 +55,7 @@ window.$memberstackDom.getCurrentMember().then((member) => {
                         callVercelServerlessFunction(uuid, 'fetch');
                     } else {
                         tx.executeSql('INSERT INTO members (uuid) VALUES (?)', [uuid]);
-                        callVercelServerlessFunction(uuid, 'create');
+                        //callVercelServerlessFunction(uuid, 'create');
                     }
                 });
             });
@@ -107,7 +107,7 @@ function generateUUID() {
 function callVercelServerlessFunction(uuid, action) {
     // Make a request to the Vercel serverless function
     // Pass the UUID as a query parameter
-    fetch(`https://your-vercel-function-url?uuid=${uuid}?action=${action}`)
+    fetch(`https://eagleduty-magnus1000team.vercel.app/api/website/membershipServerless?uuid=${uuid}?action=${action}`)
         .then((response) => response.json())
         .then((data) => {
             console.log('Response from Vercel serverless function:', data);

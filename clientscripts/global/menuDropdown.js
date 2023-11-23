@@ -21,3 +21,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Function to toggle the dropdown menu for the profile menu
+document.addEventListener('DOMContentLoaded', function() {
+    var profileMenu = document.getElementById('profileMenu');
+    var profileIcon = document.getElementById('profileMenuIcon');
+    var profileDropdown = document.getElementById('profileDropdown');
+
+    profile.Menu.addEventListener('click', function() {
+        profileDropdown.classList.toggle('open');
+        profileIcon.classList.toggle('open');
+        profileMenu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function(event) {
+        var isClickInside = profileDropdown.contains(event.target) || profileMenu.contains(event.target);
+        var isProfileMenuOpen = profileMenu.classList.contains('open');
+
+        if (!isClickInside && isProfileMenuOpen) {
+            profileDropdown.classList.remove('open');
+            profileIcon.classList.remove('open');
+            profileMenu.classList.remove('open');
+        }
+    });
+});
+
