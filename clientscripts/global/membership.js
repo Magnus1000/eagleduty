@@ -4,6 +4,8 @@ const max_count = 10;
     const member = await window.$memberstackDom.getCurrentMember();
     if (member.data) {
         console.log('There is a member', member);
+        // Set "daily_count" to a 999 so it doesn't run out
+        localStorage.setItem('daily_count', 99999);
         // Do logged in logic here
     } else {
         console.log('No member', member);
@@ -136,7 +138,7 @@ async function callVercelServerlessFunction(uuid, action, count) {
 }
 
 // Function to track the limit
-function subtractFromDailyCount() {
+async function subtractFromDailyCount() {
     // Get the current value of "daily_count" from local storage
     let dailyCount = localStorage.getItem('daily_count');
 
@@ -148,21 +150,29 @@ function subtractFromDailyCount() {
         // Update the "daily_count" value in local storage
         localStorage.setItem('daily_count', dailyCount.toString());
 
-        // Get the UUID from local storage
-        const uuid = localStorage.getItem('uuid');
+        // Check if "member.data" exists
+        const member = await window.$memberstackDom.getCurrentMember();
+        if (!member.data) {
+            // Get the UUID from local storage
+            const uuid = localStorage.getItem('uuid');
 
-        // Call the Vercel serverless function with the query parameters
-        callVercelServerlessFunction(uuid, 'update', dailyCount);
+            // Call the Vercel serverless function with the query parameters
+            callVercelServerlessFunction(uuid, 'update', dailyCount);
+        }
     }
 }
 
-// Toggle the signup and login modals
-document.getElementById('loginLink').addEventListener('click', function() {
-    document.getElementById('modalSignup').classList.add('hidden');
-    document.getElementById('modalLogin').classList.remove('hidden');
-});
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle the signup and login modals
+    document.getElementById('loginLink').addEventListener('click', function() {
+        console.log('Login link clicked');
+        document.getElementById('modalSignup').classList.add('hidden');
+        document.getElementById('modalLogin').classList.remove('hidden');
+    });
 
-document.getElementById('signupLink').addEventListener('click', function() {
-    document.getElementById('modalLogin').classList.add('hidden');
-    document.getElementById('modalSignup').classList.remove('hidden');
+    document.getElementById('signupLink').addEventListener('click', function() {
+        console.log('Signup link clicked');
+        document.getElementById('modalLogin').classList.add('hidden');
+        document.getElementById('modalSignup').classList.remove('hidden');
+    });
 });
