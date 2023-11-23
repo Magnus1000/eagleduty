@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var profileIcon = document.getElementById('profileMenuIcon');
     var profileDropdown = document.getElementById('profileDropdown');
 
-    profile.Menu.addEventListener('click', function() {
+    profileMenu.addEventListener('click', function() {
         profileDropdown.classList.toggle('open');
         profileIcon.classList.toggle('open');
         profileMenu.classList.toggle('open');
