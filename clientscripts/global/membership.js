@@ -156,3 +156,13 @@ function subtractFromDailyCount() {
     }
 }
 
+// Toggle the signup and login modals
+document.getElementById('loginLink').addEventListener('click', function() {
+    document.getElementById('modalSignup').classList.add('hidden');
+    document.getElementById('modalLogin').classList.remove('hidden');
+});
+
+document.getElementById('signupLink').addEventListener('click', function() {
+    document.getElementById('modalLogin').classList.add('hidden');
+    document.getElementById('modalSignup').classList.remove('hidden');
+});
