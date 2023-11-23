@@ -1,3 +1,5 @@
+const max_count = 10; 
+
 window.$memberstackDom.getCurrentMember().then((member) => {
     if (member.data) {
         console.log('There is a member', member);
@@ -9,7 +11,6 @@ window.$memberstackDom.getCurrentMember().then((member) => {
         // Check if UUID exists in local storage
         if (localStorage.getItem('uuid')) {
             uuid = localStorage.getItem('uuid');
-            callVercelServerlessFunction(uuid, 'fetch');
         }
 
         // Check if UUID exists in cookie
@@ -19,7 +20,6 @@ window.$memberstackDom.getCurrentMember().then((member) => {
             ?.split('=')[1];
         if (cookieValue) {
             uuid = cookieValue;
-            callVercelServerlessFunction(uuid, 'fetch');
         }
 
         // Check if UUID exists in IndexedDB
@@ -34,10 +34,8 @@ window.$memberstackDom.getCurrentMember().then((member) => {
                     getRequest.onsuccess = function (event) {
                         if (event.target.result) {
                             uuid = event.target.result.uuid;
-                            callVercelServerlessFunction(uuid, 'fetch');
                         } else {
                             objectStore.add({ uuid: uuid });
-                            //callVercelServerlessFunction(uuid, 'create');
                         }
                     };
                 };
@@ -52,10 +50,8 @@ window.$memberstackDom.getCurrentMember().then((member) => {
                 tx.executeSql('SELECT * FROM members', [], function (tx, result) {
                     if (result.rows.length > 0) {
                         uuid = result.rows.item(0).uuid;
-                        callVercelServerlessFunction(uuid, 'fetch');
                     } else {
                         tx.executeSql('INSERT INTO members (uuid) VALUES (?)', [uuid]);
-                        //callVercelServerlessFunction(uuid, 'create');
                     }
                 });
             });
@@ -64,7 +60,8 @@ window.$memberstackDom.getCurrentMember().then((member) => {
         // If UUID is still empty, generate a new one
         if (!uuid) {
             uuid = generateUUID();
-            callVercelServerlessFunction(uuid, 'create');
+            // Set "daily_count" to a constant value
+            localStorage.setItem('daily_count', max_count);
         }
 
         // Set UUID in local storage
@@ -91,6 +88,15 @@ window.$memberstackDom.getCurrentMember().then((member) => {
                 tx.executeSql('INSERT INTO members (uuid) VALUES (?)', [uuid]);
             });
         }
+
+        // Make a request to the Vercel serverless function
+        // Pass the UUID as a query parameter
+        callVercelServerlessFunction(uuid, 'fetch').then((data) => {
+            // Set "daily_count" to the value returned from the Vercel fetch call
+            localStorage.setItem('daily_count', data.daily_count);
+        }).catch((error) => {
+            console.error('Error calling Vercel serverless function:', error);
+        });
     }
 });
 
@@ -104,10 +110,10 @@ function generateUUID() {
     });
 }
 
-function callVercelServerlessFunction(uuid, action) {
+function callVercelServerlessFunction(uuid, action, count) {
     // Make a request to the Vercel serverless function
     // Pass the UUID as a query parameter
-    fetch(`https://eagleduty-magnus1000team.vercel.app/api/website/membershipServerless?uuid=${uuid}&action=${action}`)
+    fetch(`https://eagleduty-magnus1000team.vercel.app/api/website/membershipServerless?uuid=${uuid}&action=${action}&count=${count}`)
         .then((response) => response.json())
         .then((data) => {
             console.log('Response from Vercel serverless function:', data);
@@ -117,3 +123,23 @@ function callVercelServerlessFunction(uuid, action) {
         });
 }
 
+// Function to track the limit
+function subtractFromDailyCount() {
+    // Get the current value of "daily_count" from local storage
+    let dailyCount = localStorage.getItem('daily_count');
+
+    // Check if "daily_count" exists in local storage
+    if (dailyCount) {
+        // Convert the value to a number and subtract 1
+        dailyCount = parseInt(dailyCount) - 1;
+
+        // Update the "daily_count" value in local storage
+        localStorage.setItem('daily_count', dailyCount.toString());
+
+        // Get the UUID from local storage
+        const uuid = localStorage.getItem('uuid');
+
+        // Call the Vercel serverless function with the query parameters
+        callVercelServerlessFunction(uuid, 'update', dailyCount);
+    }
+}

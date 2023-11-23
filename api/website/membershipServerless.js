@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
     // Handle CORS first before doing anything else
     corsHandler(req, res, async () => {
-        const { uuid, action } = req.query;
+        const { uuid, action, count } = req.query;
 
         if (!uuid || !action) {
             return res.status(400).json({ error: 'Missing required parameters' });
@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
             } else if (action === 'create') {
                 const { data, error } = await supabase
                     .from('user_events')
-                    .insert([{ uuid }])
+                    .insert([{ uuid, daily_count: count }])
                     .single();
 
                 if (error) {
@@ -42,6 +42,18 @@ module.exports = async (req, res) => {
                 }
 
                 return res.status(200).json({ message: 'New row created successfully' });
+            } else if (action === 'update') {
+                const { data, error } = await supabase
+                    .from('user_events')
+                    .update({ daily_count: count })
+                    .eq('uuid', uuid)
+                    .single();
+
+                if (error) {
+                    return res.status(500).json({ error: 'Failed to update the row in Supabase' });
+                }
+
+                return res.status(200).json({ message: 'Row updated successfully' });
             } else {
                 return res.status(400).json({ error: 'Invalid action' });
             }
