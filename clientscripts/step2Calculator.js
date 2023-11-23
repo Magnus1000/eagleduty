@@ -340,3 +340,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Function tom reveal the signup modal
+function showUnlimitedModal() {
+    const unlimitedModal = document.getElementById('unlimitedModal');
+    unlimitedModal.classList.remove('hidden');
+}
