@@ -1,6 +1,7 @@
-const max_count = 10; 
+const max_count = 10;
 
-window.$memberstackDom.getCurrentMember().then((member) => {
+(async function () {
+    const member = await window.$memberstackDom.getCurrentMember();
     if (member.data) {
         console.log('There is a member', member);
         // Do logged in logic here
@@ -62,7 +63,7 @@ window.$memberstackDom.getCurrentMember().then((member) => {
             uuid = generateUUID();
             // Set "daily_count" to a constant value
             localStorage.setItem('daily_count', max_count);
-            callVercelServerlessFunction(uuid, 'create', max_count);
+            await callVercelServerlessFunction(uuid, 'create', max_count);
         }
 
         // Set UUID in local storage
@@ -95,8 +96,6 @@ window.$memberstackDom.getCurrentMember().then((member) => {
         const response = await callVercelServerlessFunction(uuid, 'fetch');
         const daily_count = response?.daily_count;
 
-
-
         // Check if "daily_count" exists in local storage
         if (localStorage.getItem('daily_count')) {
             // If it exists, set it to the value returned from the serverless function
@@ -106,10 +105,10 @@ window.$memberstackDom.getCurrentMember().then((member) => {
             localStorage.setItem('daily_count', daily_count);
         }
 
-        // Log the count from Supabase 
+        // Log the count from Supabase
         console.log('daily_count', daily_count);
     }
-});
+})();
 
 function generateUUID() {
     // Generate a UUID (Universally Unique Identifier)
@@ -121,18 +120,19 @@ function generateUUID() {
     });
 }
 
-function callVercelServerlessFunction(uuid, action, count) {
-    // Make a request to the Vercel serverless function
-    // Pass the UUID as a query parameter
-    fetch(`https://eagleduty-magnus1000team.vercel.app/api/website/membershipServerless?uuid=${uuid}&action=${action}&count=${count}`)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Response from Vercel serverless function:', data);
-            return data; 
-        })
-        .catch((error) => {
-            console.error('Error calling Vercel serverless function:', error);
-        });
+async function callVercelServerlessFunction(uuid, action, count) {
+    try {
+        // Make a request to the Vercel serverless function
+        // Pass the UUID as a query parameter
+        const response = await fetch(
+            `https://eagleduty-magnus1000team.vercel.app/api/website/membershipServerless?uuid=${uuid}&action=${action}&count=${count}`
+        );
+        const data = await response.json();
+        console.log('Response from Vercel serverless function:', data);
+        return data;
+    } catch (error) {
+        console.error('Error calling Vercel serverless function:', error);
+    }
 }
 
 // Function to track the limit
@@ -155,3 +155,4 @@ function subtractFromDailyCount() {
         callVercelServerlessFunction(uuid, 'update', dailyCount);
     }
 }
+
