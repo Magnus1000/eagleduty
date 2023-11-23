@@ -62,6 +62,7 @@ window.$memberstackDom.getCurrentMember().then((member) => {
             uuid = generateUUID();
             // Set "daily_count" to a constant value
             localStorage.setItem('daily_count', max_count);
+            callVercelServerlessFunction(uuid, 'create', max_count);
         }
 
         // Set UUID in local storage
@@ -91,12 +92,22 @@ window.$memberstackDom.getCurrentMember().then((member) => {
 
         // Make a request to the Vercel serverless function
         // Pass the UUID as a query parameter
-        callVercelServerlessFunction(uuid, 'fetch').then((data) => {
-            // Set "daily_count" to the value returned from the Vercel fetch call
-            localStorage.setItem('daily_count', data.daily_count);
-        }).catch((error) => {
-            console.error('Error calling Vercel serverless function:', error);
-        });
+        const response = await callVercelServerlessFunction(uuid, 'fetch');
+        const daily_count = response?.daily_count;
+
+
+
+        // Check if "daily_count" exists in local storage
+        if (localStorage.getItem('daily_count')) {
+            // If it exists, set it to the value returned from the serverless function
+            localStorage.setItem('daily_count', daily_count);
+        } else {
+            // If it doesn't exist, create it and set the value to the value returned from the serverless function
+            localStorage.setItem('daily_count', daily_count);
+        }
+
+        // Log the count from Supabase 
+        console.log('daily_count', daily_count);
     }
 });
 
@@ -117,6 +128,7 @@ function callVercelServerlessFunction(uuid, action, count) {
         .then((response) => response.json())
         .then((data) => {
             console.log('Response from Vercel serverless function:', data);
+            return data; 
         })
         .catch((error) => {
             console.error('Error calling Vercel serverless function:', error);
