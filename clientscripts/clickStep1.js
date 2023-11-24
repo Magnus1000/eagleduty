@@ -81,40 +81,34 @@ function goStep2() {
     selectedResultCard.setAttribute('data-htsno', htsno);
 
     // Function to display the correct unit field – value or amount
-    // function displayUnitFields(units, matchValues) {
-    //     const selectedResultCard = document.querySelector("#selectedResult");
-    //     const valueWrapper = document.querySelector("#valueWrapper");
-    //     const amountWrapper = document.querySelector("#amountWrapper");
-    //     const valueUnitText = document.querySelector("#valueUnitText");
-    //     const amountUnitText = document.querySelector("#amountUnitText");
-    //     const amountUnitSelect = document.querySelector("#amountUnitSelect");
-    //     amountUnitSelect.innerHTML = "";
-    //     const unitOptions = units.split(",");
+    function setUnitFields(units, matchValues) {
+        const selectedResultCard = document.querySelector("#selectedResult");
+        const valueUnitText = document.querySelector("#valueUnitText");
+        const amountUnitText = document.querySelector("#amountUnitText");
+        const amountUnitSelect = document.querySelector("#amountUnitSelect");
+        amountUnitSelect.innerHTML = "";
+        const unitOptions = units.split(",");
 
-    //     if (matchValues.includes(units)) {
-    //         //Show value fields
-    //         valueWrapper.style.display = "flex";
-    //         amountWrapper.style.display = "none";
-    //         valueUnitText.textContent = "$";
-    //         selectedResultCard.setAttribute('data-calculation-type', 'value');
-    //     } else {
-    //         // Show amount fields
-    //         valueWrapper.style.display = "none";
-    //         amountWrapper.style.display = "flex";
-    //         amountUnitText.textContent = unitOptions[0];
-    //         selectedResultCard.setAttribute('data-calculation-type', 'amount');
-    //         for (let i = 0; i < unitOptions.length; i++) {
-    //             const option = document.createElement("option");
-    //             option.setAttribute("value", unitOptions[i]);
-    //             option.textContent = unitOptions[i];
-    //             amountUnitSelect.appendChild(option);
-    //         }
-    //         amountUnitSelect.selectedIndex = 0;        
-    //     }
-    // }
+        if (matchValues.includes(units)) {
+            //Show value fields
+            valueUnitText.textContent = "$";
+            selectedResultCard.setAttribute('data-calculation-type', 'value');
+        } else {
+            // Show amount fields
+            amountUnitText.textContent = unitOptions[0];
+            selectedResultCard.setAttribute('data-calculation-type', 'amount');
+            for (let i = 0; i < unitOptions.length; i++) {
+                const option = document.createElement("option");
+                option.setAttribute("value", unitOptions[i]);
+                option.textContent = unitOptions[i];
+                amountUnitSelect.appendChild(option);
+            }
+            amountUnitSelect.selectedIndex = 0;        
+        }
+    }
 
     // Call the displayUnitFields function
-    // displayUnitFields(units, matchValues);
+    setUnitFields(units, matchValues);
 
     // Call the animateArrow1 function
     animateArrow("arrow1wrapper", "forward");
