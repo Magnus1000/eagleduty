@@ -9,9 +9,13 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     // Extract the percentage value from the request body
-    const { string } = req.body.string;
+    const { string } = req.body;
     const percentage = string.match(/\d+(\.\d+)?%/);
 
     // Send the extracted percentage value as the response
-    res.status(200).json({ percentage: percentage[0] });
+    if (percentage) {
+        res.status(200).json({ percentage: percentage[0] });
+    } else {
+        res.status(400).json({ error: 'Percentage value not found in the string' });
+    }
 };
