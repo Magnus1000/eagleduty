@@ -86,10 +86,11 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     console.log('Special Duty:', specialDuty);
 
     // Step 3: Calculate the China tariff
-    if isoCode === 'CN' && chinaTariffRate !== null && chinaTariffRate !== undefined && chinaTariffRate !== '' {
+    if (isoCode === 'CN' && chinaTariffRate !== null && chinaTariffRate !== undefined && chinaTariffRate !== '') {
         chinaTariff = (chinaValue * chinaTariffRate * chinaQuantity).toFixed(2);
         console.log('China Tariff:', chinaTariff);
-    }    
+    }
+
 
     // Step 4: Calculate the total duty
     let totalDuty = specialDuty !== null ? specialDuty : duty; // Total duty rounded to 2 decimal places
