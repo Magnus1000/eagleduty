@@ -28,6 +28,7 @@ function renderResults(hits) {
         resultItem.setAttribute('data-section-name', hit.sectionName);
         resultItem.setAttribute('data-section-description', hit.sectionDescription);
         resultItem.setAttribute('data-general', hit.general);
+        resultItem.setAttribute('data-china-tariff-rate', hit.chinaTariffRate);
         resultItem.setAttribute('data-other', hit.other);
         resultItem.setAttribute('data-special-json', JSON.stringify(hit.special_json));
         resultItem.setAttribute('data-units', hit.units);

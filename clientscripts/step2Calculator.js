@@ -1,8 +1,9 @@
 // Main Function to calculate the duty
-function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency) {
+function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency, chinaTariffRate) {
     console.log('Calculating Duty...');
     // Define Special Duty and Duty variables
     let specialDuty = null;
+    let chinaTariff = null;
     let duty = null;
 
     // Additional Info fields
@@ -10,6 +11,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const shippingCostCurrency = document.querySelector("#shippingCurrencySelect").value;
     const insuranceCost = parseFloat(document.querySelector("#insuranceCostField").value);
     const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
+
+    //Fetch China value
+    const chinaValue = parseFloat(document.querySelector("#chinaValueField").value);
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
@@ -79,9 +83,17 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     console.log('Special Duty:', specialDuty);
 
-    // Step 3: Calculate the total duty
-    const totalDuty = specialDuty !== null ? specialDuty : duty; // Total duty rounded to 2 decimal places
-    console.log('Total Duty:', totalDuty);
+    // Step 3: Calculate the China tariff
+    if isoCode === 'CN' && chinaTariffRate !== null && chinaTariffRate !== undefined && chinaTariffRate !== '' {
+        chinaTariff = (chinaValue * chinaTariffRate * quantity).toFixed(2);
+        console.log('China Tariff:', chinaTariff);
+    }    
+
+    // Step 4: Calculate the total duty
+    let totalDuty = specialDuty !== null ? specialDuty : duty; // Total duty rounded to 2 decimal places
+    console.log('Total Duty (excl tariffs):', totalDuty);
+    totalDuty = chinaTariff !== null ? (parseFloat(totalDuty) + parseFloat(chinaTariff)).toFixed(2) : totalDuty;
+    console.log('Total Duty (incl tariffs):', totalDuty);
 
     // Function to reveal duty
     function updateTotalDuty(totalDuty, currency) {
@@ -131,6 +143,9 @@ document.addEventListener("DOMContentLoaded", async function() {
                 const generalRateString = selectedResultCard.getAttribute('data-general');
                 const generalRate = generalRateString === 'Free' ? 0 : (generalRateString ? parseFloat(generalRateString) / 100 : '');
 
+                // China Tariff rate
+                const chinaTariffRate = selectedResultCard.getAttribute('data-china-tariff-rate');
+
                 // Other input values
                 const quantity = parseFloat(document.querySelector("#quantityField").value);
                 const isoCode = document.querySelector("#importingFrom").value;
@@ -141,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
 
                 // Call the calculateDuty function with the input values
-                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
+                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency, chinaTariffRate);
                 addLoadingClass();
 
                 // Call the subtractFromDailyCount function
