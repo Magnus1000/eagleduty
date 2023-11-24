@@ -14,6 +14,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     //Fetch China value
     const chinaValue = parseFloat(document.querySelector("#chinaValueField").value);
+    const chinaQuantity = parseFloat(document.querySelector("#chinaQuantityField").value);
+
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
@@ -85,7 +87,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     // Step 3: Calculate the China tariff
     if isoCode === 'CN' && chinaTariffRate !== null && chinaTariffRate !== undefined && chinaTariffRate !== '' {
-        chinaTariff = (chinaValue * chinaTariffRate * quantity).toFixed(2);
+        chinaTariff = (chinaValue * chinaTariffRate * chinaQuantity).toFixed(2);
         console.log('China Tariff:', chinaTariff);
     }    
 
@@ -407,3 +409,53 @@ document.addEventListener('DOMContentLoaded', () => {
     closeUnlimitedModal.addEventListener('click', toggleUnlimitedModal);
 });
 
+// Find the China radio buttons add event listeners to them
+document.addEventListener('DOMContentLoaded', () => {
+    // Get all radio buttons with class "standard-radio-button"
+    const radioButtons = document.querySelectorAll('.china-radio-button');
+
+    // Add event listener to each radio button
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('click', () => {
+            // Uncheck all other radio buttons
+            radioButtons.forEach(otherRadioButton => {
+                if (otherRadioButton !== radioButton) {
+                    otherRadioButton.checked = false;
+                }
+            });
+            // Check the clicked radio button
+            radioButton.checked = true;
+
+            // Call setButtonState if valueTotalRadio is checked
+            if (radioButton.id === 'chinaValueTotalRadio' && radioButton.checked) {
+                setButtonState('chinaQuantityField', 'disable');
+                setQuantityFieldToOne();
+            } else if (radioButton.id === 'chinaValueUnitRadio' && radioButton.checked) {
+                setButtonState('chinaQuantityField', 'enable');
+            }
+        });
+        // Pre-check the radio button with ID = valueTotalRadio
+        if (radioButton.id === 'chinaValueTotalRadio') {
+            radioButton.checked = true;
+        }
+    });
+});
+
+// Function to togle the display of the China value fields
+function updateDisplay() {
+    const importingFromField = document.getElementById("importingFrom");
+    const chinaValueWrapper = document.getElementById("chinaValueWrapper");
+
+    if (importingFromField.value === "CN") {
+        chinaValueWrapper.style.display = "flex";
+    } else {
+        chinaValueWrapper.style.display = "none";
+    }
+}
+
+// Add event listener to importingFrom field to toggle the display of the China value fields
+const importingFromField = document.getElementById("importingFrom");
+
+importingFromField.addEventListener("change", function() {
+    updateDisplay();
+});

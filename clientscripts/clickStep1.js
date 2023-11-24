@@ -405,6 +405,7 @@ function createDropdownOptions() {
     const importingFromSelect = document.getElementById('importingFrom');
     const shippingCurrencySelect = document.getElementById('shippingCurrencySelect');
     const insuranceCurrencySelect = document.getElementById('insuranceCurrencySelect');
+    const chinaCurrencySelect = document.getElementById('chinaCurrencySelect');
 
     // Define common countries and currencies
     const commonCountries = ['CN', 'MX', 'CA', 'JP', 'DE']; // ISO codes of common countries
@@ -457,6 +458,7 @@ function createDropdownOptions() {
             addOption(currencySelect, currency, currency);
             addOption(shippingCurrencySelect, currency, currency);
             addOption(insuranceCurrencySelect, currency, currency);
+            addOption(chinaCurrencySelect, currency, currency);
         }
     });
 
@@ -471,6 +473,7 @@ function createDropdownOptions() {
             addOption(currencySelect, country[2], country[2]);
             addOption(shippingCurrencySelect, country[2], country[2]);
             addOption(insuranceCurrencySelect, country[2], country[2]);
+            addOption(chinaCurrencySelect, country[2], country[2]);
         }
     });
 }
@@ -491,6 +494,7 @@ function getUserLocation() {
         setSelectedOption('currencySelect', data.currency);
         setSelectedOption('shippingCurrencySelect', data.currency);
         setSelectedOption('insuranceCurrencySelect', data.currency);
+        setSelectedOption('chinaCurrencySelect', data.currency);
         console.log('Success:', data.country_name, data.currency);
     })
     .catch(error => {
