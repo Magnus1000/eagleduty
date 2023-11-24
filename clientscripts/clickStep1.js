@@ -86,6 +86,7 @@ function goStep2() {
         const valueUnitText = document.querySelector("#valueUnitText");
         const amountUnitText = document.querySelector("#amountUnitText");
         const amountUnitSelect = document.querySelector("#amountUnitSelect");
+        const amountWrapper = document.querySelector("#amountWrapper");
         amountUnitSelect.innerHTML = "";
         const unitOptions = units.split(",");
 
@@ -93,6 +94,7 @@ function goStep2() {
             //Show value fields
             valueUnitText.textContent = "$";
             selectedResultCard.setAttribute('data-calculation-type', 'value');
+            amountWrapper.style.display = "none";
         } else {
             // Show amount fields
             amountUnitText.textContent = unitOptions[0];
