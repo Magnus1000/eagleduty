@@ -104,6 +104,7 @@ function goStep2() {
                 option.setAttribute("value", unitOptions[i]);
                 option.textContent = unitOptions[i];
                 amountUnitSelect.appendChild(option);
+                amountWrapper.style.display = "flex";
             }
             amountUnitSelect.selectedIndex = 0;        
         }
