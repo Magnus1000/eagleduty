@@ -12,11 +12,6 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const insuranceCost = parseFloat(document.querySelector("#insuranceCostField").value);
     const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
 
-    //Fetch China value
-    const chinaValue = parseFloat(document.querySelector("#chinaValueField").value);
-    const chinaQuantity = parseFloat(document.querySelector("#chinaQuantityField").value);
-
-
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
     // Step 1: Calculate the general duty
@@ -87,7 +82,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     // Step 3: Calculate the China tariff
     if (isoCode === 'CN' && chinaTariffRate !== null && chinaTariffRate !== undefined && chinaTariffRate !== '') {
-        chinaTariff = (chinaValue * chinaTariffRate * chinaQuantity).toFixed(2);
+        chinaTariff = (value * chinaTariffRate * quantity).toFixed(2);
         console.log('China Tariff:', chinaTariff);
     }
 
@@ -111,7 +106,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     return totalDuty;
 }
 
-// Calculate duty button
+// Calculate duty button with count and login logic
 document.addEventListener("DOMContentLoaded", async function() {
     // Get the button element
     const button = document.querySelector("#calculateDuty");
@@ -195,7 +190,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
 
                 // Call the calculateDuty function with the input values
-                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
+                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency, chinaTariffRate);
                 addLoadingClass();
 
                 // Call the subtractFromDailyCount function
@@ -324,6 +319,7 @@ function watchFieldsForCalculation() {
     console.log('Started watching calculation fields...');
     const selectedResult = document.getElementById('selectedResult');
     const calculationType = selectedResult.getAttribute('data-calculation-type');
+    const importingFrom = document.getElementById('importingFrom').value;
 
     // Common function to check fields
     const checkFields = (fields) => {
@@ -348,7 +344,7 @@ function watchFieldsForCalculation() {
 
         fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
-    } else if (calculationType === 'amount') {
+    } else if (calculationType === 'amount' && importingFrom !== 'CN') {
         const fields = [
             document.getElementById('importingTo'),
             document.getElementById('importingFrom'),
@@ -356,7 +352,24 @@ function watchFieldsForCalculation() {
             document.getElementById('amountUnitSelect')
         ];
 
-        console.log('Calculation type is amount. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
+        console.log('Calculation type is amount and importingFrom is not China. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
+
+        // Initial check for pre-populated fields
+        checkFields(fields);
+
+        fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
+        fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
+    } else if (calculationType === 'amount' && importingFrom === 'CN') {
+        const fields = [
+            document.getElementById('importingTo'),
+            document.getElementById('importingFrom'),
+            document.getElementById('amountField'),
+            document.getElementById('amountUnitSelect'),
+            document.getElementById('valueField'),
+            document.getElementById('quantityField')
+        ];
+
+        console.log('Calculation type is amount and importingFrom is China. Found fields: importingTo, importingFrom, amountField, amountUnitSelect, valueField, quantityField');
 
         // Initial check for pre-populated fields
         checkFields(fields);
@@ -410,47 +423,15 @@ document.addEventListener('DOMContentLoaded', () => {
     closeUnlimitedModal.addEventListener('click', toggleUnlimitedModal);
 });
 
-// Find the China radio buttons add event listeners to them
-document.addEventListener('DOMContentLoaded', () => {
-    // Get all radio buttons with class "standard-radio-button"
-    const radioButtons = document.querySelectorAll('.china-radio-button');
-
-    // Add event listener to each radio button
-    radioButtons.forEach(radioButton => {
-        radioButton.addEventListener('click', () => {
-            // Uncheck all other radio buttons
-            radioButtons.forEach(otherRadioButton => {
-                if (otherRadioButton !== radioButton) {
-                    otherRadioButton.checked = false;
-                }
-            });
-            // Check the clicked radio button
-            radioButton.checked = true;
-
-            // Call setButtonState if valueTotalRadio is checked
-            if (radioButton.id === 'chinaValueTotalRadio' && radioButton.checked) {
-                setButtonState('chinaQuantityField', 'disable');
-                setQuantityFieldToOne();
-            } else if (radioButton.id === 'chinaValueUnitRadio' && radioButton.checked) {
-                setButtonState('chinaQuantityField', 'enable');
-            }
-        });
-        // Pre-check the radio button with ID = valueTotalRadio
-        if (radioButton.id === 'chinaValueTotalRadio') {
-            radioButton.checked = true;
-        }
-    });
-});
-
 // Function to togle the display of the China value fields
 function updateDisplay() {
     const importingFromField = document.getElementById("importingFrom");
-    const chinaValueWrapper = document.getElementById("chinaValueWrapper");
+    const chinaValueWrapper = document.getElementById("valueWrapper");
 
     if (importingFromField.value === "CN") {
-        chinaValueWrapper.style.display = "flex";
+        chinaValueWrapper.classList.remove("hidden");
     } else {
-        chinaValueWrapper.style.display = "none";
+        chinaValueWrapper.classList.add("hidden");
     }
 }
 
