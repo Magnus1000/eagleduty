@@ -590,22 +590,20 @@ function addEventListenersToSeeDetailsButton() {
 
         // If such an element was found and it's within the resultsColumn, toggle the details modal
         if (targetElement && resultsColumn.contains(targetElement)) {
-            populateSeeDetailsModal(event)
+            populateSeeDetailsModal(targetElement); // Pass the targetElement to the function
             toggleDetailsModal();
         }
     });
 }
 
 // Function to populate the details modal
-function populateSeeDetailsModal(event) {
-    // Get the button element that was clicked
-    const button = event.target;
+function populateSeeDetailsModal(targetElement) { // Receive the targetElement as a parameter
+    // Get the parent element of the targetElement
+    const parentElement = targetElement.parentElement;
 
-    // Get the parent element of the button
-    const parent = button.parentNode;
-
-    // Get the attributes of the parent element
-    const htsno = parent.getAttribute("data-htsno");
+    // Get the attributes of the parentElement
+    const htsno = parentElement.getAttribute("data-htsno");
+    console.log("See details htsno:", htsno);
 
     // Set the values of the selected result card on screen 2
     const detailsModalHeader = document.querySelector("#detailsModalHeader");
