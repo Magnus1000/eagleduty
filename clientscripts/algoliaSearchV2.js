@@ -102,8 +102,25 @@ function renderResults(hits) {
         const radioCircleElement = document.createElement('div');
         radioCircleElement.classList.add('checked-result-circle');
         resultItem.appendChild(radioCircleElement);
+
+        // Create and append the see details element
+        const seeDetailsElement = document.createElement('div');
+        seeDetailsElement.classList.add('result-see-details');
+        resultItem.appendChild(seeDetailsElement);
+
+        // Create and append the see details text element
+        const seeDetailsTextElement = document.createElement('span');
+        seeDetailsTextElement.textContent = 'See details';
+        seeDetailsTextElement.classList.add('result-see-details-text');
+        seeDetailsElement.appendChild(seeDetailsTextElement);
+
+        // Create and append the see details icon element
+        const seeDetailsIconElement = document.createElement('div');
+        seeDetailsIconElement.classList.add('result-see-details-icon');
+        seeDetailsElement.appendChild(seeDetailsIconElement);
     });
 }
+
 // Function to handle search input changes
 function handleSearchInput(event) {
   const query = event.target.value;
