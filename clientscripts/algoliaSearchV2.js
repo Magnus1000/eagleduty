@@ -41,7 +41,7 @@ function renderResults(hits) {
         htsCodeElement.classList.add('hts-code');
         htsCodeWrapper.appendChild(htsCodeElement);
         const htsCodeTextElement = document.createElement('div');
-        htsCodeTextElement.textContent = 'HTS Code';
+        htsCodeTextElement.textContent = 'hts code';
         htsCodeTextElement.classList.add('hts-code-text');
         htsCodeWrapper.appendChild(htsCodeTextElement);
         resultItem.appendChild(htsCodeWrapper);
@@ -97,6 +97,11 @@ function renderResults(hits) {
 
         // Append the main result item div to the results container
         resultsContainer.appendChild(resultItem);
+
+        // Create and append the radio circle element
+        const radioCircleElement = document.createElement('div');
+        radioCircleElement.classList.add('checked-result-circle');
+        resultItem.appendChild(radioCircleElement);
     });
 }
 // Function to handle search input changes
