@@ -515,7 +515,11 @@ function getUserLocation() {
 }
 
 window.addEventListener("load", () => {
+    // Add event listener to the radio buttons which wrap the results
     addRadioEventListener();
+
+    // Add event listener to the see details buttons
+    addEventListenersToSeeDetailsButton();
 
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", function() {
@@ -559,3 +563,35 @@ function setQuantityFieldToOne() {
     const quantityField = document.querySelector('#quantityField');
     quantityField.value = '1';
 }
+
+// Function to toggle the signup modal
+function toggleDetailsModal() {
+    const detailsModal = document.getElementById('detailsModal');
+    detailsModal.classList.toggle('hidden');
+}
+
+// Add event listener to closeUnlimitedModal element
+document.addEventListener('DOMContentLoaded', () => {
+    const closeDetailsModal = document.getElementById('closeDetailsModal');
+    closeDetailsModal.addEventListener('click', toggleDetailsModal);
+});
+
+// Function to apply event listeners to see details buttons
+function addEventListenersToSeeDetailsButton() {
+    const resultsColumn = document.getElementById('resultsColumn');
+
+    resultsColumn.addEventListener('click', function(event) {
+        // Traverse up from the target of the event until you find the element with the class '.result-see-details'
+        let targetElement = event.target;
+        while (targetElement != null && !targetElement.classList.contains('result-see-details')) {
+            targetElement = targetElement.parentElement;
+        }
+
+        // If such an element was found and it's within the resultsColumn, toggle the details modal
+        if (targetElement && resultsColumn.contains(targetElement)) {
+            toggleDetailsModal();
+        }
+    });
+}
+
+
