@@ -1,3 +1,4 @@
+// Add checked class to the selected result and its child div
 function addRadioEventListener() {
     const radiosContainer = document.querySelector("#resultsColumn");
 
@@ -11,6 +12,10 @@ function addRadioEventListener() {
                 if (radio !== clickedRadio) {
                     radio.checked = false;
                     radio.classList.remove("checked");
+                    const childDiv = radio.querySelector(".checked-result-circle");
+                    if (childDiv) {
+                        childDiv.classList.remove("checked");
+                    }
                 }
             });
 
@@ -19,9 +24,17 @@ function addRadioEventListener() {
                 urlParams.set("htsno", clickedRadio.value);
                 window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
                 clickedRadio.classList.add("checked");
+                const childDiv = clickedRadio.querySelector(".checked-result-circle");
+                if (childDiv) {
+                    childDiv.classList.add("checked");
+                }
                 setButtonState('nextStep1', 'enable');
             } else {
                 clickedRadio.classList.remove("checked");
+                const childDiv = clickedRadio.querySelector(".checked-result-circle");
+                if (childDiv) {
+                    childDiv.classList.remove("checked");
+                }
             }
         }
     });
