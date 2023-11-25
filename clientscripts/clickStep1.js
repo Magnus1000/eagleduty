@@ -1,4 +1,4 @@
-// Add checked class to the selected result and its child div
+// Add checked class to the selected result and its sibling div
 function addRadioEventListener() {
     const radiosContainer = document.querySelector("#resultsColumn");
 
@@ -12,10 +12,10 @@ function addRadioEventListener() {
                 if (radio !== clickedRadio) {
                     radio.checked = false;
                     radio.classList.remove("checked");
-                    const childDiv = radio.querySelector(".checked-result-circle");
-                    if (childDiv) {
-                        childDiv.classList.remove("checked");
-                        console.log("Removed 'checked' class from child div:", childDiv);
+                    const siblingDiv = radio.nextElementSibling;
+                    if (siblingDiv && siblingDiv.classList.contains("checked-result-circle")) {
+                        siblingDiv.classList.remove("checked");
+                        console.log("Removed 'checked' class from sibling div:", siblingDiv);
                     }
                 }
             });
@@ -25,18 +25,18 @@ function addRadioEventListener() {
                 urlParams.set("htsno", clickedRadio.value);
                 window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
                 clickedRadio.classList.add("checked");
-                const childDiv = clickedRadio.querySelector(".checked-result-circle");
-                if (childDiv) {
-                    childDiv.classList.add("checked");
-                    console.log("Added 'checked' class to child div:", childDiv);
+                const siblingDiv = clickedRadio.nextElementSibling;
+                if (siblingDiv && siblingDiv.classList.contains("checked-result-circle")) {
+                    siblingDiv.classList.add("checked");
+                    console.log("Added 'checked' class to sibling div:", siblingDiv);
                 }
                 setButtonState('nextStep1', 'enable');
             } else {
                 clickedRadio.classList.remove("checked");
-                const childDiv = clickedRadio.querySelector(".checked-result-circle");
-                if (childDiv) {
-                    childDiv.classList.remove("checked");
-                    console.log("Removed 'checked' class from child div:", childDiv);
+                const siblingDiv = clickedRadio.nextElementSibling;
+                if (siblingDiv && siblingDiv.classList.contains("checked-result-circle")) {
+                    siblingDiv.classList.remove("checked");
+                    console.log("Removed 'checked' class from sibling div:", siblingDiv);
                 }
             }
         }
