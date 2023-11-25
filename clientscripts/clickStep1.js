@@ -91,12 +91,12 @@ function goStep2() {
         const unitOptions = units.split(",");
 
         if (matchValues.includes(units)) {
-            //Show value fields
+            // Set value fields
             valueUnitText.textContent = "$";
             selectedResultCard.setAttribute('data-calculation-type', 'value');
             amountWrapper.style.display = "none";
         } else {
-            // Show amount fields
+            // Set amount fields
             amountUnitText.textContent = unitOptions[0];
             selectedResultCard.setAttribute('data-calculation-type', 'amount');
             for (let i = 0; i < unitOptions.length; i++) {

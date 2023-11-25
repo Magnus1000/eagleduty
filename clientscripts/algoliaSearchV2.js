@@ -2,7 +2,7 @@ console.log("globalSearch2.js script initiated");
 
 // Initialize Algolia Search Client
 const searchClient = algoliasearch('ZHBXQEBA3W', '7c1a59f0885f557595cf95b1173c6d47');
-const index = searchClient.initIndex('eagleDutyHtsCodes');
+const index = searchClient.initIndex('eagleDutyHtsCodesEnhanced');
 
 // Function to render the search results
 function renderResults(hits) {
