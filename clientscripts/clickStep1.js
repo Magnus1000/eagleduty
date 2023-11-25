@@ -15,6 +15,7 @@ function addRadioEventListener() {
                     const childDiv = radio.querySelector(".checked-result-circle");
                     if (childDiv) {
                         childDiv.classList.remove("checked");
+                        console.log("Removed 'checked' class from child div:", childDiv);
                     }
                 }
             });
@@ -27,6 +28,7 @@ function addRadioEventListener() {
                 const childDiv = clickedRadio.querySelector(".checked-result-circle");
                 if (childDiv) {
                     childDiv.classList.add("checked");
+                    console.log("Added 'checked' class to child div:", childDiv);
                 }
                 setButtonState('nextStep1', 'enable');
             } else {
@@ -34,6 +36,7 @@ function addRadioEventListener() {
                 const childDiv = clickedRadio.querySelector(".checked-result-circle");
                 if (childDiv) {
                     childDiv.classList.remove("checked");
+                    console.log("Removed 'checked' class from child div:", childDiv);
                 }
             }
         }
