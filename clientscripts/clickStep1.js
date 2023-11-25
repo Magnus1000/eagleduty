@@ -514,6 +514,7 @@ function getUserLocation() {
     });
 }
 
+// Call functions on page load
 window.addEventListener("load", () => {
     // Add event listener to the radio buttons which wrap the results
     addRadioEventListener();
@@ -589,9 +590,24 @@ function addEventListenersToSeeDetailsButton() {
 
         // If such an element was found and it's within the resultsColumn, toggle the details modal
         if (targetElement && resultsColumn.contains(targetElement)) {
+            populateSeeDetailsModal(event)
             toggleDetailsModal();
         }
     });
 }
 
+// Function to populate the details modal
+function populateSeeDetailsModal(event) {
+    // Get the button element that was clicked
+    const button = event.target;
 
+    // Get the parent element of the button
+    const parent = button.parentNode;
+
+    // Get the attributes of the parent element
+    const htsno = parent.getAttribute("data-htsno");
+
+    // Set the values of the selected result card on screen 2
+    const detailsModalHeader = document.querySelector("#detailsModalHeader");
+    detailsModalHeader.textContent = htsno;
+}
