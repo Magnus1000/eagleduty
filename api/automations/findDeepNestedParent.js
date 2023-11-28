@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
         const airtableTableId = process.env.AIRTABLE_TABLE_ID;
         const airtableBaseId = process.env.AIRTABLE_BASE_ID;
 
-        let foundRecordId = null;
+        let highestSortNumRecord = null;
 
         for (let currentSortNum = sortNum; currentSortNum > 0; currentSortNum -= 50) {
             const endSortNum = Math.max(currentSortNum - 49, 1);
@@ -23,15 +23,18 @@ module.exports = async (req, res) => {
             const records = response.data.records;
 
             if (records.length > 0) {
-                foundRecordId = records[0].id; // Assuming records are ordered by sortNum
+                // Sort records by sortNum in descending order
+                const sortedRecords = records.sort((a, b) => b.fields.sortNum - a.fields.sortNum);
+                // Select the record with the highest sortNum
+                highestSortNumRecord = sortedRecords[0];
                 break;
             }
 
             console.log(`Checked sortNum range ${endSortNum} - ${currentSortNum}`);
         }
 
-        console.log(`Found Record ID: ${foundRecordId}`);
-        res.status(200).json({ recordId: foundRecordId });
+        console.log(`Found Record with Highest sortNum: ID=${highestSortNumRecord ? highestSortNumRecord.id : 'None'}`);
+        res.status(200).json({ recordId: highestSortNumRecord ? highestSortNumRecord.id : null });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'An error occurred while fetching the records' });
