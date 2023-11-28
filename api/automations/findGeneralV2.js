@@ -3,7 +3,12 @@ const axios = require('axios');
 module.exports = async (req, res) => {
     try {
         // Extract the record IDs from the request query parameters
-        const recordIds = req.query.recordIds;
+        let recordIds = req.query.recordIds;
+
+        // Convert recordIds to an array if it is not already an array
+        if (!Array.isArray(recordIds)) {
+            recordIds = Array.from(recordIds);
+        }
 
         // Get the Airtable key, table ID, and base ID from environment variables
         const airtableKey = process.env.AIRTABLE_KEY;
