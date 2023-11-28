@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
             const records = response.data.records;
 
             // Find the first record that matches the criteria in the current batch
-            const matchingRecord = records.find(record => record.fields.indent === indent);
+            const matchingRecord = records.find(record => record.fields.indent === parentIndent);
             if (matchingRecord) {
                 foundRecordId = matchingRecord.id;
                 break;
