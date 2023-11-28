@@ -4,6 +4,7 @@ module.exports = async (req, res) => {
     try {
         // Extract the query parameters from the request
         const { indent, sortNum } = req.query;
+        const { parentIndent } = indent - 1;
 
         // Get the Airtable key, table ID, and base ID from environment variables
         const airtableKey = process.env.AIRTABLE_KEY;
@@ -23,7 +24,7 @@ module.exports = async (req, res) => {
             const endSortNum = startSortNum - 49;
 
             // Make a GET request to the Airtable API to fetch the records for the current batch
-            const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=AND(sortNum>=${endSortNum}, sortNum<=${startSortNum}, indent=${indent})`, {
+            const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=AND(sortNum>=${endSortNum}, sortNum<=${startSortNum}, indent=${parentIndent})`, {
                 headers: {
                     Authorization: `Bearer ${airtableKey}`,
                 },
