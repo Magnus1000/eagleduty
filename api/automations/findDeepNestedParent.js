@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     try {
         // Extract the query parameters from the request
         const { indent, sortNum } = req.query;
-        const { parentIndent } = indent - 1;
+        const parentIndent = indent - 1;
 
         // Get the Airtable key, table ID, and base ID from environment variables
         const airtableKey = process.env.AIRTABLE_KEY;
