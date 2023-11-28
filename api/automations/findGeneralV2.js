@@ -5,10 +5,15 @@ module.exports = async (req, res) => {
         // Extract the record IDs from the request query parameters
         const recordIds = req.query.recordIds;
 
+        // Get the Airtable key, table ID, and base ID from environment variables
+        const airtableKey = process.env.AIRTABLE_KEY;
+        const airtableTableId = process.env.AIRTABLE_TABLE_ID;
+        const airtableBaseId = process.env.AIRTABLE_BASE_ID;
+
         // Make a GET request to the Airtable API to fetch the records
-        const response = await axios.get(`https://api.airtable.com/v0/app65mmXH80sle2qO/tblMOYEO2dSqBJMLl?filterByFormula=OR(${recordIds.map(id => `RECORD_ID='${id}'`).join(',')})`, {
+        const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=OR(${recordIds.map(id => `RECORD_ID='${id}'`).join(',')})`, {
             headers: {
-                Authorization: `Bearer patkPgQNIsCJaci3p.512c335a388e6c3dd7838fecfe4de785dd48b242b87781fd22fbbb1d4b09e917`,
+                Authorization: `Bearer ${airtableKey}`,
             },
         });
 
