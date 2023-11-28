@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
             const endSortNum = startSortNum - 49;
 
             // Make a GET request to the Airtable API to fetch the records for the current batch
-            const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=AND(SORT_NUM>=${endSortNum}, SORT_NUM<=${startSortNum}, INDENT=${indent})`, {
+            const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=AND(sortNum>=${endSortNum}, sortNum<=${startSortNum}, indent=${indent})`, {
                 headers: {
                     Authorization: `Bearer ${airtableKey}`,
                 },
