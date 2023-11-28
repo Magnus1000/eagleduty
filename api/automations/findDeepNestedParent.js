@@ -11,9 +11,8 @@ module.exports = async (req, res) => {
 
         let foundRecordId = null;
 
-        // Start from the given sortNum and go backwards
         for (let currentSortNum = sortNum; currentSortNum > 0; currentSortNum -= 50) {
-            const endSortNum = Math.max(currentSortNum - 49, 1); // Ensure it doesn't go below 1
+            const endSortNum = Math.max(currentSortNum - 49, 1);
 
             const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=AND(sortNum>=${endSortNum}, sortNum<=${currentSortNum}, indent=${parentIndent})`, {
                 headers: {
@@ -23,19 +22,12 @@ module.exports = async (req, res) => {
 
             const records = response.data.records;
 
-            // Look for a record with indent equal to parentIndent
-            const matchingRecord = records.find(record => record.fields.indent === parentIndent);
-            if (matchingRecord) {
-                foundRecordId = matchingRecord.id;
+            if (records.length > 0) {
+                foundRecordId = records[0].id; // Assuming records are ordered by sortNum
                 break;
             }
 
             console.log(`Checked sortNum range ${endSortNum} - ${currentSortNum}`);
-
-            // Log the sortNum of each record fetched
-            records.forEach(record => {
-                console.log(`Fetched record with sortNum: ${record.fields.sortNum} and ID ${record.id}`);
-            });
         }
 
         console.log(`Found Record ID: ${foundRecordId}`);
