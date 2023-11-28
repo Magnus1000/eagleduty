@@ -39,7 +39,13 @@ module.exports = async (req, res) => {
                 foundRecordId = matchingRecord.id;
                 break;
             }
+
+            // Log the current batch and range
+            console.log(`Batch ${batch + 1}: Range ${startSortNum} - ${endSortNum}`);
         }
+
+        // Log the final result
+        console.log(`Found Record ID: ${foundRecordId}`);
 
         // Send the found record ID as the response
         res.status(200).json({ recordId: foundRecordId });
