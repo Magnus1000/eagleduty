@@ -31,6 +31,11 @@ module.exports = async (req, res) => {
             }
 
             console.log(`Checked sortNum range ${endSortNum} - ${currentSortNum}`);
+
+            // Log the sortNum of each record fetched
+            records.forEach(record => {
+                console.log(`Fetched record with sortNum: ${record.fields.sortNum} and ID ${record.id}`);
+            });
         }
 
         console.log(`Found Record ID: ${foundRecordId}`);
