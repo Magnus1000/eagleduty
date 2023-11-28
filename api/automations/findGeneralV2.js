@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
         const airtableBaseId = process.env.AIRTABLE_BASE_ID;
 
         // Make a GET request to the Airtable API to fetch the records
-        const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=OR(${recordIds.map(id => `RECORD_ID='${id}'`).join(',')})`, {
+        const response = await axios.get(`https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}?filterByFormula=OR(${recordIds.map(id => `RECORD_ID()='${id}'`).join(',')})`, {
             headers: {
                 Authorization: `Bearer ${airtableKey}`,
             },
