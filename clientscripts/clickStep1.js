@@ -596,6 +596,23 @@ function addEventListenersToSeeDetailsButton() {
     });
 }
 
+// Function to create a div element for section or chapter
+function createDetailsParentDiv(name, description) {
+    const div = document.createElement("div");
+    div.classList.add("details-parent-div");
+
+    const nameElement = document.createElement("h3");
+    nameElement.textContent = name;
+
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = description;
+
+    div.appendChild(nameElement);
+    div.appendChild(descriptionElement);
+
+    return div;
+}
+
 // Function to populate the details modal
 function populateSeeDetailsModal(targetElement) { // Receive the targetElement as a parameter
     // Get the parent element of the targetElement
@@ -619,5 +636,14 @@ function populateSeeDetailsModal(targetElement) { // Receive the targetElement a
     // Set the values of the selected result card on screen 2
     const detailsModalHeader = document.querySelector("#detailsModalHeader");
     detailsModalHeader.textContent = htsno;
+
+    // Create and append the section div
+    const sectionDiv = createDetailsParentDiv(sectionName, sectionDescription);
+    detailsHierarchyTargetDiv.appendChild(sectionDiv);
+
+    // Create and append the chapter div
+    const chapterDiv = createDetailsParentDiv(chapterName, chapterDescription);
+    detailsHierarchyTargetDiv.appendChild(chapterDiv);
+    
 
 }
