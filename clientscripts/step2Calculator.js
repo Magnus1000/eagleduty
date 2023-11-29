@@ -133,8 +133,15 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     console.log('Total Duty (excl tariffs):', totalDuty);
 
     // Step 4.2: Update Total Duty if Penalty Duty exists
-    totalDuty = chinaTariff !== null ? (parseFloat(totalDuty) + parseFloat(chinaTariff)).toFixed(2) : totalDuty;
-    console.log('Total Duty (incl tariffs):', totalDuty);
+    if (penaltyType === "in_lieu") {
+        totalDuty = penaltyDuty.toFixed(2);
+        console.log(`Total Duty (incl tariffs) for ${isoCode}:`, totalDuty);
+    } else if (penaltyType === "additional") {
+        totalDuty = (parseFloat(totalDuty) + parseFloat(penaltyDuty)).toFixed(2);
+        console.log(`Total Duty (incl tariffs) for ${isoCode}:`, totalDuty);
+    } else {
+        console.log(`No penalty for ${isoCode}`);
+    }
 
     // Function to reveal duty
     function updateTotalDuty(totalDuty, currency) {
