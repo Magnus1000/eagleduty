@@ -370,6 +370,7 @@ function watchFieldsForCalculation() {
     const selectedResult = document.getElementById('selectedResult');
     const calculationType = selectedResult.getAttribute('data-calculation-type');
     const importingFrom = document.getElementById('importingFrom').value;
+    const selectedResultCard = document.querySelector("#selectedResult");
     const ninetyNineJson = selectedResultCard.getAttribute('data-99-json');
 
     // Common function to check fields
