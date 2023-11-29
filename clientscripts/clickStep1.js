@@ -597,9 +597,10 @@ function addEventListenersToSeeDetailsButton() {
 }
 
 // Function to create a div element for section or chapter
-function createDetailsParentDiv(name, description) {
+function createDetailsParentDiv(name, description, index) {
     const div = document.createElement("div");
     div.classList.add("details-parent-div");
+    div.style.marginLeft = `${index + 1}rem`; // Set the left margin based on the index
 
     const nameElement = document.createElement("p");
     nameElement.textContent = name;
@@ -647,11 +648,11 @@ function populateSeeDetailsModal(targetElement) {
     detailsHierarchyTargetDiv.innerHTML = '';
 
     // Create and append the section div
-    const sectionDiv = createDetailsParentDiv(sectionName, sectionDescription);
+    const sectionDiv = createDetailsParentDiv(sectionName, sectionDescription, 0);
     detailsHierarchyTargetDiv.appendChild(sectionDiv);
 
     // Create and append the chapter div
-    const chapterDiv = createDetailsParentDiv(chapterName, chapterDescription);
+    const chapterDiv = createDetailsParentDiv(chapterName, chapterDescription, 1);
     detailsHierarchyTargetDiv.appendChild(chapterDiv);
 
     // Create and append the hierarchy divs
@@ -660,6 +661,7 @@ function populateSeeDetailsModal(targetElement) {
         const description = item[1];
         const div = document.createElement("div");
         div.classList.add(index === hierarchyArray.length - 1 ? "details-selected-div" : "details-parent-div");
+        div.style.marginLeft = `${index + 2}rem`; // Set the left margin based on the index
         const nameElement = document.createElement("p");
         nameElement.textContent = name;
         nameElement.classList.add(index === hierarchyArray.length - 1 ? "details-select-name-text" : "details-parent-name-text"); // Add class to name element
