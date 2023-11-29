@@ -614,7 +614,7 @@ function createDetailsParentDiv(name, description) {
 }
 
 // Function to populate the details modal
-function populateSeeDetailsModal(targetElement) { // Receive the targetElement as a parameter
+function populateSeeDetailsModal(targetElement) {
     // Get the parent element of the targetElement
     const parentElement = targetElement.parentElement;
 
@@ -624,13 +624,17 @@ function populateSeeDetailsModal(targetElement) { // Receive the targetElement a
     const sectionDescription = parentElement.getAttribute("data-section-description");
     const chapterName = parentElement.getAttribute("data-chapter-name");
     const chapterDescription = parentElement.getAttribute("data-chapter-description");
-    const hierarchyArray = parentElement.getAttribute("data-hierarchy-array");
 
     console.log("See details htsno:", htsno);
     console.log("See details sectionName:", sectionName);
     console.log("See details sectionDescription:", sectionDescription);
     console.log("See details chapterName:", chapterName);
     console.log("See details chapterDescription:", chapterDescription);
+
+    // Get the hierarchy array from the attribute
+    const hierarchyArrayAttribute = parentElement.getAttribute("data-hierarchy-array");
+    const hierarchyArray = JSON.parse(hierarchyArrayAttribute);
+
     console.log("See details hierarchyArray:", hierarchyArray);
 
     // Set the values of the selected result card on screen 2
@@ -644,6 +648,19 @@ function populateSeeDetailsModal(targetElement) { // Receive the targetElement a
     // Create and append the chapter div
     const chapterDiv = createDetailsParentDiv(chapterName, chapterDescription);
     detailsHierarchyTargetDiv.appendChild(chapterDiv);
-    
 
+    // Create and append the hierarchy divs
+    hierarchyArray.forEach((item, index) => {
+        const name = item[0];
+        const description = item[1];
+        const div = document.createElement("div");
+        div.classList.add(index === hierarchyArray.length - 1 ? "details-selected-div" : "details-parent-div");
+        const nameElement = document.createElement("h3");
+        nameElement.textContent = name;
+        const descriptionElement = document.createElement("p");
+        descriptionElement.textContent = description;
+        div.appendChild(nameElement);
+        div.appendChild(descriptionElement);
+        detailsHierarchyTargetDiv.appendChild(div);
+    });
 }
