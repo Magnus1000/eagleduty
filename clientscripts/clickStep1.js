@@ -603,9 +603,11 @@ function createDetailsParentDiv(name, description) {
 
     const nameElement = document.createElement("p");
     nameElement.textContent = name;
+    nameElement.classList.add("details-parent-name-text"); // Add class to name element
 
     const descriptionElement = document.createElement("p");
     descriptionElement.textContent = description;
+    descriptionElement.classList.add("details-parent-description-text"); // Add class to description element
 
     div.appendChild(nameElement);
     div.appendChild(descriptionElement);
@@ -657,8 +659,10 @@ function populateSeeDetailsModal(targetElement) {
         div.classList.add(index === hierarchyArray.length - 1 ? "details-selected-div" : "details-parent-div");
         const nameElement = document.createElement("p");
         nameElement.textContent = name;
+        nameElement.classList.add(index === hierarchyArray.length - 1 ? "details-select-name-text" : "details-parent-name-text"); // Add class to name element
         const descriptionElement = document.createElement("p");
         descriptionElement.textContent = description;
+        descriptionElement.classList.add(index === hierarchyArray.length - 1 ? "details-select-description-text" : "details-parent-description-text"); // Add class to description element
         div.appendChild(nameElement);
         div.appendChild(descriptionElement);
         detailsHierarchyTargetDiv.appendChild(div);
