@@ -643,6 +643,9 @@ function populateSeeDetailsModal(targetElement) {
     const detailsModalHeader = document.querySelector("#detailsModalHeader");
     detailsModalHeader.textContent = htsno;
 
+    // Clear the detailsHierarchyTargetDiv
+    detailsHierarchyTargetDiv.innerHTML = '';
+
     // Create and append the section div
     const sectionDiv = createDetailsParentDiv(sectionName, sectionDescription);
     detailsHierarchyTargetDiv.appendChild(sectionDiv);
