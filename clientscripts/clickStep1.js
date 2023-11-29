@@ -600,7 +600,7 @@ function addEventListenersToSeeDetailsButton() {
 function createDetailsParentDiv(name, description, index) {
     const div = document.createElement("div");
     div.classList.add("details-parent-div");
-    div.style.marginLeft = `${index + 1}rem`; // Set the left margin based on the index
+    div.style.marginLeft = `${index}rem`; // Set the left margin based on the index
 
     const nameElement = document.createElement("p");
     nameElement.textContent = name;
