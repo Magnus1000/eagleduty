@@ -18,21 +18,24 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const selectedResultCard = document.querySelector("#selectedResult");
     const ninetyNineJson = selectedResultCard.getAttribute('data-99-json');
 
+    //Calculation Type
+    const calculationType = selectedResultCard.getAttribute('data-calculation-type');
+
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
-    if (value !== null && isNaN(amount)) {
-        duty = (value * generalRate * quantity).toFixed(2);
-        console.log('Duty (value):', duty);
-    }
-
+    if (calculationType === "value") {
+            duty = (value * generalRate * quantity).toFixed(2);
+            console.log('Duty (value):', duty);
     // Step 1.2: Calculate the duty for products where duty is calculated on amount
-    if ((isNaN(value) || value == null) && !isNaN(amount) && amountUnit != null) {
-        const amountQuantity = parseFloat(amount);
-        duty = (generalRate * amountQuantity).toFixed(2);
-        console.log('Duty (amount):', duty);
+    } else if (calculationType === "amount") {
+            const amountQuantity = parseFloat(amount);
+            duty = (generalRate * amountQuantity).toFixed(2); 
+            console.log('Duty (amount):', duty);
+    } else {
+        console.log('No calculation type found');
     }
 
     // Step 2: Calculate the special duty
@@ -391,7 +394,7 @@ function watchFieldsForCalculation() {
 
         fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
-    } else if (calculationType === 'amount' && importingFrom !== 'CN') {
+    } else if (calculationType === 'amount' && importingFrom && (!ninetyNineJson || Object.keys(ninetyNineJson).length === 0)) {
         const fields = [
             document.getElementById('importingTo'),
             document.getElementById('importingFrom'),
@@ -399,14 +402,14 @@ function watchFieldsForCalculation() {
             document.getElementById('amountUnitSelect')
         ];
 
-        console.log('Calculation type is amount and importingFrom is not China. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
+        console.log('Calculation type is amount and importingFrom country DOES NOT have an addition tariff. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
 
         // Initial check for pre-populated fields
         checkFields(fields);
 
         fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
-    } else if (calculationType === 'amount' && importingFrom === 'CN') {
+    } else if (calculationType === 'amount' && ninetyNineJson && Object.keys(ninetyNineJson).length > 0) {
         const fields = [
             document.getElementById('importingTo'),
             document.getElementById('importingFrom'),
@@ -416,7 +419,7 @@ function watchFieldsForCalculation() {
             document.getElementById('quantityField')
         ];
 
-        console.log('Calculation type is amount and importingFrom is China. Found fields: importingTo, importingFrom, amountField, amountUnitSelect, valueField, quantityField');
+        console.log('Calculation type is amount and importingFrom country DOES have an addition tariff.. Found fields: importingTo, importingFrom, amountField, amountUnitSelect, valueField, quantityField');
 
         // Initial check for pre-populated fields
         checkFields(fields);
