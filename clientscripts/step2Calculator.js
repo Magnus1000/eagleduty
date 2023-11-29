@@ -101,7 +101,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 console.log('Country match found:', matchedPenalty['99_countries']);
                 ninetyNinePenaltyRate = matchedPenalty['99_rate'];
                 penaltyType = matchedPenalty['99_type'];
-                console.log('Country match found. 99 Penalty:', ninetyNinePenalty);
+                console.log('Country match found. 99 Penalty:', ninetyNinePenaltyRate);
                 // Perform additional actions here
             } else {
                 // No country match found
