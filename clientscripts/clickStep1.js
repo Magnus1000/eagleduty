@@ -601,7 +601,7 @@ function createDetailsParentDiv(name, description) {
     const div = document.createElement("div");
     div.classList.add("details-parent-div");
 
-    const nameElement = document.createElement("h3");
+    const nameElement = document.createElement("p");
     nameElement.textContent = name;
 
     const descriptionElement = document.createElement("p");
@@ -655,7 +655,7 @@ function populateSeeDetailsModal(targetElement) {
         const description = item[1];
         const div = document.createElement("div");
         div.classList.add(index === hierarchyArray.length - 1 ? "details-selected-div" : "details-parent-div");
-        const nameElement = document.createElement("h3");
+        const nameElement = document.createElement("p");
         nameElement.textContent = name;
         const descriptionElement = document.createElement("p");
         descriptionElement.textContent = description;
