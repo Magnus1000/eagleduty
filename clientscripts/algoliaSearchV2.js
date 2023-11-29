@@ -31,7 +31,7 @@ function renderResults(hits) {
         resultItem.setAttribute('data-99-json', JSON.stringify(hit['99Json']));
         resultItem.setAttribute('data-special-json', JSON.stringify(hit.special_json));
         resultItem.setAttribute('data-other', hit.other);
-        resultItem.setAttribute('data-hierarchy_array', JSON.stringify(hit.heirarchyArray));
+        resultItem.setAttribute('data-hierarchy-array', JSON.stringify(hit.heirarchyArray));
         resultItem.setAttribute('data-units', hit.units);
 
         // Create and append the HTS code element
