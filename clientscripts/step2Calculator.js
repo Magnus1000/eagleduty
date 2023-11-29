@@ -1,16 +1,21 @@
 // Main Function to calculate the duty
-function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency, chinaTariffRate) {
+function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency) {
     console.log('Calculating Duty...');
     // Define Special Duty and Duty variables
     let specialDuty = null;
-    let chinaTariff = null;
     let duty = null;
+    let ninetyNinePenalty = null;
 
     // Additional Info fields
     const shippingCost = parseFloat(document.querySelector("#shippingCostField").value);
     const shippingCostCurrency = document.querySelector("#shippingCurrencySelect").value;
     const insuranceCost = parseFloat(document.querySelector("#insuranceCostField").value);
     const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
+
+    // Chapter 99 Fields
+    const selectedResultCard = document.querySelector("#selectedResult");
+    const ninetyNineJson = selectedResultCard.getAttribute('data-99-json');
+
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
 
@@ -80,11 +85,29 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     console.log('Special Duty:', specialDuty);
 
-    // Step 3: Calculate the China tariff
-    if (isoCode === 'CN' && chinaTariffRate !== null && chinaTariffRate !== undefined && chinaTariffRate !== '') {
-        chinaTariff = (value * chinaTariffRate * quantity).toFixed(2);
-        console.log('China Tariff:', chinaTariff);
+    // Step 3: Check if any Chapter 99 penalties apply. If so, get rate.
+    function checkCountryMatch(isoCode, ninetyNineJson) {
+        if (ninetyNineJson !== null && ninetyNineJson !== undefined && ninetyNineJson !== '') {
+            const parsedJson = JSON.parse(ninetyNineJson);
+            
+            // Find the penalty object with matching country
+            const matchedPenalty = parsedJson.find(penalty => penalty['99_countries'] === isoCode);
+            
+            if (matchedPenalty) {
+                // Country match found
+                ninetyNinePenalty = matchedPenalty['99_rate'];
+                console.log('Country match found. 99 Penalty:', ninetyNinePenalty);
+                // Perform additional actions here
+            } else {
+                // No country match found
+                console.log('No country match found.');
+                // Perform other actions here
+            }
+        }
     }
+
+    // Call the checkCountryMatch function
+    checkCountryMatch(isoCode, ninetyNineJson);    
 
 
     // Step 4: Calculate the total duty
@@ -141,9 +164,6 @@ document.addEventListener("DOMContentLoaded", async function() {
                 const generalRateString = selectedResultCard.getAttribute('data-general');
                 const generalRate = generalRateString === 'Free' ? 0 : (generalRateString ? parseFloat(generalRateString) / 100 : '');
 
-                // China Tariff rate
-                const chinaTariffRate = selectedResultCard.getAttribute('data-china-tariff-rate');
-
                 // Other input values
                 const quantity = parseFloat(document.querySelector("#quantityField").value);
                 const isoCode = document.querySelector("#importingFrom").value;
@@ -154,7 +174,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
 
                 // Call the calculateDuty function with the input values
-                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency, chinaTariffRate);
+                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
                 addLoadingClass();
 
                 // Call the subtractFromDailyCount function
@@ -190,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
 
                 // Call the calculateDuty function with the input values
-                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency, chinaTariffRate);
+                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
                 addLoadingClass();
 
                 // Call the subtractFromDailyCount function
