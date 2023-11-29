@@ -4,7 +4,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Define Special Duty and Duty variables
     let specialDuty = null;
     let duty = null;
-    let ninetyNinePenalty = null;
+    let ninetyNinePenaltyRate = null;
+    let penaltyType = null;
+    let penaltyDuty = null;
 
     // Additional Info fields
     const shippingCost = parseFloat(document.querySelector("#shippingCostField").value);
@@ -85,7 +87,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     console.log('Special Duty:', specialDuty);
 
-    // Step 3: Check if any Chapter 99 penalties apply. If so, get rate.
+    // Step 3: Calculate Chapter 99 penalties
+    // Step 3.1: Check if any Chapter 99 penalties apply and if so, get rate.
     function checkCountryMatch(isoCode, ninetyNineJson) {
         if (ninetyNineJson !== null && ninetyNineJson !== undefined && ninetyNineJson !== '') {
             const parsedJson = JSON.parse(ninetyNineJson);
@@ -95,24 +98,41 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
             
             if (matchedPenalty) {
                 // Country match found
-                ninetyNinePenalty = matchedPenalty['99_rate'];
+                console.log('Country match found:', matchedPenalty['99_countries']);
+                ninetyNinePenaltyRate = matchedPenalty['99_rate'];
+                penaltyType = matchedPenalty['99_type'];
                 console.log('Country match found. 99 Penalty:', ninetyNinePenalty);
                 // Perform additional actions here
             } else {
                 // No country match found
                 console.log('No country match found.');
-                // Perform other actions here
             }
         }
     }
 
     // Call the checkCountryMatch function
-    checkCountryMatch(isoCode, ninetyNineJson);    
+    if (ninetyNineJson && ninetyNineJson !== null && ninetyNineJson !== undefined && ninetyNineJson !== '') {
+        checkCountryMatch(isoCode, ninetyNineJson);
+    }
 
+    // Step 3.2: Calculate Penalty Amount
+    function calculatePenaltyDuty(ninetyNinePenaltyRate, value, quantity) {
+        penaltyDutyUnrounded = parseFloat(ninetyNinePenaltyRate) * parseFloat(value) * parseFloat(quantity);
+        penaltyDuty = penaltyDutyUnrounded.toFixed(2);
+        console.log('Penalty Duty:', penaltyDuty);
+    }
+
+    // Call the calculatePenaltyDuty function
+    if (ninetyNinePenaltyRate && value && quantity) {
+        calculatePenaltyDuty(ninetyNinePenaltyRate, value, quantity);
+    }
 
     // Step 4: Calculate the total duty
+    // Step 4.1: Calculate the Total Duty. Replace with Special Duty if Special Duty Exists
     let totalDuty = specialDuty !== null ? specialDuty : duty; // Total duty rounded to 2 decimal places
     console.log('Total Duty (excl tariffs):', totalDuty);
+
+    // Step 4.2: Update Total Duty if Penalty Duty exists
     totalDuty = chinaTariff !== null ? (parseFloat(totalDuty) + parseFloat(chinaTariff)).toFixed(2) : totalDuty;
     console.log('Total Duty (incl tariffs):', totalDuty);
 
