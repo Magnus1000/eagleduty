@@ -674,7 +674,7 @@ function populateSeeDetailsModal(targetElement) {
     });
 }
 
-// Add event listener to Additioanal Info button
+// Add event listener to hierarchy button
 document.addEventListener("DOMContentLoaded", () => {
     const expandHierarchyBtn = document.querySelector("#expandHierarchy");
     const hierarchyDiv = document.querySelector("#detailsHierarchyTargetDiv");
@@ -684,8 +684,8 @@ document.addEventListener("DOMContentLoaded", () => {
         hierarchyDiv.classList.toggle("hidden");
         console.log("Class Hidden applied to Hierarchy target div");
 
-        // Get all children of additionalFields
-        const childElements = hierarchyDiv.querySelectorAll("*");
+        // Get all children of the hierarchyDiv
+        const childElements = expandHierarchyBtn.querySelectorAll("*");
         // Loop through each child element and toggle the hidden class
         childElements.forEach(childElement => {
             childElement.classList.toggle("hidden");
