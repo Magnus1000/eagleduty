@@ -429,10 +429,14 @@ function updateDisplay() {
     const chinaValueWrapper = document.getElementById("valueWrapper");
     const selectedResult = document.getElementById("selectedResult");
 
-    if (importingFromField.value === "CN" && selectedResult.getAttribute("data-calculation-type") === "amount") {
-        chinaValueWrapper.classList.remove("hidden");
+    if (selectedResult.getAttribute("data-calculation-type") === "amount") {
+        if (importingFromField.value === "CN") {
+            chinaValueWrapper.classList.remove("hidden");
+        } else {
+            chinaValueWrapper.classList.add("hidden");
+        }
     } else {
-        chinaValueWrapper.classList.add("hidden");
+        console.log("Calculation type is not amount. Not toggling the display of the China value fields.");
     }
 }
 
