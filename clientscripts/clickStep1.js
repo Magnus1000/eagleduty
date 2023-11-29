@@ -603,9 +603,21 @@ function populateSeeDetailsModal(targetElement) { // Receive the targetElement a
 
     // Get the attributes of the parentElement
     const htsno = parentElement.getAttribute("data-htsno");
+    const sectionName = parentElement.getAttribute("data-section-name");
+    const sectionDescription = parentElement.getAttribute("data-section-description");
+    const chapterName = parentElement.getAttribute("data-chapter-name");
+    const chapterDescription = parentElement.getAttribute("data-chapter-description");
+    const hierarchyArray = parentElement.getAttribute("data-hierarchy-array");
+
     console.log("See details htsno:", htsno);
+    console.log("See details sectionName:", sectionName);
+    console.log("See details sectionDescription:", sectionDescription);
+    console.log("See details chapterName:", chapterName);
+    console.log("See details chapterDescription:", chapterDescription);
+    console.log("See details hierarchyArray:", hierarchyArray);
 
     // Set the values of the selected result card on screen 2
     const detailsModalHeader = document.querySelector("#detailsModalHeader");
     detailsModalHeader.textContent = htsno;
+
 }
