@@ -117,7 +117,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     // Step 3.2: Calculate Penalty Amount
     function calculatePenaltyDuty(ninetyNinePenaltyRate, value, quantity) {
-        penaltyDutyUnrounded = parseFloat(ninetyNinePenaltyRate) * parseFloat(value) * parseFloat(quantity);
+        penaltyDutyUnrounded = parseFloat(ninetyNinePenaltyRate) * parseFloat(value) * parseFloat(quantity) / 100;
         penaltyDuty = penaltyDutyUnrounded.toFixed(2);
         console.log('Penalty Duty:', penaltyDuty);
     }
