@@ -74,7 +74,7 @@ function goStep2() {
     const chapter = selectedResult.getAttribute("data-chapter-name");
     const section = selectedResult.getAttribute("data-section-name");
     const general = selectedResult.getAttribute("data-general");
-    const chinaTariffRate = selectedResult.getAttribute("data-china-tariff-rate");
+    const ninetyNineJson = selectedResult.getAttribute("data-99-json");
     const other = selectedResult.getAttribute("data-other");
     const specialJSON = selectedResult.getAttribute("data-special-json");
     const units = selectedResult.getAttribute("data-units");
@@ -90,7 +90,7 @@ function goStep2() {
     selectedResultCard.querySelector("[data-hts-card='chapter']").textContent = chapter;
     selectedResultCard.querySelector("[data-hts-card='section']").textContent = section;
     selectedResultCard.setAttribute('data-general', general);
-    selectedResultCard.setAttribute('data-china-tariff-rate', chinaTariffRate);
+    selectedResultCard.setAttribute('data-99-json', ninetyNineJson);
     selectedResultCard.setAttribute('data-other', other);
     selectedResultCard.setAttribute('data-special-json', specialJSON);
     selectedResultCard.setAttribute('data-units', units);

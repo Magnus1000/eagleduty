@@ -427,8 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateDisplay() {
     const importingFromField = document.getElementById("importingFrom");
     const chinaValueWrapper = document.getElementById("valueWrapper");
+    const selectedResult = document.getElementById("selectedResult");
 
-    if (importingFromField.value === "CN") {
+    if (importingFromField.value === "CN" && selectedResult.getAttribute("data-calculation-type") === "amount") {
         chinaValueWrapper.classList.remove("hidden");
     } else {
         chinaValueWrapper.classList.add("hidden");
