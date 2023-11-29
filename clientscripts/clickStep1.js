@@ -673,3 +673,22 @@ function populateSeeDetailsModal(targetElement) {
         detailsHierarchyTargetDiv.appendChild(div);
     });
 }
+
+// Add event listener to Additioanal Info button
+document.addEventListener("DOMContentLoaded", () => {
+    const expandHierarchyBtn = document.querySelector("#expandHierarchy");
+    const hierarchyDiv = document.querySelector("#detailsHierarchyTargetDiv");
+
+    expandHierarchyBtn.addEventListener("click", () => {
+        console.log("Hierarchy Click");
+        hierarchyDiv.classList.toggle("hidden");
+        console.log("Class Hidden applied to Hierarchy target div");
+
+        // Get all children of additionalFields
+        const childElements = hierarchyDiv.querySelectorAll("*");
+        // Loop through each child element and toggle the hidden class
+        childElements.forEach(childElement => {
+            childElement.classList.toggle("hidden");
+        });
+    });
+});
