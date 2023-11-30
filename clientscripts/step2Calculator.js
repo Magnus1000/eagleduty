@@ -137,7 +137,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     // Step 4.2: Update Total Duty if Penalty Duty exists
     if (penaltyType === "in_lieu") {
-        totalDuty = penaltyDuty.toFixed(2);
+        totalDuty = penaltyDuty;
         console.log(`Total Duty (incl tariffs) for ${isoCode}:`, totalDuty);
     } else if (penaltyType === "additional") {
         totalDuty = (parseFloat(totalDuty) + parseFloat(penaltyDuty)).toFixed(2);
