@@ -1,6 +1,3 @@
-const { spec } = require("node:test/reporters");
-const { parse } = require("path");
-
 // Main Function to calculate the duty
 function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency) {
     console.log('Calculating Duty...');
