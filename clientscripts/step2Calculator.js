@@ -216,7 +216,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     }
 
     // Function to reveal duty
-    function updateTotalDuty(totalDuty, currency, generalRate, specialRate) {
+    function updateTotalDuty(totalDuty, currency) {
         // Populate the costs fields
         const htsnoDiv = document.querySelector('#resultHTSCode');
         const selectedResultCard = document.querySelector("#selectedResult");
@@ -252,7 +252,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         }
 
         // If penalty duty exists, and type is "in-lieu", show penalty and hide general
-        if (penaltyDuty !== null && calculationType === 'in-lieu') {
+        if (penaltyDuty !== null && penaltyType === 'in-lieu') {
             const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
             penaltyDutyDiv.classList.remove('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
@@ -261,7 +261,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         }
 
         // If penalty duty exists, and type is "addition", show penalty and general
-        if (penaltyDuty !== null && calculationType === 'additional') {
+        if (penaltyDuty !== null && penaltyType === 'additional') {
             const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
             penaltyDutyDiv.classList.remove('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
