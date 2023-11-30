@@ -296,7 +296,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         penatyDutySubtext.textContent = penaltyDutySubtextText;
 
         const generalDutySubtext = document.querySelector('#resultGeneralDutySubtext');
-        generalDutySubtext.textContent = penaltyDutySubtextText;
+        generalDutySubtext.textContent = generalDutySubtextText;
 
     }
 
