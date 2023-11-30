@@ -55,8 +55,6 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         "PE": {"country": "Peru", "trade_agreement": "United States-Peru Trade Promotion Agreement (PTPA)"},
         "SG": {"country": "Singapore", "trade_agreement": "United States-Singapore Free Trade Agreement (USSFTA)"}
     }
-    
-    const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
 
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
@@ -100,6 +98,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         // Step 2.1.2: Get the special duty rate
         let specialDutyRate = specialJSON.special_json[isoCode];
         console.log('Country Level Special Duty Rate:', specialDutyRate);
+        const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
+        specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`
 
         // Step 2.2.3: If special duty rate is null or undefined, check if the country is A+, A* or USMCA
         if (specialDutyRate == null) {
@@ -107,17 +107,17 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 specialDutyRate = specialJSON.special_json['A*'];
                 const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
                 console.log('A* Special Duty Rate:', specialDutyRate);
-                specialDutySubtextText = `This item enjoys as special duty rate, saving ${amountSaved}% on duty.`;
+                specialDutySubtextText = `This item enjoys as special duty rate as ${countryName} is part of the Beneficiary Developing Countries (BDCs). You save ${amountSaved}% on duty.`;
             } else if (aPlus[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A+'];
                 console.log('A+ Special Duty Rate:', specialDutyRate);
                 const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
-                specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
+                specialDutySubtextText = `This item enjoys as special duty rate as ${countryName} is one of the Least-developed beneficiary countries. You save ${amountSaved}% on duty.`;
             } else if (usmca[isoCode]) {
                 specialDutyRate = specialJSON.special_json['S'];
                 console.log('S Special Duty Rate:', specialDutyRate);
                 const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
-                specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
+                specialDutySubtextText = `This item enjoys as special duty rate due to the United States-Mexico-Canada Agreement (USMCA). You save ${amountSaved}% on duty.`;
             } else {
                 console.log('No Special Duty Rate Found');
                 specialDutyRate = null;
