@@ -156,6 +156,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         const htsnoCost = document.querySelector('#resultHTSValue');
         htsnoCost.textContent = value;
 
+        const quantityDiv = document.querySelector('#resultQuantity');
+        quantityDiv.textContent = quantity;
+
         const shippingCostDiv = document.querySelector('#resultShippingCost');
         shippingCostDiv.textContent = shippingCost;
 
@@ -170,11 +173,11 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         const currencyDiv = document.querySelector('#dutyCurrency');
         currencyDiv.textContent = currency;
 
-        const generalRateDiv = document.querySelector('#resultGeneralDuty');
-        generalRateDiv.textContent = generalRate;
+        const generalDutyDiv = document.querySelector('#resultGeneralDuty');
+        generalDutyDiv.textContent = duty;
 
         const specialRateDiv = document.querySelector('#resultSpecialDuty');
-        specialRateDiv.textContent = specialRate;
+        specialRateDiv.textContent = specialDuty;
 
         const penaltyRateDiv = document.querySelector('#resultPenaltyDuty');
         penaltyRateDiv.textContent = penaltyDuty;
