@@ -215,8 +215,10 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         const totalDutyDiv = document.querySelector('#totalDuty');
         totalDutyDiv.textContent = totalDuty;
 
-        const currencyDiv = document.querySelector('.duty-currency');
-        currencyDiv.textContent = currency;
+        const currencyDivs = document.querySelectorAll('.duty-currency');
+        currencyDivs.forEach((currencyDiv) => {
+            currencyDiv.textContent = currency;
+        });
 
         const generalDutyDiv = document.querySelector('#resultGeneralDuty');
         generalDutyDiv.textContent = duty;
