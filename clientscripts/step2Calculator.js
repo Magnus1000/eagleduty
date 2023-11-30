@@ -17,6 +17,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Subtext
     let specialDutySubtextText = null;
     let penaltyDutySubtextText = null;
+    let generalDutySubtextText = null;
 
     // Chapter 99 Fields
     const selectedResultCard = document.querySelector("#selectedResult");
@@ -24,6 +25,38 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
     //Calculation Type
     const calculationType = selectedResultCard.getAttribute('data-calculation-type');
+
+    //General rate text
+    const generalRateString = selectedResultCard.getAttribute('data-general');
+
+    // Country name
+    const countryName = document.querySelector("#importingFrom").options[document.querySelector("#importingFrom").selectedIndex].text;
+
+    // Trade Agreement Details
+    const tradeAgreements {
+        "AU": {"country": "Australia", "trade_agreement": "United States-Australia Free Trade Agreement (AUSFTA)"},
+        "BH": {"country": "Bahrain", "trade_agreement": "United States-Bahrain Free Trade Agreement (USBFTA)"},
+        "CA": {"country": "Canada", "trade_agreement": "United States-Mexico-Canada Agreement (USMCA), previously known as the North American Free Trade Agreement (NAFTA)"},
+        "CL": {"country": "Chile", "trade_agreement": "United States-Chile Free Trade Agreement (USCFTA)"},
+        "CO": {"country": "Colombia", "trade_agreement": "United States-Colombia Trade Promotion Agreement (CTPA)"},
+        "CR": {"country": "Costa Rica", "trade_agreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR), which also includes other Central American countries"},
+        "DO": {"country": "Dominican Republic", "trade_agreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"},
+        "SV": {"country": "El Salvador", "trade_agreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"},
+        "GT": {"country": "Guatemala", "trade_agreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"},
+        "HN": {"country": "Honduras", "trade_agreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"},
+        "IL": {"country": "Israel", "trade_agreement": "United States-Israel Free Trade Agreement (USIFTA)"},
+        "JO": {"country": "Jordan", "trade_agreement": "United States-Jordan Free Trade Agreement (USJFTA)"},
+        "KR": {"country": "Korea, Republic of", "trade_agreement": "United States-Korea Free Trade Agreement (KORUS FTA)"},
+        "MX": {"country": "Mexico", "trade_agreement": "United States-Mexico-Canada Agreement (USMCA)"},
+        "MA": {"country": "Morocco", "trade_agreement": "United States-Morocco Free Trade Agreement (USMFTA)"},
+        "NI": {"country": "Nicaragua", "trade_agreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"},
+        "OM": {"country": "Oman", "trade_agreement": "United States-Oman Free Trade Agreement (USOFTA)"},
+        "PA": {"country": "Panama", "trade_agreement": "United States-Panama Trade Promotion Agreement (PATPA)"},
+        "PE": {"country": "Peru", "trade_agreement": "United States-Peru Trade Promotion Agreement (PTPA)"},
+        "SG": {"country": "Singapore", "trade_agreement": "United States-Singapore Free Trade Agreement (USSFTA)"}
+    }
+    
+    const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
 
 
     console.log('Parameters:', value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit,currency);
@@ -33,13 +66,26 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     if (calculationType === "value") {
             duty = (value * generalRate * quantity).toFixed(2);
             console.log('Duty (value):', duty);
+            if (generalRateString === Free) {
+                generalDutySubtextText = `This item is duty free.`;
+            } 
+            else {
+                generalDutySubtextText = `This item is subject to a ${generalRateString} duty on the value of ${value} ${currency}.`;
+            }
     // Step 1.2: Calculate the duty for products where duty is calculated on amount
     } else if (calculationType === "amount") {
             const amountQuantity = parseFloat(amount);
             duty = (generalRate * amountQuantity).toFixed(2); 
             console.log('Duty (amount):', duty);
+            if (generalRateString === Free) {
+                generalDutySubtextText = `This item is duty free.`;
+            }
+            else {
+            generalDutySubtextText = `This item is subject to a ${generalRateString} duty on the amount of ${amount} ${amountUnit}.`;
+            }
     } else {
         console.log('No calculation type found');
+        generalDutySubtextText = `Something went wrong calculating the general duty. Please try again.`;
     }
 
     // Step 2: Calculate the special duty
@@ -66,12 +112,12 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 specialDutyRate = specialJSON.special_json['A+'];
                 console.log('A+ Special Duty Rate:', specialDutyRate);
                 const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
-                specialDutySubtextText = `This item enjoys as special duty rate, saving ${amountSaved}% on duty.`;
+                specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
             } else if (usmca[isoCode]) {
                 specialDutyRate = specialJSON.special_json['S'];
                 console.log('S Special Duty Rate:', specialDutyRate);
                 const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
-                specialDutySubtextText = `This item enjoys as special duty rate, saving ${amountSaved}% on duty.`;
+                specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
             } else {
                 console.log('No Special Duty Rate Found');
                 specialDutyRate = null;
@@ -116,9 +162,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 penaltyType = matchedPenalty['99_type'];
                 console.log('Country match found. 99 Penalty:', ninetyNinePenaltyRate);
                 if (penaltyType === "in_lieu") {
-                    penaltyDutySubtextText = `The penalized duty rate for this item is ${ninetyNinePenaltyRate} in lieu of the general duty rate.`;
+                    penaltyDutySubtextText = `This item is subject to trade penalties or tariffs when imported from ${countryName}. The penalized duty rate for this item is ${ninetyNinePenaltyRate} instead of the general duty rate.`;
                 } else if (penaltyType === "additional") {
-                    penaltyDutySubtextText = `This item is subject to an additional ${ninetyNinePenaltyRate} penalty duty on top of the general duty.`;
+                    penaltyDutySubtextText = `This item is subject to trade penalties or tariffs when imported from ${countryName}. This item is subject to an additional ${ninetyNinePenaltyRate} penalty duty on top of the general duty.`;
                 }
             } else {
                 // No country match found
@@ -184,14 +230,16 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         if (duty !== null && specialDuty === null) {
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.remove('hidden');
+            console.log('Duty exists and Special Duty does not. Showing General Duty.');
         }
 
         // If special duty exists, hide general
         if (specialDuty !== null) {
-        const specialDutyDiv = document.querySelector('#specialDutyRow');
-        specialDutyDiv.classList.remove('hidden');
-        const dutyDiv = document.querySelector('#generalDutyRow');
-        dutyDiv.classList.add('hidden');
+            const specialDutyDiv = document.querySelector('#specialDutyRow');
+            specialDutyDiv.classList.remove('hidden');
+            const dutyDiv = document.querySelector('#generalDutyRow');
+            dutyDiv.classList.add('hidden');
+            console.log('Special Duty exists. Hiding General Duty.');
         }
 
         // If penalty duty exists, and type is "in-lieu", show penalty and hide general
@@ -200,6 +248,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
             penaltyDutyDiv.classList.remove('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.add('hidden');
+            console.log('Penalty Duty exists and type is In-Lieu. Hiding General Duty.');
         }
 
         // If penalty duty exists, and type is "addition", show penalty and general
@@ -208,6 +257,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
             penaltyDutyDiv.classList.remove('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.remove('hidden');
+            console.log('Penalty Duty exists and type is Addition. Showing General Duty.');
         }
 
 
@@ -235,6 +285,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
         const penatyDutySubtext = document.querySelector('#resultPenaltyDutySubtext');
         penatyDutySubtext.textContent = penaltyDutySubtextText;
+
+        const generalDutySubtext = document.querySelector('#resultGeneralDutySubtext');
+        generalDutySubtext.textContent = penaltyDutySubtextText;
 
     }
 
