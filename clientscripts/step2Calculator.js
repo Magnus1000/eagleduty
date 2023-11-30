@@ -147,12 +147,37 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     }
 
     // Function to reveal duty
-    function updateTotalDuty(totalDuty, currency) {
+    function updateTotalDuty(totalDuty, currency, generalRate, specialRate) {
+        // Populate the costs fields
+        const htsnoDiv = document.querySelector('#resultHTSCode');
+        const selectedResultCard = document.querySelector("#selectedResult");
+        htsnoDiv.textContent = selectedResultCard.getAttribute('data-htsno');
+
+        const htsnoCost = document.querySelector('#resultHTSValue');
+        htsnoCost.textContent = value;
+
+        const shippingCostDiv = document.querySelector('#resultShippingCost');
+        shippingCostDiv.textContent = shippingCost;
+
+        const insuranceCostDiv = document.querySelector('#resultInsuranceCost');
+        insuranceCostDiv.textContent = insuranceCost;
+
+
+        // Populate the results fields
         const totalDutyDiv = document.querySelector('#totalDuty');
         totalDutyDiv.textContent = totalDuty;
 
         const currencyDiv = document.querySelector('#dutyCurrency');
         currencyDiv.textContent = currency;
+
+        const generalRateDiv = document.querySelector('#resultGeneralDuty');
+        generalRateDiv.textContent = generalRate;
+
+        const specialRateDiv = document.querySelector('#resultSpecialDuty');
+        specialRateDiv.textContent = specialRate;
+
+        const penaltyRateDiv = document.querySelector('#resultPenaltyDuty');
+        penaltyRateDiv.textContent = penaltyDuty;
     }
 
     updateTotalDuty(totalDuty, currency);
