@@ -98,6 +98,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         // Step 2.1.2: Get the special duty rate
         let specialDutyRate = specialJSON.special_json[isoCode];
         console.log('Country Level Special Duty Rate:', specialDutyRate);
+        const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
         const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
         specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`
 
