@@ -168,7 +168,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         htsnoDiv.textContent = selectedResultCard.getAttribute('data-htsno');
 
         const htsnoCost = document.querySelector('#resultHTSValue');
-        htsnoCost.textContent = (parseFloat(value) * parsefloat(quantity)).toFixed(2);
+        htsnoCost.textContent = (parseFloat(value) * parseFloat(quantity)).toFixed(2);
 
         const quantityDiv = document.querySelector('#resultQuantity');
         quantityDiv.textContent = quantity;
