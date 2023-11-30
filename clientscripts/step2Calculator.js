@@ -479,16 +479,24 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateDisplay() {
     const importingFromField = document.getElementById("importingFrom");
     const chinaValueWrapper = document.getElementById("valueWrapper");
-    const selectedResult = document.getElementById("selectedResult");
+    const selectedResultCard = document.getElementById("selectedResult");
 
-    if (selectedResult.getAttribute("data-calculation-type") === "amount") {
-        if (importingFromField.value === "CN") {
-            chinaValueWrapper.classList.remove("hidden");
+    const ninetyNineJson = JSON.parse(selectedResultCard.getAttribute('data-99-json'));
+
+    if (Array.isArray(ninetyNineJson) && ninetyNineJson.length > 0) {
+        const ninetyNineCountries = ninetyNineJson.map(item => item["99_countries"]);
+
+        if (selectedResultCard.getAttribute("data-calculation-type") === "amount") {
+            if (ninetyNineCountries.includes(importingFromField.value)) {
+                chinaValueWrapper.classList.remove("hidden");
+            } else {
+                chinaValueWrapper.classList.add("hidden");
+            }
         } else {
-            chinaValueWrapper.classList.add("hidden");
+            console.log("Calculation type is not amount. Not toggling the display of the China value fields.");
         }
     } else {
-        console.log("Calculation type is not amount. Not toggling the display of the China value fields.");
+        console.log("Invalid 99_json. Not toggling the display of the China value fields.");
     }
 }
 
