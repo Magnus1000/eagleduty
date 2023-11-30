@@ -348,6 +348,14 @@ const usmca = {
 
 // Function to animate the loading field
 function addLoadingClass() {
+    // Show loading div
+    const loadingDiv = document.querySelector('#loadingDiv');
+    loadingDiv.classList.remove("hidden");
+
+    //Hide results div
+    const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
+    dutyRateWrapper.classList.add('hidden');
+
     const calculatorSteps = [
         document.querySelector("#calculatorStep1"),
         document.querySelector("#calculatorStep2"),
@@ -393,6 +401,10 @@ function addLoadingClass() {
                     // Reveal the duty rate wrapper
                     const dutyRateWrapper = document.querySelector('#dutyRateWrapper');
                     dutyRateWrapper.classList.remove('hidden');
+                    // Hide the loading message
+                    const loadingDiv = document.querySelector('#loadingDiv');
+                    loadingDiv.classList.add("hidden");
+                    // Set state of Next button
                     setButtonState('nextStep2', 'enable');
                 } else {
                     addLoadingClassToNextStep();
