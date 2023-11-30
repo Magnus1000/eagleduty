@@ -1,3 +1,4 @@
+const { spec } = require("node:test/reporters");
 const { parse } = require("path");
 
 // Main Function to calculate the duty
@@ -15,6 +16,10 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const shippingCostCurrency = document.querySelector("#shippingCurrencySelect").value;
     const insuranceCost = parseFloat(document.querySelector("#insuranceCostField").value);
     const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
+
+    // Subtext
+    let specialDutySubtextText = null;
+    let penaltyDutySubtextText = null;
 
     // Chapter 99 Fields
     const selectedResultCard = document.querySelector("#selectedResult");
@@ -57,13 +62,19 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         if (specialDutyRate == null) {
             if (aStar[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A*'];
+                const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
                 console.log('A* Special Duty Rate:', specialDutyRate);
+                specialDutySubtextText = `This item enjoys as special duty rate, saving ${amountSaved}% on duty.`;
             } else if (aPlus[isoCode]) {
                 specialDutyRate = specialJSON.special_json['A+'];
                 console.log('A+ Special Duty Rate:', specialDutyRate);
+                const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
+                specialDutySubtextText = `This item enjoys as special duty rate, saving ${amountSaved}% on duty.`;
             } else if (usmca[isoCode]) {
                 specialDutyRate = specialJSON.special_json['S'];
                 console.log('S Special Duty Rate:', specialDutyRate);
+                const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
+                specialDutySubtextText = `This item enjoys as special duty rate, saving ${amountSaved}% on duty.`;
             } else {
                 console.log('No Special Duty Rate Found');
                 specialDutyRate = null;
@@ -107,7 +118,11 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 ninetyNinePenaltyRate = matchedPenalty['99_rate'];
                 penaltyType = matchedPenalty['99_type'];
                 console.log('Country match found. 99 Penalty:', ninetyNinePenaltyRate);
-                // Perform additional actions here
+                if (penaltyType === "in_lieu") {
+                    penaltyDutySubtextText = `The penalized duty rate for this item is ${ninetyNinePenaltyRate}% penalty duty.`;
+                } else if (penaltyType === "additional") {
+                    penaltyDutySubtextText = `This item is subject to an additional ${ninetyNinePenaltyRate}% penalty duty on top of the general duty.`;
+                }
             } else {
                 // No country match found
                 console.log('No country match found.');
@@ -183,6 +198,13 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
         const penaltyRateDiv = document.querySelector('#resultPenaltyDuty');
         penaltyRateDiv.textContent = penaltyDuty;
+
+        // Populate the subtext
+        const specialDutySubtext = document.querySelector('#resultSpecialDutySubtext');
+        specialDutySubtext.textContent = specialDutySubtextText;
+
+        const penatyDutySubtext = document.querySelector('#resultPenaltyDutySubtext');
+        penatyDutySubtext.textContent = penaltyDutySubtextText;
     }
 
     updateTotalDuty(totalDuty, currency);
