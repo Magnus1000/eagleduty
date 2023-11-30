@@ -33,7 +33,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const countryName = document.querySelector("#importingFrom").options[document.querySelector("#importingFrom").selectedIndex].text;
 
     // Trade Agreement Details
-    const tradeAgreements {
+    const tradeAgreements = {
         "AU": {"country": "Australia", "trade_agreement": "United States-Australia Free Trade Agreement (AUSFTA)"},
         "BH": {"country": "Bahrain", "trade_agreement": "United States-Bahrain Free Trade Agreement (USBFTA)"},
         "CA": {"country": "Canada", "trade_agreement": "United States-Mexico-Canada Agreement (USMCA), previously known as the North American Free Trade Agreement (NAFTA)"},
