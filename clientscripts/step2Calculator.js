@@ -1,3 +1,5 @@
+const { parse } = require("path");
+
 // Main Function to calculate the duty
 function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency) {
     console.log('Calculating Duty...');
@@ -154,7 +156,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         htsnoDiv.textContent = selectedResultCard.getAttribute('data-htsno');
 
         const htsnoCost = document.querySelector('#resultHTSValue');
-        htsnoCost.textContent = value;
+        htsnoCost.textContent = (parseFloat(value) * parsefloat(quantity)).toFixed(2);
 
         const quantityDiv = document.querySelector('#resultQuantity');
         quantityDiv.textContent = quantity;
