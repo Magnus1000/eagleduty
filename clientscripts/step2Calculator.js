@@ -116,9 +116,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
                 penaltyType = matchedPenalty['99_type'];
                 console.log('Country match found. 99 Penalty:', ninetyNinePenaltyRate);
                 if (penaltyType === "in_lieu") {
-                    penaltyDutySubtextText = `The penalized duty rate for this item is ${ninetyNinePenaltyRate}% penalty duty.`;
+                    penaltyDutySubtextText = `The penalized duty rate for this item is ${ninetyNinePenaltyRate} in lieu of the general duty rate.`;
                 } else if (penaltyType === "additional") {
-                    penaltyDutySubtextText = `This item is subject to an additional ${ninetyNinePenaltyRate}% penalty duty on top of the general duty.`;
+                    penaltyDutySubtextText = `This item is subject to an additional ${ninetyNinePenaltyRate} penalty duty on top of the general duty.`;
                 }
             } else {
                 // No country match found
@@ -179,12 +179,43 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         const insuranceCostDiv = document.querySelector('#resultInsuranceCost');
         insuranceCostDiv.textContent = insuranceCost;
 
+        // Show / Hide the divs
+        // If duty exists and special duty doesn't, show general
+        if (duty !== null && specialDuty === null) {
+            const dutyDiv = document.querySelector('#generalDutyRow');
+            dutyDiv.classList.remove('hidden');
+        }
+
+        // If special duty exists, hide general
+        if (specialDuty !== null) {
+        const specialDutyDiv = document.querySelector('#specialDutyRow');
+        specialDutyDiv.classList.remove('hidden');
+        const dutyDiv = document.querySelector('#generalDutyRow');
+        dutyDiv.classList.add('hidden');
+        }
+
+        // If penalty duty exists, and type is "in-lieu", show penalty and hide general
+        if (penaltyDuty !== null && calculationType === 'in-lieu') {
+            const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
+            penaltyDutyDiv.classList.remove('hidden');
+            const dutyDiv = document.querySelector('#generalDutyRow');
+            dutyDiv.classList.add('hidden');
+        }
+
+        // If penalty duty exists, and type is "addition", show penalty and general
+        if (penaltyDuty !== null && calculationType === 'additional') {
+            const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
+            penaltyDutyDiv.classList.remove('hidden');
+            const dutyDiv = document.querySelector('#generalDutyRow');
+            dutyDiv.classList.remove('hidden');
+        }
+
 
         // Populate the results fields
         const totalDutyDiv = document.querySelector('#totalDuty');
         totalDutyDiv.textContent = totalDuty;
 
-        const currencyDiv = document.querySelector('#dutyCurrency');
+        const currencyDiv = document.querySelector('.duty-currency');
         currencyDiv.textContent = currency;
 
         const generalDutyDiv = document.querySelector('#resultGeneralDuty');
@@ -202,6 +233,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
 
         const penatyDutySubtext = document.querySelector('#resultPenaltyDutySubtext');
         penatyDutySubtext.textContent = penaltyDutySubtextText;
+
     }
 
     updateTotalDuty(totalDuty, currency);
