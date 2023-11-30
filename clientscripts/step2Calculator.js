@@ -64,7 +64,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     if (calculationType === "value") {
             duty = (value * generalRate * quantity).toFixed(2);
             console.log('Duty (value):', duty);
-            if (generalRateString === Free) {
+            if (generalRateString === 'Free') {
                 generalDutySubtextText = `This item is duty free.`;
             } 
             else {
@@ -75,7 +75,7 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
             const amountQuantity = parseFloat(amount);
             duty = (generalRate * amountQuantity).toFixed(2); 
             console.log('Duty (amount):', duty);
-            if (generalRateString === Free) {
+            if (generalRateString === 'Free') {
                 generalDutySubtextText = `This item is duty free.`;
             }
             else {
