@@ -100,9 +100,14 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         console.log('Country Level Special Duty Rate:', specialDutyRate);
 
         if (specialDutyRate !== null) {
-        const amountSaved = (parseFloat (duty) - parseFloat(specialDuty)).toFixed(2);
-        const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
-        specialDutySubtextText = `This item enjoys as special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`
+            const amountSaved = (parseFloat(duty) - parseFloat(specialDuty)).toFixed(2);
+
+            if (tradeAgreements && tradeAgreements[isoCode] && tradeAgreements[isoCode].trade_agreement) {
+                const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
+                specialDutySubtextText = `This item enjoys a special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
+            } else {
+                specialDutySubtextText = 'No special duty rate available for this item.';
+            }
         }
 
         // Step 2.2.3: If special duty rate is null or undefined, check if the country is A+, A* or USMCA
