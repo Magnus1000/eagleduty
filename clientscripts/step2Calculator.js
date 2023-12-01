@@ -9,9 +9,11 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     let penaltyDuty = null;
 
     // Additional Info fields
-    const shippingCost = parseFloat(document.querySelector("#shippingCostField").value);
+    const shippingCostField = document.querySelector("#shippingCostField");
+    const shippingCost = shippingCostField.value ? parseFloat(shippingCostField.value) : 0;
     const shippingCostCurrency = document.querySelector("#shippingCurrencySelect").value;
-    const insuranceCost = parseFloat(document.querySelector("#insuranceCostField").value);
+    const insuranceCostField = document.querySelector("#insuranceCostField");
+    const insuranceCost = insuranceCostField.value ? parseFloat(insuranceCostField.value) : 0;
     const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
 
     // Subtext
