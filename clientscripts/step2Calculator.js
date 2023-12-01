@@ -261,6 +261,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         if (penaltyDuty !== null && penaltyType === 'in-lieu') {
             const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
             penaltyDutyDiv.classList.remove('hidden');
+            const dutyDiv = document.querySelector('#generalDutyRow');
+            dutyDiv.classList.add('hidden');
             const specialDutyDiv = document.querySelector('#specialDutyRow');
             specialDutyDiv.classList.add('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
