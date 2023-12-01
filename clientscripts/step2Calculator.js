@@ -102,11 +102,11 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         console.log('Country Level Special Duty Rate:', specialDutyRate);
 
         if (specialDutyRate !== null) {
-            const amountSaved = (parseFloat(duty) - parseFloat(specialDuty)).toFixed(2);
+            const amountSaved = (((parseFloat(generalRate) - parseFloat(specialDutyRate)) * 100)/ parseFloat(generalRate)).toFixed(2);
 
             if (tradeAgreements && tradeAgreements[isoCode] && tradeAgreements[isoCode].trade_agreement) {
                 const freeTradeAgreement = tradeAgreements[isoCode].trade_agreement;
-                specialDutySubtextText = `This item enjoys a special duty rate as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
+                specialDutySubtextText = `This item enjoys a special duty rate of ${specialDutyRate} as part of the ${freeTradeAgreement}, saving ${amountSaved}% on duty.`;
             } else {
                 specialDutySubtextText = 'No special duty rate available for this item.';
             }
