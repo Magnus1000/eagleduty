@@ -241,6 +241,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         if (duty !== null && specialDuty === null) {
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.remove('hidden');
+            const specialDutyDiv = document.querySelector('#specialDutyRow');
+            specialDutyDiv.classList.add('hidden');
             console.log('Duty exists and Special Duty does not. Showing General Duty.');
         }
 
@@ -248,6 +250,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         if (specialDuty !== null) {
             const specialDutyDiv = document.querySelector('#specialDutyRow');
             specialDutyDiv.classList.remove('hidden');
+            const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
+            penaltyDutyDiv.classList.add('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.add('hidden');
             console.log('Special Duty exists. Hiding General Duty.');
@@ -257,6 +261,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         if (penaltyDuty !== null && penaltyType === 'in-lieu') {
             const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
             penaltyDutyDiv.classList.remove('hidden');
+            const specialDutyDiv = document.querySelector('#specialDutyRow');
+            specialDutyDiv.classList.add('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.add('hidden');
             console.log('Penalty Duty exists and type is In-Lieu. Hiding General Duty.');
@@ -265,6 +271,8 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
         // If penalty duty exists, and type is "addition", show penalty and general
         if (penaltyDuty !== null && penaltyType === 'additional') {
             const penaltyDutyDiv = document.querySelector('#penaltyDutyRow');
+            const specialDutyDiv = document.querySelector('#specialDutyRow');
+            specialDutyDiv.classList.add('hidden');
             penaltyDutyDiv.classList.remove('hidden');
             const dutyDiv = document.querySelector('#generalDutyRow');
             dutyDiv.classList.remove('hidden');
