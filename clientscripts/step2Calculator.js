@@ -16,6 +16,9 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     const insuranceCost = insuranceCostField.value ? parseFloat(insuranceCostField.value) : 0;
     const insuranceCostCurrency = document.querySelector("#insuranceCurrencySelect").value;
 
+    // Calculate the value inclusive of shipping cost and insurance cost
+    const inclusiveValue = value + shippingCost + insuranceCost;
+
     // Subtext
     let specialDutySubtextText = null;
     let penaltyDutySubtextText = null;
@@ -64,13 +67,13 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Step 1: Calculate the general duty
     // Step 1.1: Calculate the duty for products where duty is calculated on value
     if (calculationType === "value") {
-            duty = (value * generalRate * quantity).toFixed(2);
+            duty = (inclusiveValue * generalRate * quantity).toFixed(2);
             console.log('Duty (value):', duty);
             if (generalRateString === 'Free') {
                 generalDutySubtextText = `This item is duty free.`;
             } 
             else {
-                generalDutySubtextText = `This item is subject to a ${generalRateString} duty on the value of ${value} ${currency}.`;
+                generalDutySubtextText = `This item is subject to a ${generalRateString} duty on the value of ${inclusiveValue} ${currency} (including shipping and insurance costs).`;
             }
     // Step 1.2: Calculate the duty for products where duty is calculated on amount
     } else if (calculationType === "amount") {
@@ -144,14 +147,14 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     // Step 2.3: Calculate the special duty amount
     // Step 2.3.1: Calculate the special duty amount for products where duty is calculated on value
     if (value !== null && isNaN(amount) && specialDutyRate != null) {
-        specialDuty = (value * specialDutyRate * quantity).toFixed(2);
+        specialDuty = (inclusiveValue * specialDutyRate * quantity).toFixed(2);
         console.log('Special duty (value):', specialDuty);
     }
 
     // Step 2.3.2: Calculate the special duty amount for products where duty is calculated on amount
     if (amount !== null && amountUnit !== null && value === null && specialDutyRate != null) {
         const amountQuantity = parseFloat(amount);
-        specialDuty = (value * specialDutyRate * quantity).toFixed(2);
+        specialDuty = (inclusiveValue * specialDutyRate * quantity).toFixed(2);
         console.log('Special duty (amount):', specialDuty);
     }
 
@@ -190,15 +193,15 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
     }
 
     // Step 3.2: Calculate Penalty Amount
-    function calculatePenaltyDuty(ninetyNinePenaltyRate, value, quantity) {
-        penaltyDutyUnrounded = parseFloat(ninetyNinePenaltyRate) * parseFloat(value) * parseFloat(quantity) / 100;
+    function calculatePenaltyDuty(ninetyNinePenaltyRate, inclusiveValue, quantity) {
+        penaltyDutyUnrounded = parseFloat(ninetyNinePenaltyRate) * parseFloat(inclusiveValue) * parseFloat(quantity) / 100;
         penaltyDuty = penaltyDutyUnrounded.toFixed(2);
         console.log('Penalty Duty:', penaltyDuty);
     }
 
     // Call the calculatePenaltyDuty function
     if (ninetyNinePenaltyRate && value && quantity) {
-        calculatePenaltyDuty(ninetyNinePenaltyRate, value, quantity);
+        calculatePenaltyDuty(ninetyNinePenaltyRate, inclusiveValue, quantity);
     }
 
     // Step 4: Calculate the total duty
