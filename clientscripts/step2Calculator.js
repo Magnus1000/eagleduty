@@ -265,8 +265,6 @@ function calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amoun
             dutyDiv.classList.add('hidden');
             const specialDutyDiv = document.querySelector('#specialDutyRow');
             specialDutyDiv.classList.add('hidden');
-            const dutyDiv = document.querySelector('#generalDutyRow');
-            dutyDiv.classList.add('hidden');
             console.log('Penalty Duty exists and type is In-Lieu. Hiding General Duty.');
         }
 
