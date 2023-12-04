@@ -165,7 +165,7 @@ function goStep2() {
             valueWrapper.classList.add("hidden");
             // Select unit option 
             amountUnitSelect.selectedIndex = 0;
-          else if (calculationType === "amountValue") {
+        }  else if (calculationType === "amountValue") {
             // Set amount and value fields
             valueUnitText.textContent = "$";
             // Show Wrappers
