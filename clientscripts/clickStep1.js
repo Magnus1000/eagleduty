@@ -80,6 +80,7 @@ function goStep2() {
     const units = selectedResult.getAttribute("data-units");
     const calculationType = selectedResult.getAttribute("data-calculation-type");
     const helperText = selectedResult.getAttribute("data-helper-text");
+    const productTags = selectedResult.getAttribute("data-product-tags");
 
 
     // Set the values of the selected result card on screen 2
@@ -99,6 +100,7 @@ function goStep2() {
     selectedResultCard.setAttribute('data-htsno', htsno);
     selectedResultCard.setAttribute('data-calculation-type', calculationType);
     selectedResultCard.setAttribute('data-helper-text', helperText);
+    selectedResultCard.setAttribute('data-product-tags', productTags);
 
     // Function to display the correct unit field – value or amount
     function setUnitFields(units, calculationType) {
@@ -683,9 +685,26 @@ function populateSeeDetailsModal(targetElement) {
     const chapterName = parentElement.getAttribute("data-chapter-name");
     const chapterDescription = parentElement.getAttribute("data-chapter-description");
     const helperTextTarget = document.querySelector("#helperTextTarget");
+    const productTagsDiv = document.querySelector("#productTagsDiv");
 
     // Get the helper text  from the attribute
     const helperText = parentElement.getAttribute("data-helper-text");
+
+    // Get product tags
+    const productTags = parentElement.getAttribute("data-product-tags");
+
+    // Split the product tags string into an array of individual tags
+    const tagsArray = productTags.split(",");
+
+    tagsArray.forEach((tag) => {
+        // Create a div element for the product tag
+        const tagDiv = document.createElement("div");
+        tagDiv.classList.add("product-tag-pill");
+        tagDiv.textContent = tag.trim(); // Trim any leading/trailing whitespace from the tag
+
+        // Append the tag div to the productTagsDiv
+        productTagsDiv.appendChild(tagDiv);
+    });
 
     // Get the hierarchy array from the attribute
     const hierarchyArrayAttribute = parentElement.getAttribute("data-hierarchy-array");

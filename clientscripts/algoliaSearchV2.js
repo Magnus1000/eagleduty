@@ -35,6 +35,7 @@ function renderResults(hits) {
         resultItem.setAttribute('data-units', hit.units);
         resultItem.setAttribute('data-calculation-type', hit.calculationType);
         resultItem.setAttribute('data-helper-text', hit.helperText);
+        resultItem.setAttribute('data-product-tags', hit.productTags);
 
         // Create and append the HTS code element
         const htsCodeWrapper = document.createElement('div');
