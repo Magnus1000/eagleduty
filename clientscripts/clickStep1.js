@@ -81,7 +81,6 @@ function goStep2() {
     const calculationType = selectedResult.getAttribute("data-calculation-type");
 
 
-
     // Set the values of the selected result card on screen 2
     const selectedResultCard = document.querySelector("#selectedResult");
     console.log("selectedResultCard:", selectedResultCard);
@@ -120,8 +119,9 @@ function goStep2() {
         } else {
             const unitOptions = units.split(",");
             unitOption = unitOptions[0];
+            }
         }
-
+        
         // Create the units for the amount and value fields
         if (calculationType === "amountValue") {
             if (general !== 'Free') {
