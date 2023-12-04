@@ -78,7 +78,9 @@ function goStep2() {
     const other = selectedResult.getAttribute("data-other");
     const specialJSON = selectedResult.getAttribute("data-special-json");
     const units = selectedResult.getAttribute("data-units");
-    const matchValues = ["No.", ""]; // The units where the calculation field is value not quantity
+    const calculationType = selectedResult.getAttribute("data-calculation-type");
+
+
 
     // Set the values of the selected result card on screen 2
     const selectedResultCard = document.querySelector("#selectedResult");
@@ -95,39 +97,89 @@ function goStep2() {
     selectedResultCard.setAttribute('data-special-json', specialJSON);
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
+    selectedResultCard.setAttribute('data-calulation-type', calculationType);
 
     // Function to display the correct unit field – value or amount
-    function setUnitFields(units, matchValues) {
-        const selectedResultCard = document.querySelector("#selectedResult");
+    function setUnitFields(units, calculationType) {
         const valueUnitText = document.querySelector("#valueUnitText");
         const amountUnitText = document.querySelector("#amountUnitText");
         const amountUnitSelect = document.querySelector("#amountUnitSelect");
         const amountWrapper = document.querySelector("#amountWrapper");
+        const valueWrapper = document.querySelector("#valueWrapper");
         amountUnitSelect.innerHTML = "";
-        const unitOptions = units.split(",");
+        let unitOption = null;
 
-        if (matchValues.includes(units)) {
+        // Create the units for the amount fields
+        if(calculationType === "amount") {
+            if(general !== 'Free') {
+            const unitOptions = general.split("/");
+            unitOption = unitOptions[1];
+        } else if (general === 'Free' && other !== 'Free') {
+            const unitOptions = other.split("/");
+            unitOption = unitOptions[1];
+        } else {
+            const unitOptions = units.split(",");
+            unitOption = unitOptions[0];
+        }
+
+        // Create the units for the amount and value fields
+        if (calculationType === "amountValue") {
+            if (general !== 'Free') {
+                const unitOptions = general.split("/");
+                const extractedUnitOption = unitOptions[1].split(" ")[0].trim(); // Split and trim the unit option
+
+                if (!unit.includes(extractedUnitOption)) {
+                    unitOption = unit;
+                }
+            } else if (general === 'Free' && other !== 'Free') {
+                const unitOptions = other.split("/");
+                const extractedUnitOption = unitOptions[1].split(" ")[0].trim(); // Split and trim the unit option
+
+                if (!unit.includes(extractedUnitOption)) {
+                    unitOption = unit;
+                }
+            } else {
+                const unitOptions = units.split(",");
+                const extractedUnitOption = unitOptions[0].trim(); // Split and trim the unit option
+
+                if (!unit.includes(extractedUnitOption)) {
+                    unitOption = unit;
+                }
+            }
+        }
+        
+            
+
+        if (calculationType === "value") {
             // Set value fields
             valueUnitText.textContent = "$";
-            selectedResultCard.setAttribute('data-calculation-type', 'value');
-            amountWrapper.style.display = "none";
-        } else {
+            //Hide / Show Wrappers
+            amountWrapper.classList.add("hidden");
+            valueWrapper.classList.remove("hidden");
+        } else if (calculationType === "amount") {
             // Set amount fields
-            amountUnitText.textContent = unitOptions[0];
-            selectedResultCard.setAttribute('data-calculation-type', 'amount');
-            for (let i = 0; i < unitOptions.length; i++) {
-                const option = document.createElement("option");
-                option.setAttribute("value", unitOptions[i]);
-                option.textContent = unitOptions[i];
-                amountUnitSelect.appendChild(option);
-                amountWrapper.style.display = "flex";
-            }
-            amountUnitSelect.selectedIndex = 0;        
+            amountUnitText.textContent = unitOption;
+            amountUnitSelect.innerHTML = `<option value="${unitOption}">${unitOption}</option>`;
+            //Hide / Show Wrappers
+            amountWrapper.classList.remove("hidden");
+            valueWrapper.classList.add("hidden");
+            // Select unit option 
+            amountUnitSelect.selectedIndex = 0;
+          else if (calculationType === "amountValue") {
+            // Set amount and value fields
+            valueUnitText.textContent = "$";
+            // Show Wrappers
+            valueWrapper.classList.remove("hidden");
+            amountWrapper.classList.remove("hidden");
+            //
+            amountUnitText.textContent = unitOption;
+            amountUnitSelect.innerHTML = `<option value="${unitOption}">${unitOption}</option>`;
+        
         }
     }
 
     // Call the displayUnitFields function
-    setUnitFields(units, matchValues);
+    setUnitFields(units, calculationType);
 
     // Call the animateArrow1 function
     animateArrow("arrow1wrapper", "forward");

@@ -33,6 +33,7 @@ function renderResults(hits) {
         resultItem.setAttribute('data-other', hit.other);
         resultItem.setAttribute('data-hierarchy-array', JSON.stringify(hit.heirarchyArray));
         resultItem.setAttribute('data-units', hit.units);
+        resultItem.setAttribute('data-calculation-type', hit.calculationType);
 
         // Create and append the HTS code element
         const htsCodeWrapper = document.createElement('div');
@@ -51,7 +52,7 @@ function renderResults(hits) {
         const descriptionElement = document.createElement('div');
         descriptionElement.classList.add('description');
         const descriptionTextElement = document.createElement('span');
-        descriptionTextElement.textContent = hit.description;
+        descriptionTextElement.innerHTML = hit.description;
         descriptionTextElement.classList.add('description-text');
         descriptionElement.appendChild(descriptionTextElement);
         resultItem.appendChild(descriptionElement);
@@ -68,7 +69,7 @@ function renderResults(hits) {
         sectionNameElement.classList.add('section-name');
         sectionElement.appendChild(sectionNameElement);
         const sectionDescriptionElement = document.createElement('span');
-        sectionDescriptionElement.textContent = hit.sectionDescription;
+        sectionDescriptionElement.innerHTML = hit.sectionDescription;
         sectionDescriptionElement.classList.add('section-description');
         sectionElement.appendChild(sectionDescriptionElement);
         detailsElement.appendChild(sectionElement);
