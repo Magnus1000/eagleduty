@@ -34,6 +34,7 @@ function renderResults(hits) {
         resultItem.setAttribute('data-hierarchy-array', JSON.stringify(hit.heirarchyArray));
         resultItem.setAttribute('data-units', hit.units);
         resultItem.setAttribute('data-calculation-type', hit.calculationType);
+        resultItem.setAttribute('data-helper-text', hit.helperText);
 
         // Create and append the HTS code element
         const htsCodeWrapper = document.createElement('div');
