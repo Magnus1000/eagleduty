@@ -96,7 +96,7 @@ function goStep2() {
     selectedResultCard.setAttribute('data-special-json', specialJSON);
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
-    selectedResultCard.setAttribute('data-calulation-type', calculationType);
+    selectedResultCard.setAttribute('data-calculation-type', calculationType);
 
     // Function to display the correct unit field – value or amount
     function setUnitFields(units, calculationType) {
@@ -121,7 +121,7 @@ function goStep2() {
             unitOption = unitOptions[0];
             }
         }
-        
+
         // Create the units for the amount and value fields
         if (calculationType === "amountValue") {
             if (general !== 'Free') {
