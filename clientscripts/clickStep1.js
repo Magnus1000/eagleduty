@@ -79,6 +79,7 @@ function goStep2() {
     const specialJSON = selectedResult.getAttribute("data-special-json");
     const units = selectedResult.getAttribute("data-units");
     const calculationType = selectedResult.getAttribute("data-calculation-type");
+    const helperText = selectedResult.getAttribute("data-helper-text");
 
 
     // Set the values of the selected result card on screen 2
@@ -97,6 +98,7 @@ function goStep2() {
     selectedResultCard.setAttribute('data-units', units);
     selectedResultCard.setAttribute('data-htsno', htsno);
     selectedResultCard.setAttribute('data-calculation-type', calculationType);
+    selectedResultCard.setAttribute('data-helper-text', helperText);
 
     // Function to display the correct unit field – value or amount
     function setUnitFields(units, calculationType) {
@@ -680,18 +682,15 @@ function populateSeeDetailsModal(targetElement) {
     const sectionDescription = parentElement.getAttribute("data-section-description");
     const chapterName = parentElement.getAttribute("data-chapter-name");
     const chapterDescription = parentElement.getAttribute("data-chapter-description");
+    const helperTextTarget = document.querySelector("#helperTextTarget");
 
-    console.log("See details htsno:", htsno);
-    console.log("See details sectionName:", sectionName);
-    console.log("See details sectionDescription:", sectionDescription);
-    console.log("See details chapterName:", chapterName);
-    console.log("See details chapterDescription:", chapterDescription);
+    // Get the helper text  from the attribute
+    const helperText = parentElement.getAttribute("data-helper-text");
 
     // Get the hierarchy array from the attribute
     const hierarchyArrayAttribute = parentElement.getAttribute("data-hierarchy-array");
     const hierarchyArray = JSON.parse(hierarchyArrayAttribute);
 
-    console.log("See details hierarchyArray:", hierarchyArray);
 
     // Set the values of the selected result card on screen 2
     const detailsModalHeader = document.querySelector("#detailsModalHeader");
@@ -699,6 +698,12 @@ function populateSeeDetailsModal(targetElement) {
 
     // Clear the detailsHierarchyTargetDiv
     detailsHierarchyTargetDiv.innerHTML = '';
+
+    // Clear the helperTextTarget div
+    helperTextTarget.textContent = '';
+
+    // Set the helper text
+    helperTextTarget.textContent = helperText;
 
     // Create and append the section div
     const sectionDiv = createDetailsParentDiv(sectionName, sectionDescription, 0);
