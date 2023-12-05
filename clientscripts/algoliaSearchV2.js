@@ -226,7 +226,7 @@ refreshData();
 // Function to toggle the details section on the results divs
 function toggleDetails() {
     const checkbox = document.getElementById("detailsToggle");
-    const detailDivs = document.querySelectorAll(".results-detail");
+    const detailDivs = document.querySelectorAll(".results-details");
 
     checkbox.addEventListener("change", function () {
         if (this.checked) {
