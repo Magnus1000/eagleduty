@@ -226,19 +226,25 @@ refreshData();
 // Function to toggle the details section on the results divs
 function toggleDetails() {
     const checkbox = document.getElementById("detailsToggle");
-    const detailDivs = document.querySelectorAll(".results-details");
 
-    checkbox.addEventListener("change", function () {
-        if (this.checked) {
-            detailDivs.forEach(function (div) {
-                div.classList.remove("hidden");
-            });
-        } else {
-            detailDivs.forEach(function (div) {
-                div.classList.add("hidden");
-            });
+    document.addEventListener("change", function (event) {
+        if (event.target.matches("#detailsToggle")) {
+            const detailDivs = document.querySelectorAll(".results-details");
+
+            if (checkbox.checked) {
+                detailDivs.forEach(function (div) {
+                    div.classList.remove("hidden");
+                });
+            } else {
+                detailDivs.forEach(function (div) {
+                    div.classList.add("hidden");
+                });
+            }
         }
     });
 }
 
-toggleDetails();
+// Function to add event listeners to toggle button
+document.addEventListener("DOMContentLoaded", function() {
+    toggleDetails();
+});
