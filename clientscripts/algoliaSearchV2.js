@@ -61,7 +61,13 @@ function renderResults(hits) {
 
         // Create and append the section and chapter details element
         const detailsElement = document.createElement('div');
-        detailsElement.classList.add('details');
+        detailsElement.classList.add('results-details');
+
+        // Check toggle and set hidden class
+        const checkbox = document.getElementById("detailsToggle");
+        if (!checkbox.checked) {
+            detailsElement.classList.add('hidden');
+        }
 
         // Create and append the section element
         const sectionElement = document.createElement('div');
@@ -217,3 +223,22 @@ function refreshData() {
 
 refreshData();
 
+// Function to toggle the details section on the results divs
+function toggleDetails() {
+    const checkbox = document.getElementById("detailsToggle");
+    const detailDivs = document.querySelectorAll(".results-detail");
+
+    checkbox.addEventListener("change", function () {
+        if (this.checked) {
+            detailDivs.forEach(function (div) {
+                div.classList.remove("hidden");
+            });
+        } else {
+            detailDivs.forEach(function (div) {
+                div.classList.add("hidden");
+            });
+        }
+    });
+}
+
+toggleDetails();
