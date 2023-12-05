@@ -62,6 +62,16 @@ function goStep2() {
     const flowStep1 = document.querySelector("#flowStep1");
     const flowStep2 = document.querySelector("#flowStep2");
 
+    // Get the selected result
+    const radioButtons = document.querySelectorAll("input[type='radio']");
+    let clickedRadio;
+
+    radioButtons.forEach((radio) => {
+        if (radio.checked) {
+          clickedRadio = radio;
+        }
+    });
+
     // Get the attributes of the selected result
     const selectedResult = document.querySelector(".result-radio.checked").parentNode;
     const htsno = selectedResult.getAttribute("data-htsno");
