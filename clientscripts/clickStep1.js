@@ -749,13 +749,3 @@ function populateSeeDetailsModal(targetElement) {
         detailsHierarchyTargetDiv.appendChild(div);
     });
 }
-
-// Add event listener to hierarchy button
-document.addEventListener("DOMContentLoaded", () => {
-    const expandHierarchyBtn = document.querySelector("#expandHierarchy");
-
-    expandHierarchyBtn.addEventListener("click", () => {
-        console.log("Hierarchy Click");
-        toggleHiddenHierarchy();
-    });
-});
