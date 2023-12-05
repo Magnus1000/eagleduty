@@ -21,9 +21,6 @@ function addRadioEventListener() {
             });
 
             if (clickedRadio.checked) {
-                const urlParams = new URLSearchParams(window.location.search);
-                urlParams.set("htsno", clickedRadio.value);
-                window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
                 clickedRadio.classList.add("checked");
                 const siblingDiv = clickedRadio.nextElementSibling;
                 if (siblingDiv && siblingDiv.classList.contains("checked-result-circle")) {
@@ -212,6 +209,14 @@ function goStep2() {
             grandchild.classList.remove("complete");
         });
     });
+
+    // Set URL params for the selected result and search term
+    const searchBar = document.querySelector("#htsSearch");
+    const query = searchBar.value.trim();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("htsno", clickedRadio.value);
+    urlParams.set("query", query);
+    window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
 }
 
 // Function to hide step 2 and show step 1
