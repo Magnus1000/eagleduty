@@ -625,7 +625,6 @@ function setQuantityFieldToOne() {
 function toggleDetailsModal() {
     const detailsModal = document.getElementById('detailsModal');
     detailsModal.classList.toggle('hidden');
-    toggleHiddenHierarchy();
 }
 
 // Add event listener to closeUnlimitedModal element
@@ -748,22 +747,6 @@ function populateSeeDetailsModal(targetElement) {
         div.appendChild(nameElement);
         div.appendChild(descriptionElement);
         detailsHierarchyTargetDiv.appendChild(div);
-    });
-}
-
-// Function to toggle the hidden class on the hierarchy div
-function toggleHiddenHierarchy() {
-    const expandHierarchyBtn = document.querySelector("#expandHierarchy");
-    const hierarchyDiv = document.querySelector("#detailsHierarchyTargetDiv");
-
-    hierarchyDiv.classList.toggle("hidden");
-    console.log("Class Hidden applied to Hierarchy target div");
-
-    // Get all children of the hierarchyDiv
-    const childElements = expandHierarchyBtn.querySelectorAll("*");
-    // Loop through each child element and toggle the hidden class
-    childElements.forEach(childElement => {
-        childElement.classList.toggle("hidden");
     });
 }
 
