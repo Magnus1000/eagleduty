@@ -1,28 +1,53 @@
 // Call functions on page load
 window.addEventListener("load", () => {
-    // Add event listener to the radio buttons which wrap the results
-    addRadioEventListener();
-
-    // Add event listener to the see details buttons
-    addEventListenersToSeeDetailsButton();
-
-    const nextStep1Button = document.querySelector("#nextStep2");
-    nextStep1Button.addEventListener("click", function() {
-        if (!nextStep1Button.classList.contains("unclickable") && nextStep1Button.getAttribute("data-disabled") !== "true") {
-            goStep2();
-            watchFieldsForCalculation();
+    // Find the nextStep2 button and add a click event listener
+    const nextStep2Button = document.querySelector("#nextStep2");
+    nextStep2Button.addEventListener("click", function() {
+        if (!nextStep2Button.classList.contains("unclickable") && nextStep2Button.getAttribute("data-disabled") !== "true") {
+            goStep3();
         }
     });
-
-    // Event listener for the back button
-    const backStep1Button = document.querySelector("#backStep1");
-    backStep1Button.addEventListener("click", backStep1);
     
-    setButtonState('nextStep1', 'disable');
-    setButtonState('nextStep2', 'disable');
-    setButtonState('calculateDuty', 'disable');
-    createDropdownOptions();
-    getUserLocation();
-    setButtonState('quantityField', 'disable');
-    setQuantityFieldToOne();
+    setButtonState('goCheckout', 'disable');
 });
+
+function goStep3 () {
+    // Find the current step, old step and new step
+    const gridStep1Wrapper = document.querySelector(".gridstep1wrapper");
+    const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
+    const gridStep3Wrapper = document.querySelector(".gridstep3wrapper");
+    const flowStep1 = document.querySelector("#flowStep1");
+    const flowStep2 = document.querySelector("#flowStep2");
+    const flowStep3 = document.querySelector("#flowStep3");
+
+    // Call the animateArrow1 function
+    animateArrow("arrow2wrapper", "forward");
+    // Hide step 1 and show step 2
+    gridStep1Wrapper.style.display = "none";
+    gridStep2Wrapper.style.display = "none";
+    gridStep3Wrapper.style.display = "flex";
+    flowStep2.classList.remove("active");
+    flowStep2.classList.add("complete");
+    flowStep3.classList.add("active");
+
+
+    // Remove "active" class and add "complete" class to children and grandchildren of flowStep1
+    Array.from(flowStep2.children).forEach(child => {
+        child.classList.remove("active");
+        child.classList.add("complete");
+        Array.from(child.children).forEach(grandchild => {
+            grandchild.classList.remove("active");
+            grandchild.classList.add("complete");
+        });
+    });
+
+    // Add "active" class to children and grandchildren of flowStep2
+    Array.from(flowStep3.children).forEach(child => {
+        child.classList.add("active");
+        Array.from(child.children).forEach(grandchild => {
+            grandchild.classList.add("active");
+            grandchild.classList.remove("complete");
+        });
+    });
+
+}
