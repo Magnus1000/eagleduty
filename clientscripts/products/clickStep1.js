@@ -699,6 +699,7 @@ function populateSeeDetailsModal(targetElement) {
     const chapterName = parentElement.getAttribute("data-chapter-name");
     const chapterDescription = parentElement.getAttribute("data-chapter-description");
     const helperTextTarget = document.querySelector("#helperTextTarget");
+    const helperDivWrapper = document.querySelector("#helperDivWrapper");
     const productTagsDiv = document.querySelector("#productTagsDiv");
 
     // Get the helper text  from the attribute
@@ -707,18 +708,20 @@ function populateSeeDetailsModal(targetElement) {
     // Get product tags
     const productTags = parentElement.getAttribute("data-product-tags");
 
-    // Split the product tags string into an array of individual tags
-    const tagsArray = productTags.split(",");
+    if (productTags) {
+        // Split the product tags string into an array of individual tags
+        const tagsArray = productTags.split(",");
 
-    tagsArray.forEach((tag) => {
-        // Create a div element for the product tag
-        const tagDiv = document.createElement("div");
-        tagDiv.classList.add("product-tag-pill");
-        tagDiv.textContent = tag.trim(); // Trim any leading/trailing whitespace from the tag
+        tagsArray.forEach((tag) => {
+            // Create a div element for the product tag
+            const tagDiv = document.createElement("div");
+            tagDiv.classList.add("product-tag-pill");
+            tagDiv.textContent = tag.trim(); // Trim any leading/trailing whitespace from the tag
 
-        // Append the tag div to the productTagsDiv
-        productTagsDiv.appendChild(tagDiv);
-    });
+            // Append the tag div to the productTagsDiv
+            productTagsDiv.appendChild(tagDiv);
+        });
+    }
 
     // Get the hierarchy array from the attribute
     const hierarchyArrayAttribute = parentElement.getAttribute("data-hierarchy-array");
@@ -732,11 +735,19 @@ function populateSeeDetailsModal(targetElement) {
     // Clear the detailsHierarchyTargetDiv
     detailsHierarchyTargetDiv.innerHTML = '';
 
-    // Clear the helperTextTarget div
-    helperTextTarget.textContent = '';
+    if (helperText) {
+        // Clear the helperTextTarget div
+        helperTextTarget.textContent = '';
 
-    // Set the helper text
-    helperTextTarget.textContent = helperText;
+        // Set the helper text
+        helperTextTarget.textContent = helperText;
+
+        // Show the helperTextTarget div
+        helperDivWrapper.classList.remove("hidden");
+    } else {
+        // Hide the helperTextTarget div
+        helperDivWrapper.classList.add("hidden");
+    }
 
     // Create and append the section div
     const sectionDiv = createDetailsParentDiv(sectionName, sectionDescription, 0);
