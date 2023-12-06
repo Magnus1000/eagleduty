@@ -792,8 +792,9 @@ function addEventListenerToSelectButton() {
 
     buttonSelect.addEventListener("click", (event) => {
         console.log("Select button clicked");
-        const buttonHtsno = event.target.dataset.buttonHtsno;
+        const buttonHtsno = buttonSelect.getAttribute('data-button-htsno')
         const radioToSelect = radiosContainer.querySelector(`[data-htsno="${buttonHtsno}"]`);
+        console.log("Found radio to select:", radioToSelect);
 
         if (radioToSelect) {
             const radios = radiosContainer.querySelectorAll(".result-radio");
