@@ -7,7 +7,6 @@ window.addEventListener("load", () => {
             goStep3();
         }
     });
-    
     setButtonState('goCheckout', 'disable');
 });
 
@@ -16,9 +15,9 @@ function goStep3 () {
     const gridStep1Wrapper = document.querySelector(".gridstep1wrapper");
     const gridStep2Wrapper = document.querySelector(".gridstep2wrapper");
     const gridStep3Wrapper = document.querySelector(".gridstep3wrapper");
-    const flowStep1 = document.querySelector("#flowStep1");
     const flowStep2 = document.querySelector("#flowStep2");
     const flowStep3 = document.querySelector("#flowStep3");
+    const resultsNextButtonStep3 = document.querySelector("#resultsNextButtonStep3");
 
     // Call the animateArrow1 function
     animateArrow("arrow2wrapper", "forward");
@@ -30,6 +29,8 @@ function goStep3 () {
     flowStep2.classList.add("complete");
     flowStep3.classList.add("active");
 
+    // Show resultsNextButtonStep3 row
+    resultsNextButtonStep3.classList.remove("hidden");
 
     // Remove "active" class and add "complete" class to children and grandchildren of flowStep1
     Array.from(flowStep2.children).forEach(child => {
