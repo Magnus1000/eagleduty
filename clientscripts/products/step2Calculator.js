@@ -404,7 +404,6 @@ document.addEventListener("DOMContentLoaded", async function() {
                 // Call the subtractFromDailyCount function
                 subtractFromDailyCount();
             } else {
-                toggleUnlimitedModal();
                 console.log("Daily count is not greater than 0. Cannot proceed.");
             }
         }
@@ -631,18 +630,6 @@ document.addEventListener('DOMContentLoaded', () => {
             radioButton.checked = true;
         }
     });
-});
-
-// Function to toggle the signup modal
-function toggleUnlimitedModal() {
-    const unlimitedModal = document.getElementById('unlimitedModal');
-    unlimitedModal.classList.toggle('hidden');
-}
-
-// Add event listener to closeUnlimitedModal element
-document.addEventListener('DOMContentLoaded', () => {
-    const closeUnlimitedModal = document.getElementById('closeUnlimitedModal');
-    closeUnlimitedModal.addEventListener('click', toggleUnlimitedModal);
 });
 
 // Function to togle the display of the China value fields

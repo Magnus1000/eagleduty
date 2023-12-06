@@ -94,7 +94,7 @@ function goStep2() {
     const selectedResultCard = document.querySelector("#selectedResult");
     console.log("selectedResultCard:", selectedResultCard);
     selectedResultCard.querySelector("[data-hts-card='htsno']").textContent = htsno;
-    selectedResultCard.querySelector("[data-hts-card='description']").textContent = description;
+    selectedResultCard.querySelector("[data-hts-card='description']").innerHTML = description;
     selectedResultCard.querySelector("[data-hts-card='chapter-description']").textContent = chapterDescription;
     selectedResultCard.querySelector("[data-hts-card='section-description']").textContent = sectionDescription;
     selectedResultCard.querySelector("[data-hts-card='chapter']").textContent = chapter;
