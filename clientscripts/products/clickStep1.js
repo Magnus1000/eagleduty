@@ -224,9 +224,15 @@ function goStep2() {
     const searchBar = document.querySelector("#htsSearch");
     const query = searchBar.value.trim();
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("htsno", clickedRadio.value);
+
+    urlParams.set("htsno",htsno);
     urlParams.set("query", query);
     window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+
+    // Save the query, htsno and description in session storage
+    sessionStorage.setItem("query", query);
+    sessionStorage.setItem("htsno", htsno);
+    sessionStorage.setItem("description", description);
 }
 
 // Function to hide step 2 and show step 1
