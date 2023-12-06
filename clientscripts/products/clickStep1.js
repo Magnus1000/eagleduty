@@ -645,7 +645,7 @@ function toggleDetailsModal() {
     detailsModal.classList.toggle('hidden');
 }
 
-// Add event listener to closeUnlimitedModal element
+// Add event listener to closeUDetails Modal element
 document.addEventListener('DOMContentLoaded', () => {
     const closeDetailsModal = document.getElementById('closeDetailsModal');
     closeDetailsModal.addEventListener('click', toggleDetailsModal);
@@ -785,11 +785,13 @@ function populateSeeDetailsModal(targetElement) {
     });
 }
 
+// Function to apply event listeners to the selectButton
 function addEventListenerToSelectButton() {
     const radiosContainer = document.querySelector("#resultsColumn");
     const buttonSelect = document.querySelector("#buttonSelect");
 
     buttonSelect.addEventListener("click", (event) => {
+        console.log("Select button clicked");
         const buttonHtsno = event.target.dataset.buttonHtsno;
         const radioToSelect = radiosContainer.querySelector(`[data-htsno="${buttonHtsno}"]`);
 
@@ -813,6 +815,7 @@ function addEventListenerToSelectButton() {
             }
 
             setButtonState("nextStep1", "enable");
+            toggleDetailsModal();
         }
     });
 }
