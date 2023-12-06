@@ -365,8 +365,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
                 addLoadingClass();
 
-                // Call the subtractFromDailyCount function
-                subtractFromDailyCount();
+                // Call the addToCount function
+                addToCount();
             } else if (dailyCount && parseInt(dailyCount) > 0) {
                 // Get the input values
                 const selectedResultCard = document.querySelector("#selectedResult");
@@ -401,8 +401,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
                 addLoadingClass();
 
-                // Call the subtractFromDailyCount function
-                subtractFromDailyCount();
+                // Call the addToCount function
+                addToCount();
             } else {
                 console.log("Daily count is not greater than 0. Cannot proceed.");
             }

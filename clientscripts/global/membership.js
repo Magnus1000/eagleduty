@@ -1,4 +1,4 @@
-const max_count = 10;
+const max_count = 99999;
 
 (async function () {
     const member = await window.$memberstackDom.getCurrentMember();
@@ -138,14 +138,14 @@ async function callVercelServerlessFunction(uuid, action, count) {
 }
 
 // Function to track the limit
-async function subtractFromDailyCount() {
+async function addToCount() {
     // Get the current value of "daily_count" from local storage
     let dailyCount = localStorage.getItem('daily_count');
 
     // Check if "daily_count" exists in local storage
     if (dailyCount) {
-        // Convert the value to a number and subtract 1
-        dailyCount = parseInt(dailyCount) - 1;
+        // Convert the value to a number and add 1
+        dailyCount = parseInt(dailyCount) + 1;
 
         // Update the "daily_count" value in local storage
         localStorage.setItem('daily_count', dailyCount.toString());
@@ -161,18 +161,3 @@ async function subtractFromDailyCount() {
         }
     }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Toggle the signup and login modals
-    document.getElementById('loginLink').addEventListener('click', function() {
-        console.log('Login link clicked');
-        document.getElementById('modalSignup').classList.add('hidden');
-        document.getElementById('modalLogin').classList.remove('hidden');
-    });
-
-    document.getElementById('signupLink').addEventListener('click', function() {
-        console.log('Signup link clicked');
-        document.getElementById('modalLogin').classList.add('hidden');
-        document.getElementById('modalSignup').classList.remove('hidden');
-    });
-});
