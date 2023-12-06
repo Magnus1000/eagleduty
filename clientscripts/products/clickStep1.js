@@ -593,6 +593,9 @@ window.addEventListener("load", () => {
     // Add event listener to the see details buttons
     addEventListenersToSeeDetailsButton();
 
+    // Add event listener to select button in details modal
+    addEventListenerToSelectButton();
+
     const nextStep1Button = document.querySelector("#nextStep1");
     nextStep1Button.addEventListener("click", function() {
         if (!nextStep1Button.classList.contains("unclickable") && nextStep1Button.getAttribute("data-disabled") !== "true") {
@@ -701,6 +704,8 @@ function populateSeeDetailsModal(targetElement) {
     const helperTextTarget = document.querySelector("#helperTextTarget");
     const helperDivWrapper = document.querySelector("#helperDivWrapper");
     const productTagsDiv = document.querySelector("#productTagsDiv");
+    const buttonHTSNO = document.querySelector("#buttonHTSNO");
+    const buttonSelect = document.querySelector("#buttonSelect");
 
     // Get the helper text  from the attribute
     const helperText = parentElement.getAttribute("data-helper-text");
@@ -727,10 +732,14 @@ function populateSeeDetailsModal(targetElement) {
     const hierarchyArrayAttribute = parentElement.getAttribute("data-hierarchy-array");
     const hierarchyArray = JSON.parse(hierarchyArrayAttribute);
 
+    //Set data-button-htsno 
+    buttonSelect.setAttribute("data-button-htsno", htsno);
+
 
     // Set the values of the selected result card on screen 2
     const detailsModalHeader = document.querySelector("#detailsModalHeader");
     detailsModalHeader.textContent = htsno;
+    buttonHTSNO.textContent = htsno;
 
     // Clear the detailsHierarchyTargetDiv
     detailsHierarchyTargetDiv.innerHTML = '';
@@ -773,5 +782,37 @@ function populateSeeDetailsModal(targetElement) {
         div.appendChild(nameElement);
         div.appendChild(descriptionElement);
         detailsHierarchyTargetDiv.appendChild(div);
+    });
+}
+
+function addEventListenerToSelectButton() {
+    const radiosContainer = document.querySelector("#resultsColumn");
+    const buttonSelect = document.querySelector("#buttonSelect");
+
+    buttonSelect.addEventListener("click", (event) => {
+        const buttonHtsno = event.target.dataset.buttonHtsno;
+        const radioToSelect = radiosContainer.querySelector(`[data-htsno="${buttonHtsno}"]`);
+
+        if (radioToSelect) {
+            const radios = radiosContainer.querySelectorAll(".result-radio");
+
+            radios.forEach((radio) => {
+                radio.checked = false;
+                radio.classList.remove("checked");
+                const siblingDiv = radio.nextElementSibling;
+                if (siblingDiv && siblingDiv.classList.contains("checked-result-circle")) {
+                    siblingDiv.classList.remove("checked");
+                }
+            });
+
+            radioToSelect.checked = true;
+            radioToSelect.classList.add("checked");
+            const siblingDiv = radioToSelect.nextElementSibling;
+            if (siblingDiv && siblingDiv.classList.contains("checked-result-circle")) {
+                siblingDiv.classList.add("checked");
+            }
+
+            setButtonState("nextStep1", "enable");
+        }
     });
 }
