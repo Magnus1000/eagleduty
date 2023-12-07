@@ -1,8 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
 const cors = require('cors');
 
-const supabaseUrl = 'https://esdqgomknfbxfsqxumjt.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzZHFnb21rbmZieGZzcXh1bWp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk1MzQ4MDksImV4cCI6MjAxNTExMDgwOX0.J20zZ-OKlT7wTS3QnkFmgqe1XzBIMQ5Nm_RqUXISTxY';
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const corsHandler = cors(); // Initialize CORS handler
@@ -26,18 +26,35 @@ module.exports = async (req, res) => {
                     .select('calc_count')
                     .eq('uuid', uuid)
                     .single();
-
+            
                 if (error) {
                     console.log('Failed to fetch data from Supabase:', error); // Debugging
                     return res.status(500).json({ error: 'Failed to fetch data from Supabase' });
                 }
-
+            
+                if (!data) {
+                    console.log('No data found for the provided UUID, creating a new record:', uuid); // Debugging
+                    const insertResponse = await supabase
+                        .from('user_events')
+                        .insert([{ uuid, calc_count: 0 }])
+                        .single();
+            
+                    if (insertResponse.error) {
+                        console.log('Failed to insert new row:', insertResponse.error); // Debugging
+                        return res.status(500).json({ error: 'Failed to insert new row' });
+                    }
+            
+                    console.log('New row created with calc_count 0:', insertResponse.data); // Debugging
+                    return res.status(200).json({ calc_count: insertResponse.data.calc_count });
+                }
+            
                 console.log('Fetched data:', data); // Debugging
                 return res.status(200).json({ calc_count: data.calc_count });
+                }
             } else if (action === 'create') {
                 const { data, error } = await supabase
                     .from('user_events')
-                    .insert([{ uuid, calc_count: count }])
+                    .insert([{ uuid, calc_count: 0 }])
                     .single();
 
                 if (error) {
