@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
             if (action === 'fetch') {
                 const { data, error } = await supabase
                     .from('user_events')
-                    .select('daily_count')
+                    .select('calc_count')
                     .eq('uuid', uuid)
                     .single();
 
@@ -30,11 +30,11 @@ module.exports = async (req, res) => {
                     return res.status(500).json({ error: 'Failed to fetch data from Supabase' });
                 }
 
-                return res.status(200).json({ daily_count: data.daily_count });
+                return res.status(200).json({ calc_count: data.calc_count });
             } else if (action === 'create') {
                 const { data, error } = await supabase
                     .from('user_events')
-                    .insert([{ uuid, daily_count: count }])
+                    .insert([{ uuid, calc_count: count }])
                     .single();
 
                 if (error) {
@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
             } else if (action === 'update') {
                 const { data, error } = await supabase
                     .from('user_events')
-                    .update({ daily_count: count })
+                    .update({ calc_count: count })
                     .eq('uuid', uuid)
                     .single();
 

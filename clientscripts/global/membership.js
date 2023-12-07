@@ -1,12 +1,9 @@
-const max_count = 99999;
+let starting_count = 0;
 
 (async function () {
     const member = await window.$memberstackDom.getCurrentMember();
     if (member.data) {
         console.log('There is a member', member);
-        // Set "daily_count" to a 999 so it doesn't run out
-        localStorage.setItem('daily_count', 99999);
-        // Do logged in logic here
     } else {
         console.log('No member', member);
         let uuid = '';
@@ -63,9 +60,9 @@ const max_count = 99999;
         // If UUID is still empty, generate a new one
         if (!uuid) {
             uuid = generateUUID();
-            // Set "daily_count" to a constant value
-            localStorage.setItem('daily_count', max_count);
-            await callVercelServerlessFunction(uuid, 'create', max_count);
+            // Set "calc_count" to a constant value
+            localStorage.setItem('calc_count', starting_count);
+            await callVercelServerlessFunction(uuid, 'create', starting_count);
         }
 
         // Set UUID in local storage
@@ -96,19 +93,19 @@ const max_count = 99999;
         // Make a request to the Vercel serverless function
         // Pass the UUID as a query parameter
         const response = await callVercelServerlessFunction(uuid, 'fetch');
-        const daily_count = response?.daily_count;
+        const calc_count = response?.calc_count;
 
-        // Check if "daily_count" exists in local storage
-        if (localStorage.getItem('daily_count')) {
+        // Check if "calc_count" exists in local storage
+        if (localStorage.getItem('calc_count')) {
             // If it exists, set it to the value returned from the serverless function
-            localStorage.setItem('daily_count', daily_count);
+            localStorage.setItem('calc_count', calc_count);
         } else {
             // If it doesn't exist, create it and set the value to the value returned from the serverless function
-            localStorage.setItem('daily_count', daily_count);
+            localStorage.setItem('calc_count', calc_count);
         }
 
         // Log the count from Supabase
-        console.log('daily_count', daily_count);
+        console.log('calc_count', calc_count);
     }
 })();
 
@@ -139,16 +136,16 @@ async function callVercelServerlessFunction(uuid, action, count) {
 
 // Function to track the limit
 async function addToCount() {
-    // Get the current value of "daily_count" from local storage
-    let dailyCount = localStorage.getItem('daily_count');
+    // Get the current value of "calc_count" from local storage
+    let calcCount = localStorage.getItem('calc_count');
 
-    // Check if "daily_count" exists in local storage
-    if (dailyCount) {
+    // Check if "calc_count" exists in local storage
+    if (calcCount) {
         // Convert the value to a number and add 1
-        dailyCount = parseInt(dailyCount) + 1;
+        calcCount = parseInt(calcCount) + 1;
 
-        // Update the "daily_count" value in local storage
-        localStorage.setItem('daily_count', dailyCount.toString());
+        // Update the "calc_count" value in local storage
+        localStorage.setItem('calc_count', calcCount.toString());
 
         // Check if "member.data" exists
         const member = await window.$memberstackDom.getCurrentMember();
@@ -157,7 +154,7 @@ async function addToCount() {
             const uuid = localStorage.getItem('uuid');
 
             // Call the Vercel serverless function with the query parameters
-            callVercelServerlessFunction(uuid, 'update', dailyCount);
+            callVercelServerlessFunction(uuid, 'update', calcCount);
         }
     }
 }
