@@ -14,7 +14,7 @@ input[type="select"] {
     margin-bottom: 0;
 }
 
-textarea:active, input:active, textarea:focus, input:focus, textarea:focus-within, input:focus-within, textarea:target, input:target, .w-input:active, .w-input:focus, .w-input:focus-within, .w-input:target, .w-select:active, .w-select:focus, .w-select:focus-within, .w-select:target  {
+.w-commerce-commercecheckoutadditionaltextarea:focus, .w-commerce-commercecheckoutadditionaltextinput:focus, .w-input:active, .w-input:focus, .w-input:focus-within, .w-input:target, .w-select:active, .w-select:focus, .w-select:focus-within, .w-select:target  {
     border: var(--border-width) solid black;
     border-radius: var(--border-radius);
     background-color: var(--transparent);
