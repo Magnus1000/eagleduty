@@ -67,6 +67,7 @@ let starting_count = 0;
             // Set "calc_count" to a constant value
             localStorage.setItem('calc_count', starting_count);
             await callVercelServerlessFunction(uuid, 'create', starting_count);
+            console.log('No UUID exists. New UUID generated:', uuid);
         }
 
         // Set UUID in local storage

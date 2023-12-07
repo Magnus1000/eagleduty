@@ -13,6 +13,7 @@ module.exports = async (req, res) => {
     // Handle CORS first before doing anything else
     corsHandler(req, res, async () => {
         const { uuid, action, count } = req.query;
+        console.log('Serverless query parameters:', { uuid, action, count }); // Debugging
 
         if (!uuid || !action) {
             console.log('Missing required parameters:', { uuid, action }); // Debugging
