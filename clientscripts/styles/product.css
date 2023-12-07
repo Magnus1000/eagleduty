@@ -151,3 +151,23 @@ textarea {
   resize: vertical;
   overflow: auto;
 }
+
+#tickertape {
+  /* Your existing styles for #tickertape */
+  display: flex;
+  will-change: transform; /* Optimize for animations */
+}
+
+.ticker-text {
+  /* Assumed class for the text inside the ticker */
+  animation: ticker-slide 15s linear infinite; /* Adjust the duration as needed */
+}
+
+@keyframes ticker-slide {
+  0% {
+    transform: translate3d(100%, 0, 0); /* Start off the right edge of the screen */
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0); /* End off the left edge of the screen */
+  }
+}
