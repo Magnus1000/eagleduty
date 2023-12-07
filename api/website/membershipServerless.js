@@ -22,54 +22,29 @@ module.exports = async (req, res) => {
 
         try {
             if (action === 'fetch') {
-                const { data, error, status } = await supabase
-                    .from('user_events')
-                    .select('calc_count')
-                    .eq('uuid', uuid)
-                    .single();
-            
-                if (error) {
-                    console.log('Failed to fetch data from Supabase:', error); // Debugging
-            
-                    // Check if the error status is 500
-                    if (status === 500) {
-                        console.log('500 error encountered, creating a new record:', uuid); // Debugging
-                        // Create a new record
-                        const insertResponse = await supabase
-                            .from('user_events')
-                            .insert([{ uuid, calc_count: 0 }])
-                            .single();
-            
-                        if (insertResponse.error) {
-                            console.log('Failed to insert new row:', insertResponse.error); // Debugging
-                            return res.status(500).json({ error: 'Failed to insert new row after 500 error' });
-                        }
-            
-                        console.log('New row created with calc_count 0 after 500 error:', insertResponse.data); // Debugging
-                        return res.status(200).json({ calc_count: insertResponse.data.calc_count });
-                    } else {
-                        return res.status(500).json({ error: 'Failed to fetch data from Supabase' });
-                    }
-                }
-            
-                if (!data) {
-                    console.log('No data found for the provided UUID, creating a new record:', uuid); // Debugging
-                    const insertResponse = await supabase
+                try {
+                    const { data, error, status } = await supabase
                         .from('user_events')
-                        .insert([{ uuid, calc_count: 0 }])
+                        .select('calc_count')
+                        .eq('uuid', uuid)
                         .single();
-            
-                    if (insertResponse.error) {
-                        console.log('Failed to insert new row:', insertResponse.error); // Debugging
-                        return res.status(500).json({ error: 'Failed to insert new row' });
+
+                    if (error) {
+                        console.log('Error fetching data:', error); // Debugging
+                        return res.status(500).json({ error: 'Error fetching data' });
                     }
-            
-                    console.log('New row created with calc_count 0:', insertResponse.data); // Debugging
-                    return res.status(200).json({ calc_count: insertResponse.data.calc_count });
+
+                    if (!data) {
+                        console.log('No data found for the provided UUID:', uuid); // Debugging
+                        return res.status(404).json({ error: 'No data found for the provided UUID' });
+                    }
+
+                    console.log('Fetched data:', data); // Debugging
+                    return res.status(200).json({ calc_count: data.calc_count });
+                } catch (error) {
+                    console.log('Error fetching data:', error); // Debugging
+                    return res.status(500).json({ error: 'Error fetching data' });
                 }
-            
-                console.log('Fetched data:', data); // Debugging
-                return res.status(200).json({ calc_count: data.calc_count });
             } else if (action === 'create') {
                 const { data, error } = await supabase
                     .from('user_events')
