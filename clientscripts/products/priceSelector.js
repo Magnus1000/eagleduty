@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (goCheckoutButton) {
             goCheckoutButton.classList.remove('unclickable');
         }
+
+        // Store the selected order value in local storage as eagledutyPlan
+        localStorage.setItem('eagledutyPlan', value);
     };
 
     // Find all divs with data-custom-buy-now="radio"
@@ -44,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         div.addEventListener('click', function() {
-            // Get the value from data-custom-value attribute
             const value = this.getAttribute('data-custom-value');
             setSelectValue(value, this);
         });
     });
 });
+
