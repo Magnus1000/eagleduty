@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
         const { uuid, action, count } = req.query;
 
         if (!uuid || !action) {
+            console.log('Missing required parameters:', { uuid, action }); // Debugging
             return res.status(400).json({ error: 'Missing required parameters' });
         }
 
@@ -27,9 +28,11 @@ module.exports = async (req, res) => {
                     .single();
 
                 if (error) {
+                    console.log('Failed to fetch data from Supabase:', error); // Debugging
                     return res.status(500).json({ error: 'Failed to fetch data from Supabase' });
                 }
 
+                console.log('Fetched data:', data); // Debugging
                 return res.status(200).json({ calc_count: data.calc_count });
             } else if (action === 'create') {
                 const { data, error } = await supabase
@@ -38,9 +41,11 @@ module.exports = async (req, res) => {
                     .single();
 
                 if (error) {
+                    console.log('Failed to create a new row in Supabase:', error); // Debugging
                     return res.status(500).json({ error: 'Failed to create a new row in Supabase' });
                 }
 
+                console.log('New row created:', data); // Debugging
                 return res.status(200).json({ message: 'New row created successfully' });
             } else if (action === 'update') {
                 const { data, error } = await supabase
@@ -50,14 +55,18 @@ module.exports = async (req, res) => {
                     .single();
 
                 if (error) {
+                    console.log('Failed to update the row in Supabase:', error); // Debugging
                     return res.status(500).json({ error: 'Failed to update the row in Supabase' });
                 }
 
+                console.log('Row updated:', data); // Debugging
                 return res.status(200).json({ message: 'Row updated successfully' });
             } else {
+                console.log('Invalid action:', action); // Debugging
                 return res.status(400).json({ error: 'Invalid action' });
             }
         } catch (error) {
+            console.log('An error occurred:', error); // Debugging
             return res.status(500).json({ error: 'An error occurred' });
         }
     });
