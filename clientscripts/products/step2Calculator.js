@@ -326,86 +326,41 @@ document.addEventListener("DOMContentLoaded", async function() {
     button.addEventListener("click", async function() {
         // Check if the button is clickable
         if (!button.classList.contains("unclickable") && button.getAttribute("data-disabled") !== "true") {
-            // Check if daily_count is greater than 0 in local storage
-            const dailyCount = localStorage.getItem("daily_count");
+            // Get the input values
+            const selectedResultCard = document.querySelector("#selectedResult");
+            const value = parseFloat(document.querySelector("#valueField").value);
 
-            // Check if member.data exists
-            const member = await window.$memberstackDom.getCurrentMember();
-            if (member.data) {
-                // Get the input values
-                const selectedResultCard = document.querySelector("#selectedResult");
-                const value = parseFloat(document.querySelector("#valueField").value);
-
-                // Retrieve the 'data-special-json' attribute
-                const specialJSONAttr = selectedResultCard.getAttribute('data-special-json');
-                // Check if it is a valid JSON string
-                let specialJSON = null;
-                if (specialJSONAttr && specialJSONAttr !== "undefined") {
-                    try {
-                        specialJSON = JSON.parse(specialJSONAttr);
-                    } catch (e) {
-                        console.error("Error parsing JSON from data-special-json:", e);
-                    }
+            // Retrieve the 'data-special-json' attribute
+            const specialJSONAttr = selectedResultCard.getAttribute('data-special-json');
+            // Check if it is a valid JSON string
+            let specialJSON = null;
+            if (specialJSONAttr && specialJSONAttr !== "undefined") {
+                try {
+                    specialJSON = JSON.parse(specialJSONAttr);
+                } catch (e) {
+                    console.error("Error parsing JSON from data-special-json:", e);
                 }
-
-                // Handle the general rate attribute
-                const generalRateString = selectedResultCard.getAttribute('data-general');
-                const generalRate = generalRateString === 'Free' ? 0 : (generalRateString ? parseFloat(generalRateString) / 100 : '');
-
-                // Other input values
-                const quantity = parseFloat(document.querySelector("#quantityField").value);
-                const isoCode = document.querySelector("#importingFrom").value;
-                const amount = parseFloat(document.querySelector("#amountField").value);
-                const amountUnit = document.querySelector("#amountUnitSelect").value;
-                const currency = document.querySelector("#currencySelect").value;
-
-                console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
-
-                // Call the calculateDuty function with the input values
-                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
-                addLoadingClass();
-
-                // Call the addToCount function
-                addToCount();
-            } else if (dailyCount && parseInt(dailyCount) > 0) {
-                // Get the input values
-                const selectedResultCard = document.querySelector("#selectedResult");
-                const value = parseFloat(document.querySelector("#valueField").value);
-
-                // Retrieve the 'data-special-json' attribute
-                const specialJSONAttr = selectedResultCard.getAttribute('data-special-json');
-                // Check if it is a valid JSON string
-                let specialJSON = null;
-                if (specialJSONAttr && specialJSONAttr !== "undefined") {
-                    try {
-                        specialJSON = JSON.parse(specialJSONAttr);
-                    } catch (e) {
-                        console.error("Error parsing JSON from data-special-json:", e);
-                    }
-                }
-
-                // Handle the general rate attribute
-                const generalRateString = selectedResultCard.getAttribute('data-general');
-                const generalRate = generalRateString === 'Free' ? 0 : (generalRateString ? parseFloat(generalRateString) / 100 : '');
-
-                // Other input values
-                const quantity = parseFloat(document.querySelector("#quantityField").value);
-                const isoCode = document.querySelector("#importingFrom").value;
-                const amount = parseFloat(document.querySelector("#amountField").value);
-                const amountUnit = document.querySelector("#amountUnitSelect").value;
-                const currency = document.querySelector("#currencySelect").value;
-
-                console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
-
-                // Call the calculateDuty function with the input values
-                calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
-                addLoadingClass();
-
-                // Call the addToCount function
-                addToCount();
-            } else {
-                console.log("Daily count is not greater than 0. Cannot proceed.");
             }
+
+            // Handle the general rate attribute
+            const generalRateString = selectedResultCard.getAttribute('data-general');
+            const generalRate = generalRateString === 'Free' ? 0 : (generalRateString ? parseFloat(generalRateString) / 100 : '');
+
+            // Other input values
+            const quantity = parseFloat(document.querySelector("#quantityField").value);
+            const isoCode = document.querySelector("#importingFrom").value;
+            const amount = parseFloat(document.querySelector("#amountField").value);
+            const amountUnit = document.querySelector("#amountUnitSelect").value;
+            const currency = document.querySelector("#currencySelect").value;
+
+            console.log('Value:', value, 'Quantity:', quantity, 'ISO Code:', isoCode, 'General Rate:', generalRate, 'Special JSON:', specialJSON, 'Amount:', amount, 'Amount Unit:', amountUnit);
+
+            // Call the calculateDuty function with the input values
+            calculateDuty(value, specialJSON, generalRate, quantity, isoCode, amount, amountUnit, currency);
+            addLoadingClass();
+
+            // Call the addToCount function
+            addToCount();
         }
     });
 });
