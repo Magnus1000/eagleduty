@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../../../treccy/scripts"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../treccy-serverside"
+		},
+		{
+			"path": "../../../impuzzle"
+		},
+		{
+			"path": "../../../outdoorphin-app"
+		},
+		{
+			"path": "../../../treccy"
+		}
+	],
+	"settings": {}
+}
