@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
 
         try {
             if (action === 'fetch') {
-                const { data, error } = await supabase
+                const { data, error, status } = await supabase
                     .from('user_events')
                     .select('calc_count')
                     .eq('uuid', uuid)
@@ -30,7 +30,26 @@ module.exports = async (req, res) => {
             
                 if (error) {
                     console.log('Failed to fetch data from Supabase:', error); // Debugging
-                    return res.status(500).json({ error: 'Failed to fetch data from Supabase' });
+            
+                    // Check if the error status is 500
+                    if (status === 500) {
+                        console.log('500 error encountered, creating a new record:', uuid); // Debugging
+                        // Create a new record
+                        const insertResponse = await supabase
+                            .from('user_events')
+                            .insert([{ uuid, calc_count: 0 }])
+                            .single();
+            
+                        if (insertResponse.error) {
+                            console.log('Failed to insert new row:', insertResponse.error); // Debugging
+                            return res.status(500).json({ error: 'Failed to insert new row after 500 error' });
+                        }
+            
+                        console.log('New row created with calc_count 0 after 500 error:', insertResponse.data); // Debugging
+                        return res.status(200).json({ calc_count: insertResponse.data.calc_count });
+                    } else {
+                        return res.status(500).json({ error: 'Failed to fetch data from Supabase' });
+                    }
                 }
             
                 if (!data) {

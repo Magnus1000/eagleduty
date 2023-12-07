@@ -14,85 +14,14 @@ let starting_count = 0;
             console.log('UUID found in local storage:', uuid);
         }
 
-        // Check if UUID exists in cookie
-        const cookieValue = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('uuid='))
-            ?.split('=')[1];
-        if (cookieValue) {
-            uuid = cookieValue;
-            console.log('UUID found in cookie:', uuid);
-        }
-
-        // Check if UUID exists in IndexedDB
-        if ('indexedDB' in window) {
-            const request = window.indexedDB.open('myDatabase', 1);
-            request.onupgradeneeded = function (event) {
-                const db = event.target.result;
-                const objectStore = db.createObjectStore('members', { keyPath: 'uuid' });
-                objectStore.transaction.oncomplete = function () {
-                    const objectStore = db.transaction('members', 'readwrite').objectStore('members');
-                    const getRequest = objectStore.get('uuid');
-                    getRequest.onsuccess = function (event) {
-                        if (event.target.result) {
-                            uuid = event.target.result.uuid;
-                            console.log('UUID found in IndexedDB:', uuid);
-                        } else {
-                            objectStore.add({ uuid: uuid });
-                        }
-                    };
-                };
-            };
-        }
-
-        // Check if UUID exists in WebSQL
-        if ('openDatabase' in window) {
-            const db = window.openDatabase('myDatabase', '1.0', 'My Database', 2 * 1024 * 1024);
-            db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS members (uuid)');
-                tx.executeSql('SELECT * FROM members', [], function (tx, result) {
-                    if (result.rows.length > 0) {
-                        uuid = result.rows.item(0).uuid;
-                        console.log('UUID found in WebSQL:', uuid);
-                    } else {
-                        tx.executeSql('INSERT INTO members (uuid) VALUES (?)', [uuid]);
-                    }
-                });
-            });
-        }
-
         // If UUID is still empty, generate a new one
         if (!uuid) {
             uuid = generateUUID();
             // Set "calc_count" to a constant value
             localStorage.setItem('calc_count', starting_count);
+            localStorage.setItem('uuid', uuid);
             await callVercelServerlessFunction(uuid, 'create', starting_count);
             console.log('No UUID exists. New UUID generated:', uuid);
-        }
-
-        // Set UUID in local storage
-        localStorage.setItem('uuid', uuid);
-
-        // Set UUID as a cookie
-        document.cookie = `uuid=${uuid}; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/`;
-
-        // Set UUID in IndexedDB
-        if ('indexedDB' in window) {
-            const request = window.indexedDB.open('myDatabase', 1);
-            request.onupgradeneeded = function (event) {
-                const db = event.target.result;
-                const objectStore = db.createObjectStore('members', { keyPath: 'uuid' });
-                objectStore.add({ uuid: uuid });
-            };
-        }
-
-        // Set UUID in WebSQL
-        if ('openDatabase' in window) {
-            const db = window.openDatabase('myDatabase', '1.0', 'My Database', 2 * 1024 * 1024);
-            db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS members (uuid)');
-                tx.executeSql('INSERT INTO members (uuid) VALUES (?)', [uuid]);
-            });
         }
 
         // Make a request to the Vercel serverless function
