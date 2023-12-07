@@ -50,7 +50,6 @@ module.exports = async (req, res) => {
             
                 console.log('Fetched data:', data); // Debugging
                 return res.status(200).json({ calc_count: data.calc_count });
-                }
             } else if (action === 'create') {
                 const { data, error } = await supabase
                     .from('user_events')
