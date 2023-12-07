@@ -13,3 +13,7 @@ function showPlanDiv() {
         consultationDiv.classList.remove('hidden');
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    showPlanDiv();
+});
