@@ -11,6 +11,7 @@ let starting_count = 0;
         // Check if UUID exists in local storage
         if (localStorage.getItem('uuid')) {
             uuid = localStorage.getItem('uuid');
+            console.log('UUID found in local storage:', uuid);
         }
 
         // Check if UUID exists in cookie
@@ -20,6 +21,7 @@ let starting_count = 0;
             ?.split('=')[1];
         if (cookieValue) {
             uuid = cookieValue;
+            console.log('UUID found in cookie:', uuid);
         }
 
         // Check if UUID exists in IndexedDB
@@ -34,6 +36,7 @@ let starting_count = 0;
                     getRequest.onsuccess = function (event) {
                         if (event.target.result) {
                             uuid = event.target.result.uuid;
+                            console.log('UUID found in IndexedDB:', uuid);
                         } else {
                             objectStore.add({ uuid: uuid });
                         }
@@ -50,6 +53,7 @@ let starting_count = 0;
                 tx.executeSql('SELECT * FROM members', [], function (tx, result) {
                     if (result.rows.length > 0) {
                         uuid = result.rows.item(0).uuid;
+                        console.log('UUID found in WebSQL:', uuid);
                     } else {
                         tx.executeSql('INSERT INTO members (uuid) VALUES (?)', [uuid]);
                     }
