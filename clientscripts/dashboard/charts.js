@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData1 = {
         labels: [],
         datasets: [{
-            label: 'Daily Sales Total (USD)',
+            label: 'Revenue (USD)',
             data: [],
             fill: true,
             borderColor: '#3772FF',
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData2 = {
         labels: [],
         datasets: [{
-            label: 'Daily Users Total',
+            label: 'No. of Sales',
             data: [],
             fill: true,
             borderColor: '#3772FF',
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Sales Total'
+                        text: 'Revenue (USD)'
                     }
                 }
             }
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Users Total'
+                        text: 'No. of Sales'
                     }
                 }
             }
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Cost'
+                        text: 'Cost (USD)'
                     }
                 }
             }
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Conversion Rate'
+                        text: 'Conversion Rate (%)'
                     }
                 }
             }
@@ -264,6 +264,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to sum array values
     function sumArrayValues(arr) {
         return arr.reduce((acc, value) => acc + value, 0);
+    }
+
+    // Function to get average of array values
+    function getAverage(arr) {
+        return sumArrayValues(arr) / arr.length;
     }
 
     // Call the Airtable API once to fetch records for all charts
@@ -333,10 +338,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculate total sales and total users
         const totalSales = sumArrayValues(salesData);
         const totalUsers = sumArrayValues(usersData);
+        const totalCost = sumArrayValues(costData);
+        const avgConversionRate = getAverage(conversionRateData);
+        const avgROAS = totalSales / totalCost;
 
         // Update HTML elements
         document.getElementById('sumTotalSales').textContent = `US$${totalSales}`;
         document.getElementById('sumTotalUsers').textContent = `${totalUsers}`;
+        document.getElementById('sumTotalCost').textContent = `US$${totalCost}`;
+        document.getElementById('avgConversionRate').textContent = `${avgConversionRate}%`;
+        document.getElementById('avgROAS').textContent = `${avgROAS.toFixed(2)}`;
     })
     .catch(error => {
         console.error('Error fetching data from Airtable:', error);
