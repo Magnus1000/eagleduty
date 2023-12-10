@@ -261,6 +261,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Function to sum array values
+    function sumArrayValues(arr) {
+        return arr.reduce((acc, value) => acc + value, 0);
+    }
+
     // Call the Airtable API once to fetch records for all charts
     fetch('https://api.airtable.com/v0/app65mmXH80sle2qO/tbllj4ZBvlRIqQBPt?sort%5B0%5D%5Bfield%5D=Date&sort%5B0%5D%5Bdirection%5D=asc', {
         headers: {
@@ -324,6 +329,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.myChart4) window.myChart4.update();
         if (window.myChart5) window.myChart5.update();
         if (window.myChart6) window.myChart6.update();
+
+        // Calculate total sales and total users
+        const totalSales = sumArrayValues(salesData);
+        const totalUsers = sumArrayValues(usersData);
+
+        // Update HTML elements
+        document.getElementById('sumTotalSales').textContent = `${totalSales}`;
+        document.getElementById('sumTotalUsers').textContent = `${totalUsers}`;
     })
     .catch(error => {
         console.error('Error fetching data from Airtable:', error);
