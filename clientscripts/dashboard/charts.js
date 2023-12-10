@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData5 = {
         labels: [],
         datasets: [{
-            label: 'Cost',
+            label: 'Conversion Rate',
             data: [],
             fill: true,
             borderColor: '#3772FF',
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData6 = {
         labels: [],
         datasets: [{
-            label: 'Cost',
+            label: 'ROAS',
             data: [],
             fill: true,
             borderColor: '#3772FF',
