@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Prepare the data for all charts
     const chartData1 = {
+        label: 'Daily Sales Total (USD)',
         labels: [],
         datasets: [{
             data: [],
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltipFormat: 'MMMM D'
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Date'
                     }
                 },
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltipFormat: 'MMMM D'
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Date'
                     }
                 },
@@ -139,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltipFormat: 'MMMM D'
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Date'
                     }
                 },
@@ -166,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltipFormat: 'MMMM D'
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Date'
                     }
                 },
@@ -193,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltipFormat: 'MMMM D'
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Date'
                     }
                 },
@@ -220,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tooltipFormat: 'MMMM D'
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Date'
                     }
                 },
