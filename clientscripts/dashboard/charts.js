@@ -275,6 +275,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const usersData = data.records.map(record => record.fields.total_users);
         const clicksData = data.records.map(record => record.fields.clicks);
         const costData = data.records.map(record => record.fields.cost);
+        const conversionRateData = data.records.map(record => record.fields.conversion_rate);
+        const roasData = data.records.map(record => record.fields.roas);
+
 
         // Update data for the first chart
         chartData1.labels = labels;
@@ -298,12 +301,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update data for the fifth chart
         chartData5.labels = labels;
-        chartData5.datasets[0].data = costData;
+        chartData5.datasets[0].data = conversionRateData;
         console.log('Chart 5 Data:', chartData5);
 
         // Update data for the sixth chart
         chartData6.labels = labels;
-        chartData6.datasets[0].data = costData;
+        chartData6.datasets[0].data = roasData;
         console.log('Chart 6 Data:', chartData6);
 
         // Create or update all charts
