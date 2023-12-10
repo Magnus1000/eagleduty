@@ -287,6 +287,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const costData = data.records.map(record => record.fields.cost);
         const conversionRateData = data.records.map(record => record.fields.conversion_rate);
         const roasData = data.records.map(record => record.fields.roas);
+        const totalVirtualAssessment = data.records.map(record => record.fields.count_virtual_assessment);
+        const totalDutyRuling = data.records.map(record => record.fields.count_duty_ruling);
+        const totalConsultation = data.records.map(record => record.fields.count_consultation);
 
 
         // Update data for the first chart
@@ -348,8 +351,58 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('sumTotalCost').textContent = `US$${totalCost}`;
         document.getElementById('avgConversionRate').textContent = `${avgConversionRate}%`;
         document.getElementById('avgROAS').textContent = `${avgROAS.toFixed(2)}`;
+
+        // Calculate total virtual assessment, total duty ruling, and total consultation
+        const totalVirtualAssessmentSum = sumArrayValues(totalVirtualAssessment);
+        const totalDutyRulingSum = sumArrayValues(totalDutyRuling);
+        const totalConsultationSum = sumArrayValues(totalConsultation);
+
+        // Create chart data for the horizontal bar graph
+        const chartData = {
+            labels: ['Virtual Assessment', 'Duty Ruling', 'Consultation'],
+            datasets: [{
+                label: 'Counts',
+                data: [totalVirtualAssessmentSum, totalDutyRulingSum, totalConsultationSum],
+                backgroundColor: ['#3772FF', '#FF6B00', '#FFC700']
+            }]
+        };
+
+        // Configuration for the horizontal bar graph
+        const config = {
+            type: 'bar',
+            data: chartData,
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Counts'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: false,
+                            text: ''
+                        }
+                    }
+                }
+            }
+        };
+
+        // Select the canvas for the horizontal bar graph
+        const canvas = document.querySelector('canvas[data-custom-chart="7"]');
+
+        // Create or update the chart
+        createOrUpdateChart(canvas, config, 'myChart7');
+
+        // Update the chart if it already exists
+        if (window.myChart7) window.myChart7.update();
+    }
     })
     .catch(error => {
         console.error('Error fetching data from Airtable:', error);
     });
 });
+
