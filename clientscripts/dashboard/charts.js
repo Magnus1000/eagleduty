@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Counts',
                 data: [totalVirtualAssessmentSum, totalDutyRulingSum, totalConsultationSum],
-                backgroundColor: ['#3772FF', '#FF6B00', '#FFC700']
+                backgroundColor: ['#3772FF', '#3772FF', '#3772FF']
             }]
         };
 
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Counts'
+                            text: 'Sales by Product'
                         }
                     },
                     y: {
