@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData1 = {
         labels: [],
         datasets: [{
-            label: 'Daily Sales Total',
             data: [],
             fill: true,
             borderColor: '#3772FF',
