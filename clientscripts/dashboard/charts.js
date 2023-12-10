@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const chartData = {
             labels: ['Virtual Assessment', 'Duty Ruling', 'Consultation'],
             datasets: [{
-                label: 'Counts',
+                label: 'No. of Sales',
                 data: [totalVirtualAssessmentSum, totalDutyRulingSum, totalConsultationSum],
                 backgroundColor: ['#3772FF', '#3772FF', '#3772FF']
             }]
@@ -383,8 +383,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: {
                         beginAtZero: true,
                         title: {
-                            display: false,
-                            text: ''
+                            display: true,
+                            text: 'No. of Sales'
                         }
                     }
                 }
