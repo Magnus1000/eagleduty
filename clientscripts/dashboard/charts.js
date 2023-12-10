@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalUsers = sumArrayValues(usersData);
         const totalCost = sumArrayValues(costData);
         const avgConversionRate = getAverage(conversionRateData);
-        const avgROAS = totalSales / totalCost;
+        const avgROAS = totalCost !== 0 && totalSales !== 0 ? totalSales / totalCost : 0;
 
         // Update HTML elements
         document.getElementById('sumTotalSales').textContent = `US$${totalSales}`;
@@ -352,4 +352,3 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => {
         console.error('Error fetching data from Airtable:', error);
     });
-});
