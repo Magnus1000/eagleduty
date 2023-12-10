@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData3 = {
         labels: [],
         datasets: [{
-            label: 'Clicks',
+            label: 'Visitors',
             data: [],
             fill: true,
             borderColor: '#3772FF',
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData4 = {
         labels: [],
         datasets: [{
-            label: 'Cost',
+            label: 'Cost (USD)',
             data: [],
             fill: true,
             borderColor: '#3772FF',
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chartData5 = {
         labels: [],
         datasets: [{
-            label: 'Conversion Rate',
+            label: 'Conversion Rate (%)',
             data: [],
             fill: true,
             borderColor: '#3772FF',
