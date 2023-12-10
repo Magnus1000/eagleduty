@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Prepare the data for all charts
     const chartData1 = {
-        label: 'Daily Sales Total (USD)',
         labels: [],
         datasets: [{
+            label: 'Daily Sales Total (USD)',
             data: [],
             fill: true,
             borderColor: '#3772FF',
