@@ -399,7 +399,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update the chart if it already exists
         if (window.myChart7) window.myChart7.update();
-    }
     })
     .catch(error => {
         console.error('Error fetching data from Airtable:', error);
