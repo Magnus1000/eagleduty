@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Clicks'
+                        text: 'Visitors'
                     }
                 }
             }
