@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalUsers = sumArrayValues(usersData);
 
         // Update HTML elements
-        document.getElementById('sumTotalSales').textContent = `${totalSales}`;
+        document.getElementById('sumTotalSales').textContent = `US$${totalSales}`;
         document.getElementById('sumTotalUsers').textContent = `${totalUsers}`;
     })
     .catch(error => {
