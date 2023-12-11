@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const costData = data.records.map(record => record.fields.cost);
         const conversionRateData = data.records.map(record => record.fields.conversion_rate);
         const roasData = data.records.map(record => record.fields.roas);
-        const totalVirtualAssessment = data.records.map(record => record.fields.count_virtual_assessment);
+        const totalHSCodeReview = data.records.map(record => record.fields.count_hs_code_review);
         const totalDutyRuling = data.records.map(record => record.fields.count_duty_ruling);
         const totalConsultation = data.records.map(record => record.fields.count_consultation);
 
@@ -352,17 +352,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('avgConversionRate').textContent = `${avgConversionRate}%`;
         document.getElementById('avgROAS').textContent = `${avgROAS.toFixed(2)}`;
 
-        // Calculate total virtual assessment, total duty ruling, and total consultation
-        const totalVirtualAssessmentSum = sumArrayValues(totalVirtualAssessment);
+        // Calculate total hs code review, total duty ruling, and total consultation
+        const totalHSCodeReviewSum = sumArrayValues(totalHSCodeReview);
         const totalDutyRulingSum = sumArrayValues(totalDutyRuling);
         const totalConsultationSum = sumArrayValues(totalConsultation);
 
         // Create chart data for the horizontal bar graph
         const chartData = {
-            labels: ['Virtual Assessment', 'Duty Ruling', 'Consultation'],
+            labels: ['HS Code Review', 'Duty Ruling', 'Consultation'],
             datasets: [{
                 label: 'No. of Sales',
-                data: [totalVirtualAssessmentSum, totalDutyRulingSum, totalConsultationSum],
+                data: [totalHSCodeReviewSum, totalDutyRulingSum, totalConsultationSum],
                 backgroundColor: ['#3772FF', '#3772FF', '#3772FF']
             }]
         };
