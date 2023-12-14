@@ -346,10 +346,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const avgROAS = totalCost !== 0 && totalSales !== 0 ? totalSales / totalCost : 0;
 
         // Update HTML elements
-        document.getElementById('sumTotalSales').textContent = `US$${totalSales}`;
+        document.getElementById('sumTotalSales').textContent = `US$${totalSales.toFixed(2)}`;
         document.getElementById('sumTotalUsers').textContent = `${totalUsers}`;
-        document.getElementById('sumTotalCost').textContent = `US$${totalCost}`;
-        document.getElementById('avgConversionRate').textContent = `${avgConversionRate}%`;
+        document.getElementById('sumTotalCost').textContent = `US$${totalCost.toFixed(2)}`;
+        document.getElementById('avgConversionRate').textContent = `${avgConversionRate.toFixed(2)}%`;
         document.getElementById('avgROAS').textContent = `${avgROAS.toFixed(2)}`;
 
         // Calculate total hs code review, total duty ruling, and total consultation
