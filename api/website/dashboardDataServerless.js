@@ -4,11 +4,13 @@ const axios = require('axios');
 module.exports = async (req, res) => {
     try {
         // Access environment variables
-        const apiUrl = process.env.API_URL; 
-        const apiKey = process.env.API_KEY;  
+        const tableID = process.env.AIRTABLE_DASHBOARD_TABLE_ID; 
+        const baseID = process.env.AIRTABLE_BASE_ID;
+        const apiKey = process.env.AIRTABLE_API_KEY;  
+        const apiURL = `https://api.airtable.com/v0/${baseID}/${tableID}`;
 
         // Make an HTTP request using Axios
-        const response = await axios.get(apiUrl, {
+        const response = await axios.get(apiURL, {
             headers: {
                 'Authorization': `Bearer ${apiKey}` // Replace header structure based on your API's requirements
             }
