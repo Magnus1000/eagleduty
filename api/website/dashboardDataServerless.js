@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
         // Access environment variables
         const tableID = process.env.AIRTABLE_DASHBOARD_TABLE_ID; 
         const baseID = process.env.AIRTABLE_BASE_ID;
-        const apiKey = process.env.AIRTABLE_API_KEY;  
+        const apiKey = process.env.AIRTABLE_KEY;  
         const apiURL = `https://api.airtable.com/v0/${baseID}/${tableID}`;
 
         // Make an HTTP request using Axios
