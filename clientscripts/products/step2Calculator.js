@@ -495,7 +495,7 @@ function watchFieldsForCalculation() {
     const calculationType = selectedResult.getAttribute('data-calculation-type');
     const importingFrom = document.getElementById('importingFrom').value;
     const selectedResultCard = document.querySelector("#selectedResult");
-    const ninetyNineJson = selectedResultCard.getAttribute('data-99-json');
+    const ninetyNineJson = JSON.parse(selectedResultCard.getAttribute('data-99-json'));
 
     console.log('ninetyNineJson:', ninetyNineJson);
     console.log('ninetyNineJsonLength:', ninetyNineJson.length);
