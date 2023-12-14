@@ -520,7 +520,7 @@ function watchFieldsForCalculation() {
 
         fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
-    } else if (calculationType === 'amount' && importingFrom && (!ninetyNineJson || Object.keys(ninetyNineJson).length === 0)) {
+    } else if (calculationType === 'amount' && importingFrom && (!ninetyNineJson || ninetyNineJson.length === 0)) {
         const fields = [
             document.getElementById('importingTo'),
             document.getElementById('importingFrom'),
@@ -529,13 +529,14 @@ function watchFieldsForCalculation() {
         ];
 
         console.log('Calculation type is amount and importingFrom country DOES NOT have an addition tariff. Found fields: importingTo, importingFrom, amountField, amountUnitSelect');
+        console.log('ninetyNineJsonLength:', ninetyNineJson.length);
 
         // Initial check for pre-populated fields
         checkFields(fields);
 
         fields.forEach(field => field.addEventListener('input', () => checkFields(fields)));
         fields.forEach(field => field.addEventListener('change', () => checkFields(fields)));
-    } else if (calculationType === 'amount' && ninetyNineJson && Object.keys(ninetyNineJson).length > 0) {
+    } else if (calculationType === 'amount' && Array.isArray(ninetyNineJson) && ninetyNineJson.length > 0) {
         const fields = [
             document.getElementById('importingTo'),
             document.getElementById('importingFrom'),
@@ -587,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to togle the display of the China value fields
+// Function to toggle the display of the China value fields
 function updateDisplay() {
     const importingFromField = document.getElementById("importingFrom");
     const chinaValueWrapper = document.getElementById("valueWrapper");
