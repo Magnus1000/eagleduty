@@ -1,8 +1,16 @@
-// Import the Axios library
+// Import the Axios and CORS libraries
 const axios = require('axios');
+const cors = require('cors');
 
 module.exports = async (req, res) => {
     try {
+        // Enable CORS for eagleduty.io
+        const corsOptions = {
+            origin: 'https://eagleduty.io'
+        };
+        const corsMiddleware = cors(corsOptions);
+        await corsMiddleware(req, res);
+
         // Access environment variables
         const tableID = process.env.AIRTABLE_DASHBOARD_TABLE_ID; 
         const baseID = process.env.AIRTABLE_BASE_ID;
