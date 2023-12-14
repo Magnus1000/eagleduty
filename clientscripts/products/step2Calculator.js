@@ -499,6 +499,7 @@ function watchFieldsForCalculation() {
 
     console.log('ninetyNineJson:', ninetyNineJson);
     console.log('ninetyNineJsonLength:', ninetyNineJson.length);
+    console.log('isArray:', Array.isArray(ninetyNineJson));
 
     // Common function to check fields
     const checkFields = (fields) => {
