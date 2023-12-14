@@ -4,17 +4,19 @@ document.addEventListener('DOMContentLoaded', function() {
     var toolsIcon = document.getElementById('toolsMenuIcon');
     var toolsDropdown = document.getElementById('toolsDropdown');
 
-    toolsMenu.addEventListener('click', function() {
-        toolsDropdown.classList.toggle('open');
-        toolsIcon.classList.toggle('open');
-        toolsMenu.classList.toggle('open');
-    });
+    if (toolsMenu && toolsIcon && toolsDropdown) {
+        toolsMenu.addEventListener('click', function() {
+            toolsDropdown.classList.toggle('open');
+            toolsIcon.classList.toggle('open');
+            toolsMenu.classList.toggle('open');
+        });
+    }
 
     document.addEventListener('click', function(event) {
-        var isClickInside = toolsDropdown.contains(event.target) || toolsMenu.contains(event.target);
-        var isToolsMenuOpen = toolsMenu.classList.contains('open');
+        var isClickInside = toolsDropdown && toolsDropdown.contains(event.target) || toolsMenu && toolsMenu.contains(event.target);
+        var isToolsMenuOpen = toolsMenu && toolsMenu.classList.contains('open');
 
-        if (!isClickInside && isToolsMenuOpen) {
+        if (toolsDropdown && toolsIcon && toolsMenu && !isClickInside && isToolsMenuOpen) {
             toolsDropdown.classList.remove('open');
             toolsIcon.classList.remove('open');
             toolsMenu.classList.remove('open');
@@ -28,17 +30,19 @@ document.addEventListener('DOMContentLoaded', function() {
     var profileIcon = document.getElementById('profileMenuIcon');
     var profileDropdown = document.getElementById('profileDropdown');
 
-    profileMenu.addEventListener('click', function() {
-        profileDropdown.classList.toggle('open');
-        profileIcon.classList.toggle('open');
-        profileMenu.classList.toggle('open');
-    });
+    if (profileMenu && profileIcon && profileDropdown) {
+        profileMenu.addEventListener('click', function() {
+            profileDropdown.classList.toggle('open');
+            profileIcon.classList.toggle('open');
+            profileMenu.classList.toggle('open');
+        });
+    }
 
     document.addEventListener('click', function(event) {
-        var isClickInside = profileDropdown.contains(event.target) || profileMenu.contains(event.target);
-        var isProfileMenuOpen = profileMenu.classList.contains('open');
+        var isClickInside = profileDropdown && profileDropdown.contains(event.target) || profileMenu && profileMenu.contains(event.target);
+        var isProfileMenuOpen = profileMenu && profileMenu.classList.contains('open');
 
-        if (!isClickInside && isProfileMenuOpen) {
+        if (profileDropdown && profileIcon && profileMenu && !isClickInside && isProfileMenuOpen) {
             profileDropdown.classList.remove('open');
             profileIcon.classList.remove('open');
             profileMenu.classList.remove('open');
@@ -52,17 +56,19 @@ document.addEventListener('DOMContentLoaded', function() {
     var resourcesIcon = document.getElementById('resourcesMenuIcon');
     var resourcesDropdown = document.getElementById('resourcesDropdown');
 
-    resourcesMenu.addEventListener('click', function() {
-        resourcesDropdown.classList.toggle('open');
-        resourcesIcon.classList.toggle('open');
-        resourcesMenu.classList.toggle('open');
-    });
+    if (resourcesMenu && resourcesIcon && resourcesDropdown) {
+        resourcesMenu.addEventListener('click', function() {
+            resourcesDropdown.classList.toggle('open');
+            resourcesIcon.classList.toggle('open');
+            resourcesMenu.classList.toggle('open');
+        });
+    }
 
     document.addEventListener('click', function(event) {
-        var isClickInside = resourcesDropdown.contains(event.target) || resourcesMenu.contains(event.target);
-        var isResourcesMenuOpen = resourcesMenu.classList.contains('open');
+        var isClickInside = resourcesDropdown && resourcesDropdown.contains(event.target) || resourcesMenu && resourcesMenu.contains(event.target);
+        var isResourcesMenuOpen = resourcesMenu && resourcesMenu.classList.contains('open');
 
-        if (!isClickInside && isResourcesMenuOpen) {
+        if (resourcesDropdown && resourcesIcon && resourcesMenu && !isClickInside && isResourcesMenuOpen) {
             resourcesDropdown.classList.remove('open');
             resourcesIcon.classList.remove('open');
             resourcesMenu.classList.remove('open');
