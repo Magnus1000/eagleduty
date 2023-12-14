@@ -497,6 +497,9 @@ function watchFieldsForCalculation() {
     const selectedResultCard = document.querySelector("#selectedResult");
     const ninetyNineJson = selectedResultCard.getAttribute('data-99-json');
 
+    console.log('ninetyNineJson:', ninetyNineJson);
+    console.log('ninetyNineJsonLength:', ninetyNineJson.length);
+
     // Common function to check fields
     const checkFields = (fields) => {
         const allFilled = fields.every(field => field.value.trim() !== '');
