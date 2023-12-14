@@ -272,11 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Call the Airtable API once to fetch records for all charts
-    fetch('https://api.airtable.com/v0/app65mmXH80sle2qO/tbllj4ZBvlRIqQBPt?sort%5B0%5D%5Bfield%5D=Date&sort%5B0%5D%5Bdirection%5D=asc', {
-        headers: {
-            'Authorization': 'Bearer pat0LaF9Di2UZoBxM.94c2a44c1844c108309113d397ffa0cf114c4c9aecc1e4dde2d92d89a5dcb1fc' // Replace with your actual Airtable API key
-        }
-    })
+    // Call the Vercel serverless function to fetch records for all charts
+    fetch('https://eagleduty-magnus1000team.vercel.app/api/website/dashboardDataServerless')
     .then(response => response.json())
     .then(data => {
         // Process data for all charts
@@ -401,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.myChart7) window.myChart7.update();
     })
     .catch(error => {
-        console.error('Error fetching data from Airtable:', error);
+        console.error('Error fetching data from Vercel', error);
     });
 });
 
