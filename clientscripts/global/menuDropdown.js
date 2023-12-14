@@ -46,3 +46,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Function to toggle the dropdown menu for the resources menu
+document.addEventListener('DOMContentLoaded', function() {
+    var resourcesMenu = document.getElementById('resourcesMenu');
+    var resourcesIcon = document.getElementById('resourcesMenuIcon');
+    var resourcesDropdown = document.getElementById('resourcesDropdown');
+
+    resourcesMenu.addEventListener('click', function() {
+        resourcesDropdown.classList.toggle('open');
+        resourcesIcon.classList.toggle('open');
+        resourcesMenu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function(event) {
+        var isClickInside = resourcesDropdown.contains(event.target) || resourcesMenu.contains(event.target);
+        var isResourcesMenuOpen = resourcesMenu.classList.contains('open');
+
+        if (!isClickInside && isResourcesMenuOpen) {
+            resourcesDropdown.classList.remove('open');
+            resourcesIcon.classList.remove('open');
+            resourcesMenu.classList.remove('open');
+        }
+    });
+});

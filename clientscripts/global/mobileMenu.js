@@ -36,3 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenu.classList.remove('open');
     });
 });
+
+// Function to toggle the dropdown menu for the resources menu
+document.addEventListener('DOMContentLoaded', function() {
+    var mobileResourcesButton = document.getElementById('mobileResourcesDropdownButton');
+    var mobileResourcesIcon = document.getElementById('mobileResourcesIcon');
+    var mobileResourcesList = document.getElementById('mobileResourcesDropdownList');
+
+    mobileResourcesButton.addEventListener('click', function() {
+        mobileResourcesList.classList.toggle('open');
+        mobileResourcesIcon.classList.toggle('open');
+        mobileResourcesButton.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function(event) {
+        var isClickInside = mobileResourcesList.contains(event.target) || mobileResourcesButton.contains(event.target);
+        var isResourcesMenuOpen = mobileResourcesButton.classList.contains('open');
+
+        if (!isClickInside && isResourcesMenuOpen) {
+            mobileResourcesButton.classList.remove('open');
+            mobileResourcesIcon.classList.remove('open');
+            mobileResourcesList.classList.remove('open');
+        }
+    });
+});
