@@ -28,8 +28,8 @@ function decimalToRoman(decimal) {
 
 module.exports = async (req, res) => {
     try {
-        // Get the string from the request body
-        const { string } = req.body;
+        // Get the string from the request parameters
+        const { string } = req.query;
 
         // Extract the chapter and section numbers
         const chapter = string.substring(2, 4);
