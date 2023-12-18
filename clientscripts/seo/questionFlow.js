@@ -27,9 +27,6 @@ function RenderCloneDiv({ data, index, onAnswerClick }) {
     // Clone the main div
     const mainClone = document.querySelector('[data-jactory-div="1"]').cloneNode(true);
 
-    // Remove the template question div
-    targetComponent.innerHTML = '';
-
     // Set the question text
     const questionTextDiv = mainClone.querySelector('div:first-child');
     if (questionTextDiv && data[index]) {
