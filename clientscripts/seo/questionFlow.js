@@ -25,7 +25,7 @@ function CloneDiv() {
                 // Set the question text
                 const questionTextDiv = mainClone.querySelector('div:first-child');
                 if (questionTextDiv) {
-                    questionTextDiv.textContent = item.title;
+                    questionTextDiv.textContent = data[0].title;
                 }
 
                 // Remove the template answer div
@@ -33,7 +33,7 @@ function CloneDiv() {
                 answerDiv.remove();
 
                 // Clone and append answer divs for each answer
-                item.answers_text.forEach(answerText => {
+                data[0].answers_text.forEach(answerText => {
                     const cloneAnswerDiv = answerDiv.cloneNode(true);
                     const answerTextDiv = cloneAnswerDiv.querySelector('.hs-code-answer-text');
                     if (answerTextDiv) {
