@@ -43,7 +43,7 @@ function RenderCloneDiv({ data, index, onAnswerClick }) {
         const answerTextDiv = cloneAnswerDiv.querySelector('.hs-code-answer-text');
         if (answerTextDiv) {
             answerTextDiv.textContent = answerText;
-            answerTextDiv.dataset.nextQuestionIndex = data[index].next_question[answerIndex];
+            answerTextDiv.dataset.nextQuestionIndex = data[index].next_question[answerIndex] || '';
             answerTextDiv.addEventListener('click', onAnswerClick);
         }
         mainClone.appendChild(cloneAnswerDiv);
