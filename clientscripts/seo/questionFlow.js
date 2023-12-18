@@ -20,25 +20,31 @@ function CloneDiv() {
                     // Clear previous answers if any
                     targetComponent.innerHTML = '';
 
-                    // Clone the main div without the answers
-                    const mainClone = sourceDiv.cloneNode(false);
+                    // Deep clone the main div to include structural elements but without the answer content
+                    const mainClone = sourceDiv.cloneNode(true); 
                     targetComponent.appendChild(mainClone);
 
                     console.log('Number of answers:', data[0].answers_text.length);
 
                     // Set the question text
-                    const questionTextSlot = mainClone.querySelector('[slot="questionText"]');
+                    const questionTextSlot = mainClone.querySelector('[slot="question-text"]');
                     if (questionTextSlot) {
-                        questionTextSlot.textContent = data.title;
+                        questionTextSlot.textContent = data[0].title;
                     }
+                    
+                    // Remove existing answer divs before cloning new ones
+                    mainClone.querySelectorAll('[data-jactory-div="2"]').forEach(node => node.remove());
 
                     // Iterate over the answers_text array and clone the answer div for each
+                    const answerTemplate = document.querySelector('[data-jactory-div="2"]');
                     data[0].answers_text.forEach(answerText => {
-                        const answerDiv = document.querySelector('[data-jactory-div="2"]');
-                        if (answerDiv) {
-                            const clone = answerDiv.cloneNode(true);
-                            clone.textContent = answerText; // Set the answer text from the data
-                            mainClone.appendChild(clone);
+                        if (answerTemplate) {
+                            const clone = answerTemplate.cloneNode(true);
+                            const answerTextSlot = clone.querySelector('[slot="answer-text"]');
+                            if (answerTextSlot) {
+                                answerTextSlot.textContent = answerText; // Set the answer text from the data
+                            }
+                            mainClone.appendChild(clone); // Append the cloned answer to the mainClone
                         }
                     });
                 }
