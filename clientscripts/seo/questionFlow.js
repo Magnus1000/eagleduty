@@ -24,6 +24,14 @@ function CloneDiv() {
                     const mainClone = sourceDiv.cloneNode(false);
                     targetComponent.appendChild(mainClone);
 
+                    console.log('Number of answers:', data[0].answers_text.length);
+
+                    // Set the question text
+                    const questionTextSlot = mainClone.querySelector('[slot="questionText"]');
+                    if (questionTextSlot) {
+                        questionTextSlot.textContent = data.title;
+                    }
+
                     // Iterate over the answers_text array and clone the answer div for each
                     data[0].answers_text.forEach(answerText => {
                         const answerDiv = document.querySelector('[data-jactory-div="2"]');
