@@ -49,7 +49,7 @@ function CloneDiv() {
     }, []);
   
     return React.createElement('div', null);
-  }
+}
   
-  ReactDOM.render(React.createElement(CloneDiv), document.getElementById('root'));
+ReactDOM.render(React.createElement(CloneDiv), document.getElementById('root'));
   
