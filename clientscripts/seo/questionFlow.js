@@ -1,5 +1,5 @@
 // This component represents a single question block
-function QuestionBlock({ question, answers, onAnswerClick }) {
+function QuestionBlock({ question, answers, onAnswerClick, isClickable }) {
     const [selectedAnswer, setSelectedAnswer] = React.useState(null); // State to store the selected answer index
 
     const handleAnswerClick = (index, nextQuestion, htsno) => {
@@ -8,7 +8,7 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
     };
 
     return (
-        <div className="hs-code-question-block">
+        <div className={`hs-code-question-block ${!isClickable ? 'disabled' : ''}`}>
             <div>{question}</div>
             {answers.map((answer, index) => (
                 <div
@@ -16,7 +16,7 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
                     className={`hs-code-answer ${selectedAnswer === index ? 'selected' : ''}`}
                     // answer is an object within the answers array.
                     // Set the prop onAnswerClick, which represents a function, passing the next_question value. The function is defined in the QuestionDiv component.
-                    onClick={() => handleAnswerClick(index, answer.next_question, answer.htsno)}
+                    onClick={() => isClickable && handleAnswerClick(index, answer.next_question, answer.htsno)}
                 >
                     <div className="hs-code-answer-text">{answer.text}</div>
                 </div>
