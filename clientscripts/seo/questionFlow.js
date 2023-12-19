@@ -15,7 +15,7 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
     );
 }
 
-function CloneDiv() {
+function QuestionDiv() {
     const [questions, setQuestions] = React.useState([]);
 
     React.useEffect(() => {
@@ -52,4 +52,4 @@ function CloneDiv() {
     );
 }
 
-ReactDOM.render(<CloneDiv />, document.getElementById('root'));
+ReactDOM.render(<QuestionDiv />, document.getElementById('root'));
