@@ -9,7 +9,7 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
                     className="hs-code-answer"
                     onClick={() => onAnswerClick(answer)}
                 >
-                    <div className="hs-code-answer-text">{answer}</div>
+                    <div className="hs-code-answer-text">{answer.text}</div>
                 </div>
             ))}
         </div>
@@ -18,8 +18,8 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
 
 // This component represents the main question container
 function QuestionDiv() {
-    const [questions, setQuestions] = React.useState([]); // State to store the questions
-    const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0); // State to track the current question index
+    const [questions, setQuestions] = React.useState([]); // State to store all questions
+    const [renderedQuestions, setRenderedQuestions] = React.useState([]); // State to store rendered questions
 
     React.useEffect(() => {
         // Fetching the questions from an API
@@ -32,6 +32,7 @@ function QuestionDiv() {
             })
             .then((data) => {
                 setQuestions(data); // Updating the state with the fetched questions
+                setRenderedQuestions([data[0]]); // Initialize with the first question
             })
             .catch((error) => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -39,24 +40,26 @@ function QuestionDiv() {
     }, []);
 
     // Function to handle the click event on an answer
-    const handleAnswerClick = (value) => {
-        const currentQuestion = questions[currentQuestionIndex]; // Get the current question object
-        const nextQuestionIndex = currentQuestion.answers.find((answer) => answer.value === value)?.next_question; // Get the next question index based on the selected answer value
-
+    const handleAnswerClick = (answer) => {
+        const nextQuestionIndex = answer.next_question; // Get the next question index from the answer
         if (nextQuestionIndex !== undefined) {
-            setCurrentQuestionIndex(nextQuestionIndex); // Update the current question index with the next question index
+            const nextQuestion = questions.find(q => q.id === nextQuestionIndex);
+            if (nextQuestion) {
+                setRenderedQuestions(prev => [...prev, nextQuestion]); // Append the next question to the rendered questions
+            }
         }
     };
 
     return (
         <div>
-            {questions.length > 0 && (
+            {renderedQuestions.map((question, index) => (
                 <QuestionBlock
-                    question={questions[currentQuestionIndex].title} // Displaying the current question
-                    answers={questions[currentQuestionIndex].answers_text} // Displaying the answers for the current question
-                    onAnswerClick={(value) => handleAnswerClick(value)} // Passing the click event handler to the question block
+                    key={index}
+                    question={question.title}
+                    answers={question.answers}
+                    onAnswerClick={handleAnswerClick}
                 />
-            )}
+            ))}
         </div>
     );
 }
