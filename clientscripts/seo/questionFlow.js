@@ -53,6 +53,7 @@ function QuestionDiv() {
         if (nextQuestionIndex !== null) {
             const nextQuestion = questions.find(q => q.id === nextQuestionIndex);
             if (nextQuestion) {
+                console.log("Selected answer value:", nextQuestionIndex); // Log the selected answer value to the console
                 setRenderedQuestions(prev => [...prev, nextQuestion]); // Append the next question
             }
         }
