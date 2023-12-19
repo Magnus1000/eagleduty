@@ -9,12 +9,22 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
                     className="hs-code-answer"
                     // answer is an object within the answers array.
                     // Set the prop onAnswerClick, which represents a function, passing the next_question value. The function is defined in the QuestionDiv component.
-                    onClick={() => onAnswerClick(answer.next_question)}
+                    onClick={() => onAnswerClick(answer.next_question, answer.htsno)}
                 >
                     <div className="hs-code-answer-text">{answer.text}</div>
                 </div>
             ))}
         </div>
+    );
+}
+
+// This component represents the block which displays the HTS Code
+function CodeBlock({ htsno }) {
+    return (
+      <div className="hs-code-final-code">
+        <div className="hs-code-final-header">Your HS Code is:</div>
+        <div className="hs-code-final-text">{htsno}</div>
+      </div>
     );
 }
 
@@ -24,6 +34,8 @@ function QuestionDiv() {
     const [questions, setQuestions] = React.useState([]); // State to store all questions
     // renderedQuestions is an array of questions that have been rendered. setRenderedQuestions is a function to update the state.   
     const [renderedQuestions, setRenderedQuestions] = React.useState([]); // State to store rendered questions
+    // New state for storing the HS code
+    const [htsno, setHtsno] = React.useState(null); 
 
     React.useEffect(() => {
         // Fetching the questions from an API
@@ -43,9 +55,10 @@ function QuestionDiv() {
                     // The incoming answers_text array is "answers_text": ["Yes", "No"] and next_question is "next_question": [3, 6]
                     answers: item.answers_text.map((text, index) => ({
                         text,
-                        next_question: item.next_question ? item.next_question[index] : null
+                        next_question: item.next_question ? item.next_question[index] : null,
+                        htsno: item.htsno ? item.htsno[index] : null
                     }))
-                    // The processed data will look like this: {"title": "Are the shoes purposely waterproof?", "answers": [{"text": "Yes", "next_question": 3}, {"text": "No", "next_question": 6}]}
+                    // The processed data will look like this: {"title": "Are the shoes purposely waterproof?", "answers": [{"text": "Yes", "next_question": 3, "htsno": "6402.99.31"}, {"text": "No", "next_question": 6, "htsno": "6402.99.31"}]}
                 }));
 
                 setQuestions(processedData); // Updating the state (questions array) with the processed questions
@@ -57,7 +70,7 @@ function QuestionDiv() {
     }, []);
 
     // Function to handle the click event on an answer
-    const handleAnswerClick = (nextQuestionIndex) => {
+    const handleAnswerClick = (nextQuestionIndex, nextQuestionHtsno) => {
         if (nextQuestionIndex) {
             console.log("Selected answer value:", nextQuestionIndex); // Log the selected answer value to the console
             // Find the next question in questions, searching by index, based on the next_question value
@@ -65,8 +78,10 @@ function QuestionDiv() {
             if (nextQuestion) {
                 setRenderedQuestions(prev => [...prev, nextQuestion]); // Append the next question
             }
-        }
-        else {
+        } else if (!nextQuestionIndex && nextQuestionHtsno) {
+            console.log("Selected HTSNO value:", nextQuestionHtsno); // Log the selected HTSNO value to the console
+            setHtsno(nextQuestionHtsno); // Update the state with the HTSNO value
+        } else {
             console.log("No next question"); // Log that there is no next question
         }
     };
@@ -84,6 +99,7 @@ function QuestionDiv() {
                     onAnswerClick={handleAnswerClick}
                 />
             ))}
+            {htsno && <CodeBlock htsno={htsno} />} {/* Conditionally render CodeBlock with htsno */}
         </div>
     );
 }
