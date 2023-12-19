@@ -7,7 +7,7 @@ function QuestionBlock({ question, answers, onAnswerClick }) {
                 <div
                     key={index}
                     className="hs-code-answer"
-                    onClick={() => onAnswerClick(answer)}
+                    onClick={() => onAnswerClick(answer.next_question)}
                 >
                     <div className="hs-code-answer-text">{answer.text}</div>
                 </div>
@@ -31,8 +31,17 @@ function QuestionDiv() {
                 return response.json();
             })
             .then((data) => {
-                setQuestions(data); // Updating the state with the fetched questions
-                setRenderedQuestions([data[0]]); // Initialize with the first question
+                // Process the data to combine answers text with their next_question value
+                const processedData = data.map((item) => ({
+                    ...item,
+                    answers: item.answers_text.map((text, index) => ({
+                        text,
+                        next_question: item.next_question ? item.next_question[index] : null
+                    }))
+                }));
+
+                setQuestions(processedData); // Updating the state with the processed questions
+                setRenderedQuestions([processedData[0]]); // Initialize with the first question
             })
             .catch((error) => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -40,12 +49,11 @@ function QuestionDiv() {
     }, []);
 
     // Function to handle the click event on an answer
-    const handleAnswerClick = (answer) => {
-        const nextQuestionIndex = answer.next_question; // Get the next question index from the answer
-        if (nextQuestionIndex !== undefined) {
+    const handleAnswerClick = (nextQuestionIndex) => {
+        if (nextQuestionIndex !== null) {
             const nextQuestion = questions.find(q => q.id === nextQuestionIndex);
             if (nextQuestion) {
-                setRenderedQuestions(prev => [...prev, nextQuestion]); // Append the next question to the rendered questions
+                setRenderedQuestions(prev => [...prev, nextQuestion]); // Append the next question
             }
         }
     };
