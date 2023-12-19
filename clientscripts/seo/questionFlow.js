@@ -13,7 +13,7 @@ function QuestionBlock({ question, answers, onAnswerClick, isClickable }) {
             {answers.map((answer, index) => (
                 <div
                     key={index}
-                    className={`hs-code-answer ${selectedAnswer === index ? 'selected' : ''}`}
+                    className={`hs-code-answer ${selectedAnswer === index ? 'selected' : ''} ${!isClickable ? 'disabled' : ''}`}
                     // answer is an object within the answers array.
                     // Set the prop onAnswerClick, which represents a function, passing the next_question value. The function is defined in the QuestionDiv component.
                     onClick={() => isClickable && handleAnswerClick(index, answer.next_question, answer.htsno)}
