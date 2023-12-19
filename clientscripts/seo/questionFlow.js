@@ -74,11 +74,11 @@ function QuestionDiv() {
         if (nextQuestionIndex) {
             console.log("Selected answer value:", nextQuestionIndex); // Log the selected answer value to the console
             const nextQuestion = questions[nextQuestionIndex]; // Get the next question from the questions array
-    
-            if (nextQuestion && !renderedQuestions.some(q => q.uid === nextQuestionIndex)) {
-                // Only append the nextQuestion if it's not already in the renderedQuestions
+
+            if (nextQuestion && !renderedQuestions.some(q => q.uid === nextQuestion.uid)) {
+                // Only append the nextQuestion if its uid is not already in the renderedQuestions
                 setRenderedQuestions(prev => [...prev, nextQuestion]); // Append the next question
-                console.log("Next question added"); // Log the next question to the console
+                console.log("Next question added. uid", nextQuestion.uid); // Log the next question to the console
             }
         } else if (nextQuestionHtsno) {
             // If there is no next question but there is an HS code, update the htsno state
