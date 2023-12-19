@@ -9,7 +9,7 @@ function QuestionBlock({ question, answers, onAnswerClick, isClickable }) {
 
     return (
         <div className={`hs-code-question-block ${!isClickable ? 'disabled' : ''}`}>
-            <div>{question}</div>
+            <div className="hs-code-question-text">{question}</div>
             {answers.map((answer, index) => (
                 <div
                     key={index}
