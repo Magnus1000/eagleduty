@@ -109,6 +109,8 @@ function QuestionDiv() {
                     answers={question.answers}
                     // Pass the handleAnswerClick function to the QuestionBlock component as a prop
                     onAnswerClick={handleAnswerClick}
+                    // Only the last question is clickable
+                    isClickable={index === renderedQuestions.length - 1} // Only the last question is clickable
                 />
             ))}
             {htsno && <CodeBlock htsno={htsno} />} {/* Conditionally render CodeBlock with htsno */}
