@@ -1,12 +1,12 @@
-// Vercel serverless function for formatting HS codes
 module.exports = async (req, res) => {
     try {
         // Check if the request body is valid
-        if (!req.body || !Array.isArray(req.body.hsCodes)) {
+        if (!req.body || typeof req.body.hsCodes !== 'string') {
             return res.status(400).send('Invalid request');
         }
 
-        const hsCodes = req.body.hsCodes;
+        // Split the string into an array of HS codes
+        const hsCodes = req.body.hsCodes.split(',').map(code => code.trim());
 
         // Function to reformat the HS code
         const reformatHSCode = (code) => {
