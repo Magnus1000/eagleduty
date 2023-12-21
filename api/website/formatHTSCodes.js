@@ -27,23 +27,23 @@ module.exports = async (req, res) => {
             // Assign value based on code length
             const value = strippedCode.length === 8 ? 10 : 30;
 
-            return { code: formattedCode, value };
+            return formattedCode;
         };
 
         // Process each HS code
         const results = hsCodes.map(processHSCode);
 
         // Check for any errors
-        const errors = results.filter(result => result.error);
+        const errors = results.filter(result => typeof result === 'object' && result.error);
         if (errors.length > 0) {
             console.log('Errors:', errors);
             return res.status(400).json({ errors });
         }
 
         // Filter out valid results and send response
-        const validResults = results.filter(result => !result.error);
-        console.log('Formatted Data', validResults);
-        res.status(200).json({ validResults });
+        const validResults = results.filter(result => typeof result === 'string');
+        console.log('Response Data', validResults);
+        res.status(200).json(validResults);
     } catch (error) {
         console.log('Internal Server Error:', error.message);
         res.status(500).send(error.message);
