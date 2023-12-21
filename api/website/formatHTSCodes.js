@@ -1,7 +1,11 @@
 module.exports = async (req, res) => {
     try {
+        // Log the request body
+        console.log('Request Body:', req.body);
+
         // Check if the request body is valid
         if (!req.body || typeof req.body.hsCodes !== 'string') {
+            console.log('Invalid request: Body must contain a string under "hsCodes" key.');
             return res.status(400).send('Invalid request: Body must contain a string under "hsCodes" key.');
         }
 
@@ -13,6 +17,7 @@ module.exports = async (req, res) => {
             // Remove periods and check the length of the code
             const strippedCode = code.replace(/\./g, '');
             if (strippedCode.length !== 8 && strippedCode.length !== 10) {
+                console.log(`Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.`);
                 return { error: `Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.` };
             }
 
@@ -31,6 +36,7 @@ module.exports = async (req, res) => {
         // Check for any errors
         const errors = results.filter(result => result.error);
         if (errors.length > 0) {
+            console.log('Errors:', errors);
             return res.status(400).json({ errors });
         }
 
@@ -38,6 +44,7 @@ module.exports = async (req, res) => {
         const validResults = results.filter(result => !result.error);
         res.status(200).json({ validResults });
     } catch (error) {
+        console.log('Internal Server Error:', error.message);
         res.status(500).send(error.message);
     }
 };
