@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
 
         // Filter out valid results and send response
         const validResults = results.filter(result => !result.error);
-        console.log('Formatted Data'; validResults);
+        console.log('Formatted Data', validResults);
         res.status(200).json({ validResults });
     } catch (error) {
         console.log('Internal Server Error:', error.message);
