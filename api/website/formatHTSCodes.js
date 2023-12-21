@@ -27,11 +27,17 @@ module.exports = async (req, res) => {
             // Assign value based on code length
             const value = strippedCode.length === 8 ? 10 : 30;
 
-            return formattedCode;
+            // Create 10-digit code with additional 00
+            const tenDigitCode = strippedCode.length === 8 ? `${strippedCode}00` : strippedCode;
+
+            // Create 8-digit code by removing the last 2 digits if they are 00
+            const eightDigitCode = strippedCode.length === 10 && strippedCode.substring(8, 10) === '00' ? strippedCode.substring(0, 8) : strippedCode;
+
+            return [formattedCode, eightDigitCode, tenDigitCode];
         };
 
         // Process each HS code
-        const results = hsCodes.map(processHSCode);
+        const results = hsCodes.flatMap(processHSCode);
 
         // Check for any errors
         const errors = results.filter(result => typeof result === 'object' && result.error);
