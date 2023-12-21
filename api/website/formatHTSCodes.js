@@ -17,30 +17,26 @@ module.exports = async (req, res) => {
             // Remove periods
             const strippedCode = code.replace(/\./g, '');
         
-            // Length check
-            if (strippedCode.length !== 8 && strippedCode.length !== 10) {
-                console.log(`Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.`);
-                return { error: `Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.` };
-            }
-        
-            // Reformat the code
-            let formattedCode = `${strippedCode.substring(0, 4)}.${strippedCode.substring(4, 6)}.${strippedCode.substring(6)}`;
+            // Handle 8-digit codes
             if (strippedCode.length === 8) {
-                formattedCode += '.00'; // Add .00 for 8-digit codes
+                const formattedEightDigitCode = `${strippedCode.substring(0, 4)}.${strippedCode.substring(4, 6)}.${strippedCode.substring(6)}`;
+                const formattedTenDigitCode = `${formattedEightDigitCode}.00`;
+                return [formattedEightDigitCode, formattedTenDigitCode];
+            } 
+            // Handle 10-digit codes
+            else if (strippedCode.length === 10) {
+                const formattedTenDigitCode = `${strippedCode.substring(0, 4)}.${strippedCode.substring(4, 6)}.${strippedCode.substring(6, 8)}.${strippedCode.substring(8)}`;
+                const eightDigitCode = strippedCode.substring(0, 8);
+                const formattedEightDigitCode = `${eightDigitCode.substring(0, 4)}.${eightDigitCode.substring(4, 6)}.${eightDigitCode.substring(6)}`;
+                return [formattedEightDigitCode, formattedTenDigitCode];
+            } 
+            // Skip codes that are not 8 or 10 digits
+            else {
+                console.log(`Skipping invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.`);
+                return null; // Return null to indicate the code should be skipped
             }
-        
-            // Generate variations
-            let variations = [];
-            variations.push(formattedCode); // The fully formatted code
-        
-            if (strippedCode.length === 10) {
-                // If it's a 10-digit code, create an 8-digit version by removing the last two digits
-                const eightDigitCode = `${strippedCode.substring(0, 8)}00`;
-                variations.push(`${strippedCode.substring(0, 4)}.${strippedCode.substring(4, 6)}.${strippedCode.substring(6, 8)}.00`);
-            }
-        
-            return variations;
         };
+        
         
         
 
