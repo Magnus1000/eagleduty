@@ -14,27 +14,30 @@ module.exports = async (req, res) => {
 
         // Function to validate and reformat the HS code
         const processHSCode = (code) => {
-            // Remove periods and check the length of the code
+            // Remove periods
             const strippedCode = code.replace(/\./g, '');
+        
+            // Length check
             if (strippedCode.length !== 8 && strippedCode.length !== 10) {
                 console.log(`Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.`);
                 return { error: `Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.` };
             }
-
-            // Reformat the code
-            const formattedCode = `${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.${strippedCode.substring(8, 10)}`;
-
-            // Assign value based on code length
-            const value = strippedCode.length === 8 ? 10 : 30;
-
-            // Create 10-digit code with additional 00
-            const tenDigitCode = strippedCode.length === 8 ? `${strippedCode}00` : strippedCode;
-
-            // Create 8-digit code by removing the last 2 digits if they are 00
-            const eightDigitCode = strippedCode.length === 10 && strippedCode.substring(8, 10) === '00' ? strippedCode.substring(0, 8) : strippedCode;
-
-            return [formattedCode, eightDigitCode, tenDigitCode];
+        
+            // Generate formatted codes based on length
+            let formattedCodes = [];
+            if (strippedCode.length === 8) {
+                formattedCodes.push(`${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.00`);
+                formattedCodes.push(`${strippedCode}00`);
+            } else if (strippedCode.length === 10) {
+                formattedCodes.push(`${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.${code.substring(8, 10)}`);
+            }
+        
+            // Include the original code
+            formattedCodes.unshift(code);
+        
+            return formattedCodes;
         };
+        
 
         // Process each HS code
         const results = hsCodes.flatMap(processHSCode);
