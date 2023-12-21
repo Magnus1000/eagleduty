@@ -3,9 +3,6 @@ module.exports = async (req, res) => {
         // Log the request body
         console.log('Request Body:', req.body);
 
-        // Log the request body
-        console.log('Request Body:', req.body.hsCodes);
-
         // Check if the request body is valid
         if (!req.body || typeof req.body.hsCodes !== 'string') {
             console.log('Invalid request: Body must contain a string under "hsCodes" key.');
@@ -25,7 +22,7 @@ module.exports = async (req, res) => {
             }
 
             // Reformat the code
-            const formattedCode = `${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.${strippedCode.length === 8 ? '00' : code.substring(8, 10)}`;
+            const formattedCode = `${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.${strippedCode.substring(8, 10)}`;
 
             // Assign value based on code length
             const value = strippedCode.length === 8 ? 10 : 30;
