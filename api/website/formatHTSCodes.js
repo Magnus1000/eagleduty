@@ -23,20 +23,25 @@ module.exports = async (req, res) => {
                 return { error: `Invalid code length for '${code}'. Expected 8 or 10 digits, got ${strippedCode.length}.` };
             }
         
-            // Generate formatted codes based on length
-            let formattedCodes = [];
+            // Reformat the code
+            let formattedCode = `${strippedCode.substring(0, 4)}.${strippedCode.substring(4, 6)}.${strippedCode.substring(6)}`;
             if (strippedCode.length === 8) {
-                formattedCodes.push(`${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.00`);
-                formattedCodes.push(`${strippedCode}00`);
-            } else if (strippedCode.length === 10) {
-                formattedCodes.push(`${code.substring(0, 4)}.${code.substring(4, 6)}.${code.substring(6, 8)}.${code.substring(8, 10)}`);
+                formattedCode += '.00'; // Add .00 for 8-digit codes
             }
         
-            // Include the original code
-            formattedCodes.unshift(code);
+            // Generate variations
+            let variations = [];
+            variations.push(formattedCode); // The fully formatted code
         
-            return formattedCodes;
+            if (strippedCode.length === 10) {
+                // If it's a 10-digit code, create an 8-digit version by removing the last two digits
+                const eightDigitCode = `${strippedCode.substring(0, 8)}00`;
+                variations.push(`${strippedCode.substring(0, 4)}.${strippedCode.substring(4, 6)}.${strippedCode.substring(6, 8)}.00`);
+            }
+        
+            return variations;
         };
+        
         
 
         // Process each HS code
