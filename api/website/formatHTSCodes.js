@@ -3,6 +3,9 @@ module.exports = async (req, res) => {
         // Log the request body
         console.log('Request Body:', req.body);
 
+        // Log the request body
+        console.log('Request Body:', req.body.hsCodes);
+
         // Check if the request body is valid
         if (!req.body || typeof req.body.hsCodes !== 'string') {
             console.log('Invalid request: Body must contain a string under "hsCodes" key.');
