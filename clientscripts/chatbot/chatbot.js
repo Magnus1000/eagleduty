@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-
 function ChatComponent() {
-    const [inputText, setInputText] = useState('');
-    const [chatResults, setChatResults] = useState('');
+    const [inputText, setInputText] = React.useState(''); // useState is accessed from React global object
+    const [chatResults, setChatResults] = React.useState('');
 
     const handleInputChange = (event) => {
         setInputText(event.target.value);
@@ -29,7 +27,7 @@ function ChatComponent() {
         <div id="chatWrapper">
             <input
                 type="text"
-                id="chatInputField"
+                id="chatSearch"
                 value={inputText}
                 onChange={handleInputChange}
             />
@@ -41,4 +39,6 @@ function ChatComponent() {
     );
 }
 
-export default ChatComponent;
+// If you're not using a module bundler that supports JSX, you'll need to use React.createElement
+// Otherwise, you can use JSX as below if your environment supports it
+ReactDOM.render(React.createElement(ChatComponent), document.getElementById('root'));
