@@ -41,14 +41,16 @@ function ChatComponent() {
                     onChange={handleInputChange}
                     disabled={isButtonDisabled} // Disable the textarea when the button is clicked
                 />
-                <button
-                    id="chatSubmit"
-                    className="chat-button" // Add the "chat-button" class
-                    onClick={handleSend}
-                    disabled={isButtonDisabled} // Disable the button when the button is clicked
-                >
-                    Send
-                </button>
+                <div className="chat-div-button-div"> {/* Wrap the button in a div */}
+                    <button
+                        id="chatSubmit"
+                        className="chat-button" // Add the "chat-button" class
+                        onClick={handleSend}
+                        disabled={isButtonDisabled} // Disable the button when the button is clicked
+                    >
+                        Send
+                    </button>
+                </div>
             </div>
             <div id="chatResults">
                 {chatResults.map((result, index) => (
