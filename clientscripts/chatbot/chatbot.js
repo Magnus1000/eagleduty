@@ -1,6 +1,6 @@
 function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
-    const [chatResults, setChatResults] = React.useState('');
+    const [chatResults, setChatResults] = React.useState([]);
     const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
 
     const handleInputChange = (event) => {
@@ -33,22 +33,30 @@ function ChatComponent() {
 
     return (
         <div id="chatWrapper">
-            <textarea
-                id="chatSearch"
-                className="text-area-input-absolute" // Add the "text-area-input-absolute" class
-                value={inputText}
-                onChange={handleInputChange}
-                disabled={isButtonDisabled} // Disable the textarea when the button is clicked
-            />
-            <button
-                id="chatSubmit"
-                className="chat-button" // Add the "chat-button" class
-                onClick={handleSend}
-                disabled={isButtonDisabled} // Disable the button when the button is clicked
-            >
-                Send
-            </button>
-            <div id="chatResults">{chatResults}</div>
+            <div className="chat-input-button-wrapper"> {/* Wrap textarea and button in a div */}
+                <textarea
+                    id="chatSearch"
+                    className="text-area-input-absolute" // Add the "text-area-input-absolute" class
+                    value={inputText}
+                    onChange={handleInputChange}
+                    disabled={isButtonDisabled} // Disable the textarea when the button is clicked
+                />
+                <button
+                    id="chatSubmit"
+                    className="chat-button" // Add the "chat-button" class
+                    onClick={handleSend}
+                    disabled={isButtonDisabled} // Disable the button when the button is clicked
+                >
+                    Send
+                </button>
+            </div>
+            <div id="chatResults">
+                {chatResults.map((result, index) => (
+                    <div key={index} className="chat-result-card">
+                        {result}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
