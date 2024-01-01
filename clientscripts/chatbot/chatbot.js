@@ -9,12 +9,12 @@ function ChatComponent() {
 
     const handleSend = () => {
         setIsButtonDisabled(true); // Disable the button
-        fetch('https://hook.us1.make.com/kmpo5x4qg1d26u9tf8xgveix5ylj61yx', {
+        fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text: inputText }),
+            body: JSON.stringify({ product_description: inputText }),
         })
             .then((response) => response.json())
             .then((data) => {
