@@ -48,7 +48,7 @@ function ChatComponent() {
                         onClick={handleSend}
                         disabled={isButtonDisabled} // Disable the button when the button is clicked
                     >
-                        Send
+                        Submit
                     </button>
                 </div>
             </div>
