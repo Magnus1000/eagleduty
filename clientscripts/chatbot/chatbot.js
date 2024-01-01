@@ -1,12 +1,14 @@
 function ChatComponent() {
-    const [inputText, setInputText] = React.useState(''); // useState is accessed from React global object
+    const [inputText, setInputText] = React.useState('');
     const [chatResults, setChatResults] = React.useState('');
+    const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
 
     const handleInputChange = (event) => {
         setInputText(event.target.value);
     };
 
     const handleSend = () => {
+        setIsButtonDisabled(true); // Disable the button
         fetch('https://hook.us1.make.com/kmpo5x4qg1d26u9tf8xgveix5ylj61yx', {
             method: 'POST',
             headers: {
@@ -20,18 +22,27 @@ function ChatComponent() {
             })
             .catch((error) => {
                 console.error(error);
+            })
+            .finally(() => {
+                setIsButtonDisabled(false); // Enable the button after the request is completed
             });
     };
 
     return (
         <div id="chatWrapper">
-            <input
-                type="text"
+            <textarea
                 id="chatSearch"
+                className="text-area-input-absolute" // Add the "text-area-input-absolute" class
                 value={inputText}
                 onChange={handleInputChange}
+                disabled={isButtonDisabled} // Disable the textarea when the button is clicked
             />
-            <button id="chatSubmit" onClick={handleSend}>
+            <button
+                id="chatSubmit"
+                className="chat-button" // Add the "chat-button" class
+                onClick={handleSend}
+                disabled={isButtonDisabled} // Disable the button when the button is clicked
+            >
                 Send
             </button>
             <div id="chatResults">{chatResults}</div>
@@ -39,6 +50,4 @@ function ChatComponent() {
     );
 }
 
-// If you're not using a module bundler that supports JSX, you'll need to use React.createElement
-// Otherwise, you can use JSX as below if your environment supports it
 ReactDOM.render(React.createElement(ChatComponent), document.getElementById('root'));
