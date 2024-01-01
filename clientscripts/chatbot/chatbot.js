@@ -18,15 +18,18 @@ function ChatComponent() {
         })
             .then((response) => response.json())
             .then((data) => {
-                setChatResults(data.response);
+                console.log('Response:', data); // Log the response
+                setChatResults(data); // Set the response as chat results
             })
             .catch((error) => {
-                console.error(error);
+                console.error('Error:', error); // Log the error
             })
             .finally(() => {
                 setIsButtonDisabled(false); // Enable the button after the request is completed
             });
     };
+
+    console.log('Rendering ChatComponent'); // Log the rendering of the component
 
     return (
         <div id="chatWrapper">
@@ -49,5 +52,7 @@ function ChatComponent() {
         </div>
     );
 }
+
+console.log('Rendering ReactDOM'); // Log the rendering of ReactDOM
 
 ReactDOM.render(React.createElement(ChatComponent), document.getElementById('root'));
