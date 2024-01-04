@@ -66,10 +66,10 @@ function ChatComponent() {
                     <div key={index} className="chat-result-item">
                         <div className="result-details">
                             <div className="section">
-                                <p>{result.section}</p>
+                                <p className="section-text">{result.section}</p>
                             </div>
                             <div className="chapter">
-                                <p>{result.chapter}</p>
+                                <p className="chapter-text">{result.chapter}</p>
                             </div>
                         </div>
                         <p className="hts-code">{result.htsno}</p>
