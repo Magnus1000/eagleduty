@@ -57,7 +57,7 @@ function ChatComponent() {
             </div>
             <div id="chatResults">
                 {chatResults.map((result, index) => (
-                    <div key={index} className="result-radio">
+                    <div key={index} className="result-item">
                         <div className="result-breadcrumb">
                             <p>{result.section}</p>
                             <span className="chevron">{'>'}</span>
