@@ -123,7 +123,9 @@ function ChatComponent() {
                     >
                         <div className={`checked-result-circle ${selectedItem === index ? 'selected' : ''}`} /> 
                         <div className="result-header">
-                            <p className="hts-code">{result.htsno} - {result.description}</p>
+                            <p className="hts-code">
+                                {result.htsno} - <span dangerouslySetInnerHTML={{ __html: result.description }}></span>
+                            </p>
                         </div>
                         <div className="result-details">
                             <div className="section">
