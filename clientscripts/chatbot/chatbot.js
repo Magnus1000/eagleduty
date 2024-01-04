@@ -5,26 +5,26 @@ function ImportForm() {
       <div className="import-form">
         <h2>Import Considerations</h2>
         <p>See duty rates, applicable penalties, free trade agreements and maximum quantities for this product</p>
-        <div className="form-group">
+        <div className="chat-form">
           <label htmlFor="countryOfOrigin">Country of Origin</label>
-          <select id="countryOfOrigin" name="countryOfOrigin">
+          <select className="inputField" id="countryOfOrigin" name="countryOfOrigin">
             <option value="china">China</option>
             {/* Add more options here */}
           </select>
         </div>
-        <div className="form-group">
+        <div className="button-group">
           <label>Total value of import</label>
-          <button>Under $2500</button>
-          <button>$2,500 - $10,000</button>
-          <button>$10,000 - $100K</button>
-          <button>$100K+</button>
+          <button className="buttonPrimary">Under $2500</button>
+          <button className="buttonPrimary">$2,500 - $10,000</button>
+          <button className="buttonPrimary">$10,000 - $100K</button>
+          <button className="buttonPrimary">$100K+</button>
         </div>
-        <div className="form-group">
+        <div className="button-group">
           <label>Do you have an Importer Number?</label>
-          <button>Yes</button>
-          <button>No</button>
+          <button className="buttonPrimary">Yes</button>
+          <button className="buttonPrimary">No</button>
         </div>
-        <button className="btn-primary">See considerations</button>
+        <button className="buttonPrimaryBlue">See considerations</button>
       </div>
     );
   }
