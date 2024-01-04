@@ -28,6 +28,16 @@ function ImportForm() {
         }
     };
 
+    const handleFormSubmit = () => {
+        const url = new URL('https://www.eagleduty.io');
+        url.searchParams.append('htsno', chatResults[selectedItem].htsno);
+        url.searchParams.append('origin', countryOfOrigin);
+        url.searchParams.append('importnumber', hasImporterNumber ? 'yes' : 'no');
+        url.searchParams.append('value', importValue);
+
+        window.location.href = url.toString();
+    };
+
     return (
         <div className="chat-form-wrapper">
             <h2>Import Considerations</h2>
@@ -58,7 +68,9 @@ function ImportForm() {
                 </div>
             </div>
             <div className="button-wrapper">
-                <button className="button-primary-blue" disabled={!isFormComplete}>See considerations</button> {/* Disable the button if the form is not complete */}
+                <button className="button-primary-blue" disabled={!isFormComplete} onClick={handleFormSubmit}> {/* Disable the button if the form is not complete */}
+                    See considerations
+                </button>
             </div>
         </div>
     );
@@ -78,6 +90,7 @@ function ChatComponent() {
 
     const handleSend = () => {
         console.log('Loading div revealed'); // Add log statement
+        setChatResults([]); // Clear the chat results
         setIsLoading(true);
         const uuid = localStorage.getItem('uuid');
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
