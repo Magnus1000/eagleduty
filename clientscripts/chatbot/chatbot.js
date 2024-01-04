@@ -2,33 +2,37 @@ function ImportForm() {
     // You can add state management here if needed for form handling
   
     return (
-      <div className="import-form">
+      <div className="chat-form-wrapper">
         <h2>Import Considerations</h2>
         <p>See duty rates, applicable penalties, free trade agreements and maximum quantities for this product</p>
         <div className="chat-form">
-          <label htmlFor="countryOfOrigin">Country of Origin</label>
-          <select className="input-field w-select" id="countryOfOrigin" name="countryOfOrigin">
-            <option value="china">China</option>
-            {/* Add more options here */}
-          </select>
+            <div className="button-group-wrapper">  
+                <label htmlFor="countryOfOrigin">Country of Origin</label>
+                <select className="input-field w-select" id="countryOfOrigin" name="countryOfOrigin">
+                    <option value="china">China</option>
+                    {/* Add more options here */}
+                </select>
+            </div>
+            <div className="button-group-wrapper">
+                <label>Total value of import</label>
+                <div className="button-group">
+                    <button className="button-primary">Under $2500</button>
+                    <button className="button-primary">$2,500 - $10,000</button>
+                    <button className="button-primary">$10,000 - $100K</button>
+                    <button className="button-primary">$100K+</button>
+                </div>
+            </div>    
+            <div className="button-group-wrapper">
+                <label>Do you have an Importer Number?</label>
+                <div className="button-group">
+                    <button className="button-primary">Yes</button>
+                    <button className="button-primary">No</button>
+                </div>
+            </div>
         </div>
-        <div className="button-group-wrapper">
-          <label>Total value of import</label>
-          <div className="button-group">
-            <button className="button-primary">Under $2500</button>
-            <button className="button-primary">$2,500 - $10,000</button>
-            <button className="button-primary">$10,000 - $100K</button>
-            <button className="button-primary">$100K+</button>
-          </div>
+        <div className="button-wrapper">
+            <button className="button-primary-blue">See considerations</button>
         </div>
-        <div className="button-group-wrapper">
-          <label>Do you have an Importer Number?</label>
-          <div className="button-group">
-            <button className="button-primary">Yes</button>
-            <button className="button-primary">No</button>
-          </div>
-        </div>
-        <button className="button-primary-blue">See considerations</button>
       </div>
     );
   }
