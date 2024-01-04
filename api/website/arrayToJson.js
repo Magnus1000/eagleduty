@@ -1,15 +1,17 @@
 module.exports = async (req, res) => {
     try {
-        const { array1, array2, array3, array4 } = req.body;
+        const { array1, array2, array3, array4, array5, array6 } = req.body;
 
         // Group the arrays based on their corresponding indices
         const groupedArrays = [];
         for (let i = 0; i < array1.length; i++) {
             groupedArrays.push({
                 htsno: array1[i],
-                section: array2[i],
-                chapter: array3[i],
-                description: array4[i]
+                section_name: array2[i],
+                chapter_name: array3[i],
+                section_description: array4[i],
+                chapter_description: array5[i],
+                description: array6[i]
             });
         }
 
