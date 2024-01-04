@@ -1,3 +1,34 @@
+function ImportForm() {
+    // You can add state management here if needed for form handling
+  
+    return (
+      <div className="import-form">
+        <h2>Import Considerations</h2>
+        <p>See duty rates, applicable penalties, free trade agreements and maximum quantities for this product</p>
+        <div className="form-group">
+          <label htmlFor="countryOfOrigin">Country of Origin</label>
+          <select id="countryOfOrigin" name="countryOfOrigin">
+            <option value="china">China</option>
+            {/* Add more options here */}
+          </select>
+        </div>
+        <div className="form-group">
+          <label>Total value of import</label>
+          <button>Under $2500</button>
+          <button>$2,500 - $10,000</button>
+          <button>$10,000 - $100K</button>
+          <button>$100K+</button>
+        </div>
+        <div className="form-group">
+          <label>Do you have an Importer Number?</label>
+          <button>Yes</button>
+          <button>No</button>
+        </div>
+        <button className="btn-primary">See considerations</button>
+      </div>
+    );
+  }
+
 function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
     const [chatResults, setChatResults] = React.useState([]);
@@ -99,6 +130,8 @@ function ChatComponent() {
                     </div>
                 ))}
             </div>
+            {/* Conditionally render the ImportForm component if an item is selected */}
+            {selectedItem !== null && <ImportForm />}
         </div>
     );
 }
