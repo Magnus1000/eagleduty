@@ -1,4 +1,4 @@
-function ImportForm() {
+function ImportForm({ selectedItem }) {
     const [countryOfOrigin, setCountryOfOrigin] = React.useState('china');
     const [importValue, setImportValue] = React.useState('');
     const [hasImporterNumber, setHasImporterNumber] = React.useState(null);
@@ -196,7 +196,7 @@ function ChatComponent() {
                 ))}
             </div>
             {/* Conditionally render the ImportForm component if an item is selected */}
-            {selectedItem !== null && <ImportForm />}
+            {selectedItem !== null && <ImportForm selectedItem={selectedItem} />}
         </div>
     );
 }
