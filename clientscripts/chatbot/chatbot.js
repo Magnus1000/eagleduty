@@ -7,24 +7,24 @@ function ImportForm() {
         <p>See duty rates, applicable penalties, free trade agreements and maximum quantities for this product</p>
         <div className="chat-form">
           <label htmlFor="countryOfOrigin">Country of Origin</label>
-          <select className="inputField" id="countryOfOrigin" name="countryOfOrigin">
+          <select className="inputfield w-select" id="countryOfOrigin" name="countryOfOrigin">
             <option value="china">China</option>
             {/* Add more options here */}
           </select>
         </div>
         <div className="button-group">
           <label>Total value of import</label>
-          <button className="buttonPrimary">Under $2500</button>
-          <button className="buttonPrimary">$2,500 - $10,000</button>
-          <button className="buttonPrimary">$10,000 - $100K</button>
-          <button className="buttonPrimary">$100K+</button>
+          <button className="button-primary">Under $2500</button>
+          <button className="button-primary">$2,500 - $10,000</button>
+          <button className="button-primary">$10,000 - $100K</button>
+          <button className="button-primary">$100K+</button>
         </div>
         <div className="button-group">
           <label>Do you have an Importer Number?</label>
-          <button className="buttonPrimary">Yes</button>
-          <button className="buttonPrimary">No</button>
+          <button className="button-primary">Yes</button>
+          <button className="button-primary">No</button>
         </div>
-        <button className="buttonPrimaryBlue">See considerations</button>
+        <button className="button-primary-blue">See considerations</button>
       </div>
     );
   }
