@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 module.exports = async (req, res) => {
     try {
         const { array1, array2, array3 } = req.body;
@@ -17,11 +15,8 @@ module.exports = async (req, res) => {
         // Convert the grouped arrays to JSON
         const jsonData = JSON.stringify(groupedArrays);
 
-        // Make a POST request to an API endpoint with the JSON data
-        const response = await axios.post('https://api.example.com/endpoint', jsonData);
-
         // Return the response as a valid JSON response
-        res.status(200).json(response.data);
+        res.status(200).json(jsonData);
     } catch (error) {
         // Handle any errors that occur during the process
         console.error(error);
