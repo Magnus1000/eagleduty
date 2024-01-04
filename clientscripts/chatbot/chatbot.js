@@ -1,11 +1,12 @@
 function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
     const [chatResults, setChatResults] = React.useState([]);
-    const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
-    const chatSearchRef = React.useRef(null); // Create a ref for the chat search textarea
+    const [isButtonDisabled, setIsButtonDisabled] = React.useState(true); // Set initial state to true
+    const chatSearchRef = React.useRef(null);
 
     const handleInputChange = (event) => {
         setInputText(event.target.value);
+        setIsButtonDisabled(event.target.value.length < 10); // Update the isButtonDisabled state based on input length
     };
 
     const handleSend = () => {
@@ -32,7 +33,7 @@ function ChatComponent() {
     };
 
     React.useEffect(() => {
-        chatSearchRef.current.focus(); // Focus the chat search textarea on component mount
+        chatSearchRef.current.focus();
     }, []);
 
     console.log('Rendering ChatComponent');
@@ -46,7 +47,7 @@ function ChatComponent() {
                     value={inputText}
                     onChange={handleInputChange}
                     disabled={isButtonDisabled}
-                    ref={chatSearchRef} // Assign the ref to the chat search textarea
+                    ref={chatSearchRef}
                 />
                 <div className="chat-div-button-div">
                     <button
