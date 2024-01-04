@@ -59,12 +59,12 @@ function ChatComponent() {
                 {chatResults.map((result, index) => (
                     <div key={index} className="chat-result-card">
                         <div className="result-breadcrumb">
-                            <p>section: {result.section}</p>
+                            <p>{result.section}</p>
                             <span className="chevron">{'>'}</span>
-                            <p>chapter: {result.chapter}</p>
+                            <p>{result.chapter}</p>
                         </div>
-                        <p className="result-htsno">htsno: {result.htsno}</p>
-                        <p className="result-description">description: {result.description}</p>
+                        <p className="result-htsno">{result.htsno}</p>
+                        <p className="result-description">{result.description}</p>
                     </div>
                 ))}
             </div>
