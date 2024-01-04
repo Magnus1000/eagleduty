@@ -144,14 +144,16 @@ function ChatComponent() {
             </div>
             {isLoading && (
                 <div className="loading-div">
-                    <dotlottie-player
-                        src="https://lottie.host/bbfcd041-2847-455d-b639-8b01f3a12e5a/vkgdwrUSFL.json"
-                        background="transparent"
-                        speed="1"
-                        style={{ width: '300px', height: '300px' }}
-                        loop
-                        autoplay
-                    ></dotlottie-player>
+                    <div className="loading-content">
+                        <dotlottie-player
+                            src="https://lottie.host/bbfcd041-2847-455d-b639-8b01f3a12e5a/vkgdwrUSFL.json"
+                            background="transparent"
+                            speed="1"
+                            style={{ width: '100px', height: '100px' }}
+                            loop
+                            autoplay
+                        ></dotlottie-player>
+                    </div>
                 </div>
             )}
             <div id="chatResults" className="chat-results">
