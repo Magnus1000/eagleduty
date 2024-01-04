@@ -57,14 +57,14 @@ function ChatComponent() {
             </div>
             <div id="chatResults">
                 {chatResults.map((result, index) => (
-                    <div key={index} className="chat-result-card">
+                    <div key={index} className="result-radio">
                         <div className="result-breadcrumb">
                             <p>{result.section}</p>
                             <span className="chevron">{'>'}</span>
                             <p>{result.chapter}</p>
                         </div>
-                        <p className="result-htsno">{result.htsno}</p>
-                        <p className="result-description">{result.description}</p>
+                        <p className="hts-code">{result.htsno}</p>
+                        <p className="description-text">{result.description}</p>
                     </div>
                 ))}
             </div>
