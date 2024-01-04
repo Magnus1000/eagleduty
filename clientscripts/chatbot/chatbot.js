@@ -77,6 +77,7 @@ function ChatComponent() {
     };
 
     const handleSend = () => {
+        console.log('Loading div revealed'); // Add log statement
         setIsLoading(true);
         const uuid = localStorage.getItem('uuid');
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
@@ -143,14 +144,14 @@ function ChatComponent() {
             </div>
             {isLoading && (
                 <div className="loading-div">
-                    <lottie-player
-                        src="https://lottie.host/embed/bbfcd041-2847-455d-b639-8b01f3a12e5a/vkgdwrUSFL.json"
+                    <dotlottie-player
+                        src="https://lottie.host/bbfcd041-2847-455d-b639-8b01f3a12e5a/vkgdwrUSFL.json"
                         background="transparent"
                         speed="1"
                         style={{ width: '300px', height: '300px' }}
                         loop
                         autoplay
-                    ></lottie-player>
+                    ></dotlottie-player>
                 </div>
             )}
             <div id="chatResults" className="chat-results">
