@@ -28,7 +28,7 @@ function ImportForm() {
         }
     };
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = (selectedItem) => {
         const url = new URL('https://www.eagleduty.io');
         url.searchParams.append('htsno', chatResults[selectedItem].htsno);
         url.searchParams.append('origin', countryOfOrigin);
@@ -68,7 +68,7 @@ function ImportForm() {
                 </div>
             </div>
             <div className="button-wrapper">
-                <button className="button-primary-blue" disabled={!isFormComplete} onClick={handleFormSubmit}> {/* Disable the button if the form is not complete */}
+                <button className="button-primary-blue" disabled={!isFormComplete} onClick={() => handleFormSubmit(selectedItem)}>
                     See considerations
                 </button>
             </div>
