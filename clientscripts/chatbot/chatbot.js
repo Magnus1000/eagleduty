@@ -9,12 +9,13 @@ function ChatComponent() {
 
     const handleSend = () => {
         setIsButtonDisabled(true); // Disable the button
+        const uuid = localStorage.getItem('uuid'); // Get the UUID from local storage
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ product_description: inputText }),
+            body: JSON.stringify({ product_description: inputText, uuid }), // Include the UUID in the request body
         })
             .then((response) => response.json())
             .then((data) => {
