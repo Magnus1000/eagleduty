@@ -55,9 +55,9 @@ function ChatComponent() {
                     </button>
                 </div>
             </div>
-            <div id="chatResults">
+            <div id="chatResults" className="chat-results">
                 {chatResults.map((result, index) => (
-                    <div key={index} className="result-item">
+                    <div key={index} className="chat-result-item">
                         <div className="result-breadcrumb">
                             <p>{result.section}</p>
                             <span className="chevron">{'>'}</span>
