@@ -6,10 +6,10 @@ module.exports = async (req, res) => {
         const groupedArrays = [];
         for (let i = 0; i < array1.length; i++) {
             groupedArrays.push({
-                htsno1: array1[i],
-                htsno2: array2[i],
-                htsno3: array3[i],
-                htsno4: array4[i]
+                htsno: array1[i],
+                section: array2[i],
+                chapter: array3[i],
+                description: array4[i]
             });
         }
 
