@@ -82,7 +82,7 @@ function ChatComponent() {
                         className={`chat-result-item ${selectedItem === index ? 'selected' : ''}`} // Apply 'selected' class if the item is selected
                         onClick={() => handleSelectItem(index)} // Handle item selection
                     >
-                        <div className={`checked-result-circle ${selectedItem === index ? 'selected' : ''}`} /> // Apply 'selected' class to the checked-result-circle div if the item is selected
+                        <div className={`checked-result-circle ${selectedItem === index ? 'selected' : ''}`} /> 
                         <div className="result-header">
                             <p className="hts-code">{result.htsno} - {result.description}</p>
                         </div>
