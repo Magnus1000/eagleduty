@@ -64,16 +64,16 @@ function ChatComponent() {
             <div id="chatResults" className="chat-results">
                 {chatResults.map((result, index) => (
                     <div key={index} className="chat-result-item">
-                        <div className="result-details">
-                            <div className="section">
-                                <p className="section-text">{result.section}</p>
-                            </div>
-                            <div className="chapter">
-                                <p className="chapter-text">{result.chapter}</p>
-                            </div>
-                        </div>
                         <p className="hts-code">{result.htsno}</p>
                         <p className="description-text">{result.description}</p>
+                        <div className="result-details">
+                            <div className="section">
+                                <p className="section-desciption">{result.section}</p>
+                            </div>
+                            <div className="chapter">
+                                <p className="chapter-description">{result.chapter}</p>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
