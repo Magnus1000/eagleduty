@@ -1,6 +1,7 @@
 function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
     const [chatResults, setChatResults] = React.useState([]);
+    const [selectedItem, setSelectedItem] = React.useState(null); // Track the selected item
     const [isLoading, setIsLoading] = React.useState(false);
     const isButtonDisabled = inputText.length < 10 || isLoading;
     const chatSearchRef = React.useRef(null);
@@ -39,6 +40,10 @@ function ChatComponent() {
         }
     };
 
+    const handleSelectItem = (index) => {
+        setSelectedItem(index); // Set the selected item index
+    };
+
     React.useEffect(() => {
         chatSearchRef.current.focus();
     }, []);
@@ -72,11 +77,15 @@ function ChatComponent() {
             </div>
             <div id="chatResults" className="chat-results">
                 {chatResults.map((result, index) => (
-                    <div key={index} className="chat-result-item">
+                    <div
+                        key={index}
+                        className={`chat-result-item ${selectedItem === index ? 'selected' : ''}`} // Apply 'selected' class if the item is selected
+                        onClick={() => handleSelectItem(index)} // Handle item selection
+                    >
+                        <div className={`checked-result-circle ${selectedItem === index ? 'selected' : ''}`} /> // Apply 'selected' class to the checked-result-circle div if the item is selected
                         <div className="result-header">
                             <p className="hts-code">{result.htsno} - {result.description}</p>
                         </div>
-                        <div class="checked-result-circle"></div>
                         <div className="result-details">
                             <div className="section">
                                 <p className="section-name">{result.section_name}</p>
