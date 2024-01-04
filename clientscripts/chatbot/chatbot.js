@@ -68,10 +68,12 @@ function ChatComponent() {
                         <p className="description-text">{result.description}</p>
                         <div className="result-details">
                             <div className="section">
-                                <p className="section-description">{result.section}</p>
+                                <p className="section-name">{result.section_name}</p>
+                                <p className="section-description">{result.section_description}</p>
                             </div>
                             <div className="chapter">
-                                <p className="chapter-description">{result.chapter}</p>
+                                <p className="chapter-name">{result.chapter_name}</p>
+                                <p className="chapter-description">{result.chapter_description}</p>
                             </div>
                         </div>
                     </div>
