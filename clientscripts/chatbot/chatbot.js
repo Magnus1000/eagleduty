@@ -2,47 +2,53 @@ function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
     const [chatResults, setChatResults] = React.useState([]);
     const [isButtonDisabled, setIsButtonDisabled] = React.useState(false);
+    const chatSearchRef = React.useRef(null); // Create a ref for the chat search textarea
 
     const handleInputChange = (event) => {
         setInputText(event.target.value);
     };
 
     const handleSend = () => {
-        setIsButtonDisabled(true); // Disable the button
-        const uuid = localStorage.getItem('uuid'); // Get the UUID from local storage
+        setIsButtonDisabled(true);
+        const uuid = localStorage.getItem('uuid');
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ product_description: inputText, uuid }), // Include the UUID in the request body
+            body: JSON.stringify({ product_description: inputText, uuid }),
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Response:', data); // Log the response
-                setChatResults(data); // Set the response as chat results
+                console.log('Response:', data);
+                setChatResults(data);
             })
             .catch((error) => {
-                console.error('Error:', error); // Log the error
+                console.error('Error:', error);
             })
             .finally(() => {
-                setIsButtonDisabled(false); // Enable the button after the request is completed
+                setIsButtonDisabled(false);
             });
     };
 
-    console.log('Rendering ChatComponent'); // Log the rendering of the component
+    React.useEffect(() => {
+        chatSearchRef.current.focus(); // Focus the chat search textarea on component mount
+    }, []);
+
+    console.log('Rendering ChatComponent');
 
     return (
         <div id="chatWrapper">
-            <div className="chat-input-button-wrapper"> {/* Wrap textarea and button in a div */}
+            <div className="chat-input-button-wrapper">
                 <textarea
                     id="chatSearch"
-                    className="text-area-input-absolute" // Add the "text-area-input-absolute" class
+                    className="text-area-input-absolute"
                     value={inputText}
                     onChange={handleInputChange}
-                    disabled={isButtonDisabled} // Disable the textarea when the button is clicked
+                    disabled={isButtonDisabled}
+                    ref={chatSearchRef} // Assign the ref to the chat search textarea
                 />
-                <div className="chat-div-button-div"> {/* Wrap the button in a div */}
+                <div className="chat-div-button-div">
                     <button
                         id="chatSubmit"
                         className="chat-button"
@@ -58,7 +64,7 @@ function ChatComponent() {
             <div id="chatResults" className="chat-results">
                 {chatResults.map((result, index) => (
                     <div key={index} className="chat-result-item">
-                        <div className="result-breadcrumb">
+                        <div className="section-description">
                             <p>{result.section}</p>
                             <span className="chevron">{'>'}</span>
                             <p>{result.chapter}</p>
@@ -72,6 +78,6 @@ function ChatComponent() {
     );
 }
 
-console.log('Rendering ReactDOM'); // Log the rendering of ReactDOM
+console.log('Rendering ReactDOM');
 
 ReactDOM.render(React.createElement(ChatComponent), document.getElementById('root'));
