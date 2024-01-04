@@ -21,6 +21,7 @@ function ChatComponent() {
         })
         .then((response) => response.json())
         .then((data) => {
+            console.log('Response:', data);
             setChatResults(data);
         })
         .catch((error) => {
@@ -34,6 +35,8 @@ function ChatComponent() {
     React.useEffect(() => {
         chatSearchRef.current.focus();
     }, []);
+
+    console.log('Rendering ChatComponent');
 
     return (
         <div id="chatWrapper">
