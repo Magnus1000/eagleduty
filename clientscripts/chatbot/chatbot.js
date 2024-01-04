@@ -13,7 +13,11 @@ function ChatComponent() {
         setIsLoading(true); // Set loading to true when sending request
         const uuid = localStorage.getItem('uuid');
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
-            // Fetch parameters
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ product_description: inputText, uuid }),
         })
         .then((response) => response.json())
         .then((data) => {
