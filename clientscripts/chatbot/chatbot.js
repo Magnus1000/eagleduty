@@ -141,6 +141,18 @@ function ChatComponent() {
                     </button>
                 </div>
             </div>
+            {isLoading && (
+                <div className="loading-div">
+                    <lottie-player
+                        src="https://lottie.host/embed/bbfcd041-2847-455d-b639-8b01f3a12e5a/vkgdwrUSFL.json"
+                        background="transparent"
+                        speed="1"
+                        style={{ width: '300px', height: '300px' }}
+                        loop
+                        autoplay
+                    ></lottie-player>
+                </div>
+            )}
             <div id="chatResults" className="chat-results">
                 {chatResults.map((result, index) => (
                     <div
