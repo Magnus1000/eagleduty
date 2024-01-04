@@ -1,41 +1,55 @@
 function ImportForm() {
-    // You can add state management here if needed for form handling
-  
+    const [countryOfOrigin, setCountryOfOrigin] = React.useState('china');
+    const [importValue, setImportValue] = React.useState('');
+    const [hasImporterNumber, setHasImporterNumber] = React.useState(null);
+
+    const handleCountryOfOriginChange = (event) => {
+        setCountryOfOrigin(event.target.value);
+    };
+
+    const handleImportValueChange = (value) => {
+        setImportValue(value);
+    };
+
+    const handleHasImporterNumberChange = (value) => {
+        setHasImporterNumber(value);
+    };
+
     return (
-      <div className="chat-form-wrapper">
-        <h2>Import Considerations</h2>
-        <p>See duty rates, applicable penalties, free trade agreements and maximum quantities for this product</p>
-        <div className="chat-form">
-            <div className="button-group-wrapper">  
-                <label htmlFor="countryOfOrigin">Country of Origin</label>
-                <select className="input-field w-select" id="countryOfOrigin" name="countryOfOrigin">
-                    <option value="china">China</option>
-                    {/* Add more options here */}
-                </select>
+        <div className="chat-form-wrapper">
+            <h2>Import Considerations</h2>
+            <p>See duty rates, applicable penalties, free trade agreements and maximum quantities for this product</p>
+            <div className="chat-form">
+                <div className="button-group-wrapper">
+                    <label htmlFor="countryOfOrigin">Country of Origin</label>
+                    <select className="input-field w-select" id="countryOfOrigin" name="countryOfOrigin" value={countryOfOrigin} onChange={handleCountryOfOriginChange}>
+                        <option value="china">China</option>
+                        {/* Add more options here */}
+                    </select>
+                </div>
+                <div className="button-group-wrapper">
+                    <label>Total value of import</label>
+                    <div className="button-group">
+                        <button className={`button-primary ${importValue === 'under2500' ? 'selected' : ''}`} onClick={() => handleImportValueChange('under2500')}>Under $2500</button>
+                        <button className={`button-primary ${importValue === '2500to10000' ? 'selected' : ''}`} onClick={() => handleImportValueChange('2500to10000')}>$2,500 - $10,000</button>
+                        <button className={`button-primary ${importValue === '10000to100000' ? 'selected' : ''}`} onClick={() => handleImportValueChange('10000to100000')}>$10,000 - $100K</button>
+                        <button className={`button-primary ${importValue === '100000plus' ? 'selected' : ''}`} onClick={() => handleImportValueChange('100000plus')}>$100K+</button>
+                    </div>
+                </div>
+                <div className="button-group-wrapper">
+                    <label>Do you have an Importer Number?</label>
+                    <div className="button-group">
+                        <button className={`button-primary ${hasImporterNumber === true ? 'selected' : ''}`} onClick={() => handleHasImporterNumberChange(true)}>Yes</button>
+                        <button className={`button-primary ${hasImporterNumber === false ? 'selected' : ''}`} onClick={() => handleHasImporterNumberChange(false)}>No</button>
+                    </div>
+                </div>
             </div>
-            <div className="button-group-wrapper">
-                <label>Total value of import</label>
-                <div className="button-group">
-                    <button className="button-primary">Under $2500</button>
-                    <button className="button-primary">$2,500 - $10,000</button>
-                    <button className="button-primary">$10,000 - $100K</button>
-                    <button className="button-primary">$100K+</button>
-                </div>
-            </div>    
-            <div className="button-group-wrapper">
-                <label>Do you have an Importer Number?</label>
-                <div className="button-group">
-                    <button className="button-primary">Yes</button>
-                    <button className="button-primary">No</button>
-                </div>
+            <div className="button-wrapper">
+                <button className="button-primary-blue">See considerations</button>
             </div>
         </div>
-        <div className="button-wrapper">
-            <button className="button-primary-blue">See considerations</button>
-        </div>
-      </div>
     );
-  }
+}
 
 function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
