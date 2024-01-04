@@ -1,4 +1,4 @@
-function ImportForm({ selectedItem }) {
+function ImportForm({ chatResults, selectedItem }) {
     const [countryOfOrigin, setCountryOfOrigin] = React.useState('china');
     const [importValue, setImportValue] = React.useState('');
     const [hasImporterNumber, setHasImporterNumber] = React.useState(null);
@@ -28,15 +28,23 @@ function ImportForm({ selectedItem }) {
         }
     };
 
-    const handleFormSubmit = (selectedItem) => {
-        const url = new URL('https://www.eagleduty.io');
-        url.searchParams.append('htsno', chatResults[selectedItem].htsno);
-        url.searchParams.append('origin', countryOfOrigin);
-        url.searchParams.append('importnumber', hasImporterNumber ? 'yes' : 'no');
-        url.searchParams.append('value', importValue);
-
-        window.location.href = url.toString();
+    const handleFormSubmit = () => {
+        // Ensure that chatResults and selectedItem are defined and valid
+        if (chatResults && selectedItem != null && chatResults[selectedItem]) {
+            const selectedItemData = chatResults[selectedItem];
+    
+            const url = new URL('https://www.eagleduty.io');
+            url.searchParams.append('htsno', selectedItemData.htsno);
+            url.searchParams.append('origin', countryOfOrigin);
+            url.searchParams.append('importnumber', hasImporterNumber ? 'yes' : 'no');
+            url.searchParams.append('value', importValue);
+    
+            window.location.href = url.toString();
+        } else {
+            console.error('Invalid chat result or selected item');
+        }
     };
+    
 
     return (
         <div className="chat-form-wrapper">
@@ -196,7 +204,7 @@ function ChatComponent() {
                 ))}
             </div>
             {/* Conditionally render the ImportForm component if an item is selected */}
-            {selectedItem !== null && <ImportForm selectedItem={selectedItem} />}
+            {selectedItem !== null && <ImportForm chatResults={chatResults} selectedItem={selectedItem} />}
         </div>
     );
 }
