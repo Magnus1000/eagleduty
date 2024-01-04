@@ -2,17 +2,30 @@ function ImportForm() {
     const [countryOfOrigin, setCountryOfOrigin] = React.useState('china');
     const [importValue, setImportValue] = React.useState('');
     const [hasImporterNumber, setHasImporterNumber] = React.useState(null);
+    const [isFormComplete, setIsFormComplete] = React.useState(false); // Track the form completion status
 
     const handleCountryOfOriginChange = (event) => {
         setCountryOfOrigin(event.target.value);
+        checkFormCompletion(); // Check form completion when country of origin is changed
     };
 
     const handleImportValueChange = (value) => {
         setImportValue(value);
+        checkFormCompletion(); // Check form completion when import value is changed
     };
 
     const handleHasImporterNumberChange = (value) => {
         setHasImporterNumber(value);
+        checkFormCompletion(); // Check form completion when importer number is changed
+    };
+
+    const checkFormCompletion = () => {
+        // Check if all form fields are selected
+        if (countryOfOrigin && importValue && hasImporterNumber !== null) {
+            setIsFormComplete(true);
+        } else {
+            setIsFormComplete(false);
+        }
     };
 
     return (
@@ -45,7 +58,7 @@ function ImportForm() {
                 </div>
             </div>
             <div className="button-wrapper">
-                <button className="button-primary-blue">See considerations</button>
+                <button className="button-primary-blue" disabled={!isFormComplete}>See considerations</button> {/* Disable the button if the form is not complete */}
             </div>
         </div>
     );
