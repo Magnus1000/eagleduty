@@ -16,7 +16,7 @@ function ImportForm({ chatResults, selectedItem }) {
         setHasImporterNumber(value);
     };
 
-    const handleFormSubmit = () => {
+    const clearSearch = () => {
         setChatResults({});
         setSelectedItem(null);
     };
@@ -81,7 +81,7 @@ function ImportForm({ chatResults, selectedItem }) {
                 <button className="button-primary-blue" disabled={!isFormComplete} onClick={() => handleFormSubmit(selectedItem)}>
                     See considerations
                 </button>
-                <button className="button-no-border" onClick={handleFormSubmit}>
+                <button className="button-no-border" onClick={clearSearch}>
                     Start again
                 </button>
             </div>
