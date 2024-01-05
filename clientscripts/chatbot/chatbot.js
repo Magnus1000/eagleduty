@@ -149,6 +149,7 @@ function ChatComponent() {
                     disabled={isLoading}
                     onKeyDown={handleKeyDown} // Add onKeyDown event handler
                     ref={chatSearchRef}
+                    placeholder="Describe your product..."
                 />
                 <div className="chat-div-button-div">
                     <button
