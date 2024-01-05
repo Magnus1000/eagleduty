@@ -211,7 +211,7 @@ function ChatComponent() {
                 ))}
             </div>
             {/* Conditionally render the ImportForm component if an item is selected */}
-            {selectedItem !== null && <ImportForm chatResults={chatResults} selectedItem={selectedItem} setChatResults={setChatResults} />}
+            {selectedItem !== null && <ImportForm chatResults={chatResults} selectedItem={selectedItem} />}
         </div>
     );
 }
