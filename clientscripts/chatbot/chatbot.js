@@ -100,6 +100,7 @@ function ChatComponent() {
         console.log('Loading div revealed'); // Add log statement
         setChatResults([]); // Clear the chat results
         setIsLoading(true);
+        setSelectedItem(null); // Clear the selected item
         const uuid = localStorage.getItem('uuid');
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
             method: 'POST',
