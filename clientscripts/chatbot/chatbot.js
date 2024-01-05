@@ -16,6 +16,11 @@ function ImportForm({ chatResults, selectedItem }) {
         setHasImporterNumber(value);
     };
 
+    const handleFormSubmit = () => {
+        setChatResults({});
+        setSelectedItem(null);
+    };
+
     React.useEffect(() => {
         // Check if all form fields are selected
         if (countryOfOrigin && importValue && hasImporterNumber !== null) {
@@ -75,6 +80,9 @@ function ImportForm({ chatResults, selectedItem }) {
             <div className="button-wrapper">
                 <button className="button-primary-blue" disabled={!isFormComplete} onClick={() => handleFormSubmit(selectedItem)}>
                     See considerations
+                </button>
+                <button className="button-no-border" onClick={handleFormSubmit}>
+                    Start again
                 </button>
             </div>
         </div>
