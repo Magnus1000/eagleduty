@@ -6,27 +6,24 @@ function ImportForm({ chatResults, selectedItem }) {
 
     const handleCountryOfOriginChange = (event) => {
         setCountryOfOrigin(event.target.value);
-        checkFormCompletion(); // Check form completion when country of origin is changed
     };
 
     const handleImportValueChange = (value) => {
         setImportValue(value);
-        checkFormCompletion(); // Check form completion when import value is changed
     };
 
     const handleHasImporterNumberChange = (value) => {
         setHasImporterNumber(value);
-        checkFormCompletion(); // Check form completion when importer number is changed
     };
 
-    const checkFormCompletion = () => {
+    React.useEffect(() => {
         // Check if all form fields are selected
         if (countryOfOrigin && importValue && hasImporterNumber !== null) {
             setIsFormComplete(true);
         } else {
             setIsFormComplete(false);
         }
-    };
+    }, [countryOfOrigin, importValue, hasImporterNumber]);
 
     const handleFormSubmit = () => {
         // Ensure that chatResults and selectedItem are defined and valid
