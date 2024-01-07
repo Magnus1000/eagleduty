@@ -1,6 +1,10 @@
 const Airtable = require('airtable');
+const cors = require('cors');
 
 module.exports = async (req, res) => {
+    // Enable CORS
+    await cors()(req, res);
+
     const { uuid, event_content } = req.body;
 
     // Generate event time in ISO format

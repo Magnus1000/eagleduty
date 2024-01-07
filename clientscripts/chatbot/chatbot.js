@@ -34,14 +34,37 @@ function ImportForm({ chatResults, selectedItem, setChatResults }) {
         // Ensure that chatResults and selectedItem are defined and valid
         if (chatResults && selectedItem != null && chatResults[selectedItem]) {
             const selectedItemData = chatResults[selectedItem];
-    
+
             const url = new URL('https://www.eagleduty.io');
             url.searchParams.append('htsno', selectedItemData.htsno);
             url.searchParams.append('origin', countryOfOrigin);
             url.searchParams.append('importnumber', hasImporterNumber ? 'yes' : 'no');
             url.searchParams.append('value', importValue);
-    
-            window.location.href = url.toString();
+
+            const uuid = localStorage.getItem('uuid');
+            const eventContent = [selectedItemData.htsno, countryOfOrigin, hasImporterNumber ? 'yes' : 'no', importValue].join(';');
+
+            fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
+                method: 'POST',
+                body: JSON.stringify({ uuid, event_content: eventContent }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = url.toString();
+                } else {
+                    console.error('Failed to create Airtable event');
+                    // Still perform the redirect even if there's an error
+                    window.location.href = url.toString();
+                }
+            })
+            .catch(error => {
+                console.error('Error creating Airtable event:', error);
+                // Still perform the redirect even if there's an error
+                window.location.href = url.toString();
+            });
         } else {
             console.error('Invalid chat result or selected item');
         }
