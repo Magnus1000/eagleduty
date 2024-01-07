@@ -9,6 +9,7 @@ async function fetchData() {
     const htsnoValue = urlParams.get('htsno');
     const countryOfOrigin = urlParams.get('countryOfOrigin');
     const value = urlParams.get('value');
+    const product = urlParams.get('product');
 
     const apiUrl = `https://eagleduty-magnus1000team.vercel.app/api/website/fetchHTSCode.js?htsno=${htsnoValue}`;
 
@@ -16,13 +17,15 @@ async function fetchData() {
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        processFetchData(data, countryOfOrigin, value);
+        if (product === 'chat') {
+            processChatData(data, countryOfOrigin, value);
+        }
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-function processFetchData(data, countryOfOrigin, value) {
+function processChatData(data, countryOfOrigin, value) {
     const specialJson = data.special_json;
     const specialValue = specialJson[countryOfOrigin];
 
@@ -40,24 +43,27 @@ function processFetchData(data, countryOfOrigin, value) {
         }
     }
 
+    let productDetails = '';
+
+    const generalDutyRate = `The general duty rate for your product is ${data.general_V2}<br>`;
+    productDetails += generalDutyRate;
+
     if (specialValue !== undefined) {
-        console.log(`The special value for country ${countryOfOrigin} is ${specialValue}`);
-    } else {
-        console.log(`No special value found for country ${countryOfOrigin}`);
+        productDetails += `The special value for country ${countryOfOrigin} is ${specialValue}<br>`;
     }
 
     if (value === "under2500") {
-        console.log("Because the value of your import is less than $US2500, you don't need a Customs Bond.");
+        productDetails += "Because the value of your import is less than $US2500, you don't need a Customs Bond.<br>";
     } else {
-        console.log("Since the total import value is greater than $US2500, you’ll need to submit a Customs Bond.");
+        productDetails += "Since the total import value is greater than $US2500, you’ll need to submit a Customs Bond.<br>";
     }
 
     if (penaltyRate && penaltyType && penaltyCountry) {
-        console.log(`This product has a penalty rate of ${penaltyRate} ${penaltyType} when imported from ${penaltyCountry}.`);
-    } else {
-        console.log(`No penalty rate found for country ${countryOfOrigin}`);
+        productDetails += `This product has a penalty rate of ${penaltyRate} ${penaltyType} when imported from ${penaltyCountry}.<br>`;
     }
 
-    const generalDutyRate = `The general duty rate for your product is ${data.general_V2}`;
-    console.log(generalDutyRate);
+    const productDetailsDiv = document.getElementById("product-details-div");
+    if (productDetailsDiv) {
+        productDetailsDiv.innerHTML = productDetails;
+    }
 }
