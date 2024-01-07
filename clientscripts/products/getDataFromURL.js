@@ -25,7 +25,7 @@ async function fetchData() {
 
 function processChatData(data, countryOfOrigin, value) {
     const specialJson = data.special_json;
-    const specialValue = specialJson[countryOfOrigin];
+    const specialValue = specialJson && specialJson[countryOfOrigin];
 
     const json99 = data["99_json"];
     let penaltyRate = null;
@@ -63,5 +63,6 @@ function processChatData(data, countryOfOrigin, value) {
     const productDetailsDiv = document.getElementById("product-details-div");
     if (productDetailsDiv) {
         productDetailsDiv.innerHTML = productDetails;
+        console.log('productDetailsDiv:', productDetailsDiv);
     }
 }
