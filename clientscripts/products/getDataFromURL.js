@@ -6,7 +6,7 @@ async function fetchData() {
     const urlParams = new URLSearchParams(window.location.search);
     const htsnoValue = urlParams.get('htsno');
     const countryOfOrigin = urlParams.get('origin');
-    console.log('countryOfOrigin:', countryOfOrigin);
+    console.log('countryOfOrigin:', countryOfOrigin); 
     const value = urlParams.get('value');
     const product = urlParams.get('product');
 
