@@ -6,6 +6,7 @@ async function fetchData() {
     const urlParams = new URLSearchParams(window.location.search);
     const htsnoValue = urlParams.get('htsno');
     const countryOfOrigin = urlParams.get('origin');
+    console.log('countryOfOrigin:', countryOfOrigin);
     const value = urlParams.get('value');
     const product = urlParams.get('product');
 
@@ -28,6 +29,7 @@ function processChatData(data, countryOfOrigin, value) {
     const specialValue = specialJson && specialJson[countryOfOrigin];
 
     const json99 = data["99_json"];
+    console.log('json99:', json99);
     let penaltyRate = null;
     let penaltyType = null;
     let penaltyCountry = null;
