@@ -30,6 +30,7 @@ function processChatData(data, countryOfOrigin, value) {
 
     const specialJson = fields.special_json;
     const specialValue = specialJson && specialJson[countryOfOrigin];
+    console.log('specialValue:', specialValue);
 
     console.log('data:', data);
 
