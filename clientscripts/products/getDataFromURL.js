@@ -28,7 +28,7 @@ function processChatData(data, countryOfOrigin, value) {
     const record = data.record; // Assuming there is only one record
     const fields = record.fields;
 
-    const specialJson = fields.special_json;
+    const specialJson = JSON.parse(fields.special_json);
     const specialValue = specialJson && specialJson[countryOfOrigin];
     console.log('specialValue:', specialValue);
 
