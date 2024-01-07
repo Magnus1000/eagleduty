@@ -53,17 +53,18 @@ function ImportForm({ chatResults, selectedItem, setChatResults }) {
             })
             .then(response => {
                 if (response.ok) {
-                    window.location.href = url.toString();
+                    // window.location.href = url.toString();
+                    console.log('Airtable event created successfully');
                 } else {
                     console.error('Failed to create Airtable event');
                     // Still perform the redirect even if there's an error
-                    window.location.href = url.toString();
+                    // window.location.href = url.toString();
                 }
             })
             .catch(error => {
                 console.error('Error creating Airtable event:', error);
                 // Still perform the redirect even if there's an error
-                window.location.href = url.toString();
+                // window.location.href = url.toString();
             });
         } else {
             console.error('Invalid chat result or selected item');
