@@ -9,15 +9,15 @@ module.exports = async (req, res) => {
         console.log('Inside the serverless function...');
 
         corsHandler(req, res, async () => {
-            if (req.params && req.params.htsno) { // Check if req.params and req.params.htsno are defined
-                const htsno = req.params.htsno; // Get the htsno from req.params
+            if (req.query && req.query.htsno) { // Check if req.query and req.query.htsno are defined
+                const htsno = req.query.htsno; // Get the htsno from req.query
                 console.log('htsno:', htsno);
 
                 // Initialize Airtable with your base ID and API key
                 const base = new Airtable({ apiKey: process.env.AIRTABLE_KEY }).base(process.env.AIRTABLE_BASE_ID);
             
                 try {
-                    // Fetch the record from the specified table where htsno is equal to req.params.htsno
+                    // Fetch the record from the specified table where htsno is equal to req.query.htsno
                     const records = await base(process.env.AIRTABLE_TABLE_ID).select({
                         filterByFormula: `htsno = "${htsno}"`
                     }).all();
