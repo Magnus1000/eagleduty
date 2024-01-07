@@ -25,7 +25,7 @@ async function fetchData() {
 }
 
 function processChatData(data, countryOfOrigin, value) {
-    const record = data.records[0]; // Assuming there is only one record
+    const record = data.record; // Assuming there is only one record
     const fields = record.fields;
 
     const specialJson = fields.special_json;
