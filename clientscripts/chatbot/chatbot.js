@@ -35,7 +35,7 @@ function ImportForm({ chatResults, selectedItem, setChatResults }) {
         if (chatResults && selectedItem != null && chatResults[selectedItem]) {
             const selectedItemData = chatResults[selectedItem];
 
-            const url = new URL('https://www.eagleduty.io');
+            const url = new URL('https://www.eagleduty.io/product/hts-codes');
             url.searchParams.append('product', 'chat');
             url.searchParams.append('htsno', selectedItemData.htsno);
             url.searchParams.append('origin', countryOfOrigin);
