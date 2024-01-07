@@ -42,7 +42,7 @@ function ImportForm({ chatResults, selectedItem, setChatResults }) {
             url.searchParams.append('value', importValue);
 
             const uuid = localStorage.getItem('uuid');
-            const eventContent = [selectedItemData.htsno, countryOfOrigin, hasImporterNumber ? 'yes' : 'no', importValue].join(';');
+            const eventContent = [selectedItemData.htsno, countryOfOrigin, hasImporterNumber ? 'yes' : 'no', importValue].join('; ');
 
             fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
                 method: 'POST',
