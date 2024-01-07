@@ -28,6 +28,8 @@ function processChatData(data, countryOfOrigin, value) {
     const specialJson = data.special_json;
     const specialValue = specialJson && specialJson[countryOfOrigin];
 
+    console.log('data'; data);
+
     const json99 = data["99_json"];
     console.log('json99:', json99);
     let penaltyRate = null;
