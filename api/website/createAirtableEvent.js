@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
                             uuid,
                             event_content,
                             event_time,
+                            event_type: 'chat_form_submission', 
                         },
                     },
                 ]);
