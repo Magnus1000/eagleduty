@@ -42,8 +42,10 @@ function processChatData(data, countryOfOrigin, value) {
 
     if (json99 && Array.isArray(json99)) {
         const matchingRecord = json99.find(record => record["99_countries"] === countryOfOrigin);
+        console.log('matchingRecord:', matchingRecord);
         if (matchingRecord) {
             penaltyRate = matchingRecord["99_rate"];
+            console.log('penaltyRate:', penaltyRate);
             penaltyType = matchingRecord["99_type"];
             penaltyCountry = matchingRecord["99_countries"];
         }
