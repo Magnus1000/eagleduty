@@ -25,7 +25,8 @@ module.exports = async (req, res) => {
                             uuid,
                             event_content,
                             event_time,
-                            event_type: 'chat_form_submission', 
+                            event_type: 'chat_form_submission',
+                            event_page: 'https://www.eagleduty.io/chatbot', // Set the event_page field to 'https://www.eagleduty.io/chatbot'
                         },
                     },
                 ]);
