@@ -25,12 +25,15 @@ async function fetchData() {
 }
 
 function processChatData(data, countryOfOrigin, value) {
-    const specialJson = data.special_json;
+    const record = data.records[0]; // Assuming there is only one record
+    const fields = record.fields;
+
+    const specialJson = fields.special_json;
     const specialValue = specialJson && specialJson[countryOfOrigin];
 
     console.log('data:', data);
 
-    const json99 = data["99_json"];
+    const json99 = fields["99_json"];
     console.log('json99:', json99);
     let penaltyRate = null;
     let penaltyType = null;
@@ -47,7 +50,7 @@ function processChatData(data, countryOfOrigin, value) {
 
     let productDetails = '';
 
-    const generalDutyRate = `The general duty rate for your product is ${data.general_V2}<br>`;
+    const generalDutyRate = `The general duty rate for your product is ${fields.general_V2}<br>`;
     productDetails += generalDutyRate;
 
     if (specialValue !== undefined) {
