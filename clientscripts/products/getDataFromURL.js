@@ -40,15 +40,24 @@ function processChatData(data, countryOfOrigin, value) {
     let penaltyType = null;
     let penaltyCountry = null;
 
-    if (json99 && Array.isArray(json99)) {
-        console.log('json99 is an array');
-        const matchingRecord = json99.find(record => record["99_countries"] === countryOfOrigin);
-        console.log('matchingRecord:', matchingRecord);
-        if (matchingRecord) {
-            penaltyRate = matchingRecord["99_rate"];
-            console.log('penaltyRate:', penaltyRate);
-            penaltyType = matchingRecord["99_type"];
-            penaltyCountry = matchingRecord["99_countries"];
+    if (json99) {
+        let parsedJson99;
+        try {
+            parsedJson99 = JSON.parse(json99);
+        } catch (error) {
+            console.error('Failed to parse json99:', error);
+        }
+
+        if (Array.isArray(parsedJson99)) {
+            console.log('json99 is an array');
+            const matchingRecord = parsedJson99.find(record => record["99_countries"] === countryOfOrigin);
+            console.log('matchingRecord:', matchingRecord);
+            if (matchingRecord) {
+                penaltyRate = matchingRecord["99_rate"];
+                console.log('penaltyRate:', penaltyRate);
+                penaltyType = matchingRecord["99_type"];
+                penaltyCountry = matchingRecord["99_countries"];
+            }
         }
     }
 
