@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchData() {
     const urlParams = new URLSearchParams(window.location.search);
     const htsnoValue = urlParams.get('htsno');
-    const countryOfOrigin = urlParams.get('countryOfOrigin');
+    const countryOfOrigin = urlParams.get('origin');
     const value = urlParams.get('value');
     const product = urlParams.get('product');
 
