@@ -18,18 +18,20 @@ module.exports = async (req, res) => {
             
                 try {
                     // Fetch the record from the specified table where htsno is equal to req.query.htsno
-                    const records = await base(process.env.AIRTABLE_TABLE_ID).select({
+                    const record = await base(process.env.AIRTABLE_TABLE_ID).select({
                         filterByFormula: `htsno = "${htsno}"`
-                    }).all();
+                    }).firstPage();
             
-                    if (records.length > 0) {
-                        // Do something with the fetched record(s)
-                        console.log('Fetched record(s):', records);
+                    if (record && record.length > 0) {
+                        // Do something with the fetched record
+                        console.log('Fetched record:', record[0]);
+
+                        // Return the fetched record as the response
+                        res.status(200).json({ record: record[0] });
                     } else {
                         console.log('No record found');
+                        res.status(404).json({ error: 'No record found' });
                     }
-            
-                    res.status(200).json({ message: 'Record fetched successfully' });
                 } catch (error) {
                     console.error('Error:', error);
                     res.status(500).json({ error: 'Internal Server Error' });
