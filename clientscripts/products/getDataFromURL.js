@@ -41,6 +41,7 @@ function processChatData(data, countryOfOrigin, value) {
     let penaltyCountry = null;
 
     if (json99 && Array.isArray(json99)) {
+        console.log('json99 is an array');
         const matchingRecord = json99.find(record => record["99_countries"] === countryOfOrigin);
         console.log('matchingRecord:', matchingRecord);
         if (matchingRecord) {
