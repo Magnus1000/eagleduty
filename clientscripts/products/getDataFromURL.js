@@ -32,7 +32,7 @@ function processChatData(data, countryOfOrigin, value) {
     // Check if the Country of Origin enjoys a special duty rate
     const specialJson = JSON.parse(fields.special_json);
     console.log('specialJson:', specialJson);
-    const specialValue = specialJson && specialJson[countryOfOrigin];
+    const specialValue = specialJson.special_json && specialJson.special_json[countryOfOrigin];
     console.log('specialValue:', specialValue);
 
     // Check if the Country of Origin has a penalty rate
