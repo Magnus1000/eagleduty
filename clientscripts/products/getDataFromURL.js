@@ -72,7 +72,11 @@ function processChatData(data, countryOfOrigin, value) {
     if (specialValue !== undefined) {
         const tradeAgreement = tradeAgreements.find(agreement => agreement.countryCode === countryOfOrigin);
         if (tradeAgreement) {
-            productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the ${tradeAgreement.tradeAgreement}. To qualify for the special rate, you'll need a valid Certificate of Origin.<br>`;
+            if (specialValue === 0) {
+                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the ${tradeAgreement.tradeAgreement}. To qualify for the special rate, you'll need a valid Certificate of Origin.<br>`;
+            } else {
+                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the **${tradeAgreement.tradeAgreement}**. To qualify for the special rate, you'll need a valid Certificate of Origin.<br>`;
+            }
         }
     }
 
