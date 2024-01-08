@@ -28,7 +28,7 @@ function processChatData(data, countryOfOrigin, value) {
     console.log('data:', data);
     const record = data.record; // Assuming there is only one record
     const fields = record.fields;
-    
+
     // Check if the Country of Origin enjoys a special duty rate
     const specialJson = JSON.parse(fields.special_json);
     console.log('specialJson:', specialJson);
@@ -67,15 +67,15 @@ function processChatData(data, countryOfOrigin, value) {
     let productDetails = '';
 
     const generalDutyRate = `• The general duty rate for your product is ${fields.general_V2}.<br>`;
-    productDetails += generalDutyRate;
+    productDetails += `<span class="product-details-text">${generalDutyRate}</span>`;
 
     if (specialValue !== undefined) {
         const tradeAgreement = tradeAgreements.find(agreement => agreement.countryCode === countryOfOrigin);
         if (tradeAgreement) {
             if (specialValue === 0) {
-                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.<br>`;
+                productDetails += `<span class="product-details-text">• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.</span><br>`;
             } else {
-                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.<br>`;
+                productDetails += `<span class="product-details-text">• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.</span><br>`;
             }
         }
     }
@@ -83,17 +83,17 @@ function processChatData(data, countryOfOrigin, value) {
     if (penaltyRate && penaltyType && penaltyCountry) {
         let penaltySentence = '';
         if (penaltyType === 'additional') {
-            penaltySentence = `• This product has an additional penalty rate of ${penaltyRate} when imported from ${penaltyCountry}.<br>`;
+            penaltySentence = `<span class="product-details-text">• This product has an additional penalty rate of ${penaltyRate} when imported from ${penaltyCountry}.</span><br>`;
         } else if (penaltyType === 'in_lieu') {
-            penaltySentence = `• This product has a penalty rate of ${penaltyRate} in lieu of the general rate when imported from ${penaltyCountry}.<br>`;
-        } 
+            penaltySentence = `<span class="product-details-text">• This product has a penalty rate of ${penaltyRate} in lieu of the general rate when imported from ${penaltyCountry}.</span><br>`;
+        }
         productDetails += penaltySentence;
     }
 
     if (value === "under2500") {
-        productDetails += "• Because the value of your import is less than $US2500, you don't need a Customs Bond.<br>";
+        productDetails += `<span class="product-details-text">• Because the value of your import is less than $US2500, you don't need a Customs Bond.</span><br>`;
     } else {
-        productDetails += "• Since the total import value is greater than $US2500, you’ll need to submit a <strong>Customs Bond</strong>.<br>";
+        productDetails += `<span class="product-details-text">• Since the total import value is greater than $US2500, you’ll need to submit a <strong>Customs Bond</strong>.</span><br>`;
     }
 
     const productDetailsDiv = document.getElementById("product-details-div");
