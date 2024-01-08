@@ -4,14 +4,14 @@ function setSessionStorageValues() {
     const description = sessionStorage.getItem("description");
     const uuid = localStorage.getItem('uuid');
 
-    const hsQueryElement = document.getElementById("hsQuery");
+    const hsProductDescriptionElement = document.getElementById("hsDescription");
     const hsCodeElement = document.getElementById("hsCode");
     const hsDescriptionElement = document.getElementById("hsDescription");
     const searchResultsCheckoutElement = document.getElementById("searchResultsCheckout");
     const checkoutCheckboxElement = document.getElementById("checkoutCheckbox");
 
     if (query && htsno && description) {
-        hsQueryElement.textContent = query;
+        hsProductDescriptionElement.value = query;
         hsCodeElement.textContent = htsno;
         hsDescriptionElement.textContent = description;
         searchResultsCheckoutElement.style.display = "flex";
