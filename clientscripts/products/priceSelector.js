@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
         '3': '023d5410f566bee8336708b46f235ae7'
     };
 
-    // Function to set the select value based on the clicked div's data-custom-value attribute
-    const setSelectValue = (value, clickedDiv) => {
+    // Function to set the select value based on the clicked button's data-order-value attribute
+    const setSelectValue = (value, clickedButton) => {
         const select = document.querySelector('select[data-custom-buy-now="select"]');
         if (select) {
             select.value = value;
@@ -16,40 +16,23 @@ document.addEventListener('DOMContentLoaded', function() {
             select.dispatchEvent(event);
         }
 
-        // Update the 'selected' class on the radio buttons
-        const radioDivs = document.querySelectorAll('div[data-custom-buy-now="radio"]');
-        radioDivs.forEach(div => {
-            if (div === clickedDiv) {
-                div.classList.add('selected');
-            } else {
-                div.classList.remove('selected');
-            }
-        });
-
-        // Remove the 'unclickable' class from the button with ID = goCheckout
+        // Click the goCheckout button
         const goCheckoutButton = document.getElementById('goCheckout');
         if (goCheckoutButton) {
-            goCheckoutButton.classList.remove('unclickable');
+            goCheckoutButton.click();
         }
 
         // Store the selected order value in local storage as eagledutyPlan
         localStorage.setItem('eagledutyPlan', value);
     };
 
-    // Find all divs with data-custom-buy-now="radio"
-    const radioDivs = document.querySelectorAll('div[data-custom-buy-now="radio"]');
+    // Find all buttons with the class "button-primary-blue"
+    const buttons = document.querySelectorAll('.button-primary-blue');
     
-    radioDivs.forEach(div => {
-        // Set the data-custom-value based on data-custom-order
-        const order = div.getAttribute('data-custom-order');
-        if (orderValues[order]) {
-            div.setAttribute('data-custom-value', orderValues[order]);
-        }
-
-        div.addEventListener('click', function() {
-            const value = this.getAttribute('data-custom-value');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const value = this.getAttribute('data-order-value');
             setSelectValue(value, this);
         });
     });
 });
-
