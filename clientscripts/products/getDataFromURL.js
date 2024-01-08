@@ -9,6 +9,7 @@ async function fetchData() {
     console.log('countryOfOrigin:', countryOfOrigin); 
     const value = urlParams.get('value');
     const product = urlParams.get('product');
+    const importnumber = urlParams.get('importnumber');
 
     const apiUrl = `https://eagleduty-magnus1000team.vercel.app/api/website/fetchHTSCode.js?htsno=${htsnoValue}`;
 
@@ -105,6 +106,28 @@ function processChatData(data, countryOfOrigin, value) {
     if (productDetailsDiv) {
         productDetailsDiv.innerHTML = productDetails;
         console.log('productDetailsDiv:', productDetailsDiv);
+    }
+
+    // Recommendation Text
+    let recommendationText = '';
+    if (value === "under2500") {
+        recommendationText = `Since the value of your import is less than $US2500, we recommend an HTS Code Assessment to ensure you're not overpaying on import duties and avoid import fines.`;
+        const recommendationTextDiv = document.getElementById("product-recommendation-div-1");
+        const productWrapperDiv = document.getElementById("product-column-wrapper-1");
+        recommendationTextDiv.innerHTML = recommendationText;
+        productWrapperDiv.classList.add("recommended");
+    } else if (value != "under2500" && importnumber === "no") {
+        recommendationText = `Since the value of your import is greater than $US2500, and you don't have an Import Number, we recommend a consultation with one of our expert Customs Specialists. They'll help you understand the requirements for your import.`;
+        const recommendationTextDiv = document.getElementById("product-recommendation-div-2");
+        const productWrapperDiv = document.getElementById("product-column-wrapper-2");
+        recommendationTextDiv.innerHTML = recommendationText;
+        productWrapperDiv.classList.add("recommended");
+    } else if (value != "under2500" && importnumber === "yes") {
+        recommendationText = `Since the value of your import is greater than $US2500, and you have an Import Number, we recommend getting a Duty Ruling. This will protect you from import penalties and potential import delays.`;
+        const recommendationTextDiv = document.getElementById("product-recommendation-div-3");
+        const productWrapperDiv = document.getElementById("product-column-wrapper-3");
+        recommendationTextDiv.innerHTML = recommendationText;
+        productWrapperDiv.classList.add("recommended");
     }
 }
 
