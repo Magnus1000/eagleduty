@@ -45,6 +45,10 @@ function ImportForm({ chatResults, selectedItem, setChatResults }) {
             const uuid = localStorage.getItem('uuid');
             const eventContent = [selectedItemData.htsno, countryOfOrigin, hasImporterNumber ? 'yes' : 'no', importValue].join('; ');
 
+            // Store the htsno and description in session storage
+            sessionStorage.setItem("htsno", selectedItemData.htsno);
+            sessionStorage.setItem("description", selectedItemData.description);
+
             fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
                 method: 'POST',
                 body: JSON.stringify({ uuid, event_content: eventContent }),
@@ -132,6 +136,7 @@ function ChatComponent() {
         setIsLoading(true);
         setSelectedItem(null); // Clear the selected item
         const uuid = localStorage.getItem('uuid');
+        sessionStorage.setItem("query", inputText);
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
             method: 'POST',
             headers: {
