@@ -91,9 +91,9 @@ function processChatData(data, countryOfOrigin, value) {
     }
 
     if (value === "under2500") {
-        productDetails += `<span class="product-details-text">• Because the value of your import is less than $US2500, you don't need a Customs Bond.</span><br>`;
+        productDetails += `<span class="product-details-text">• Because the value of your import is less than $US2500, you don't need a Customs Bond.</span>`;
     } else {
-        productDetails += `<span class="product-details-text">• Since the total import value is greater than $US2500, you’ll need to submit a <strong>Customs Bond</strong>.</span><br>`;
+        productDetails += `<span class="product-details-text">• Since the total import value is greater than $US2500, you’ll need to submit a <strong>Customs Bond</strong>.</span>`;
     }
 
     const productDetailsDiv = document.getElementById("product-details-div");
