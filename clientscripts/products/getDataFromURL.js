@@ -99,7 +99,7 @@ function processChatData(data, countryOfOrigin, value) {
     }
 }
 
-const tradeAgreements [
+const tradeAgreements = [
     {
         "countryCode": "AU",
         "countryName": "Australia",
