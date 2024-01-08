@@ -64,21 +64,21 @@ function processChatData(data, countryOfOrigin, value) {
 
     let productDetails = '';
 
-    const generalDutyRate = `• The general duty rate for your product is ${fields.general_V2}<br>`;
+    const generalDutyRate = `• The general duty rate for your product is ${fields.general_V2}.<br>`;
     productDetails += generalDutyRate;
 
     if (specialValue !== undefined) {
-        productDetails += `• The special value for country ${countryOfOrigin} is ${specialValue}<br>`;
+        productDetails += `• The special value for country ${countryOfOrigin} is ${specialValue}.<br>`;
+    }
+
+    if (penaltyRate && penaltyType && penaltyCountry) {
+        productDetails += `• This product has a penalty rate of ${penaltyRate} ${penaltyType} when imported from ${penaltyCountry}.<br>`;
     }
 
     if (value === "under2500") {
         productDetails += "• Because the value of your import is less than $US2500, you don't need a Customs Bond.<br>";
     } else {
         productDetails += "• Since the total import value is greater than $US2500, you’ll need to submit a Customs Bond.<br>";
-    }
-
-    if (penaltyRate && penaltyType && penaltyCountry) {
-        productDetails += `• This product has a penalty rate of ${penaltyRate} ${penaltyType} when imported from ${penaltyCountry}.<br>`;
     }
 
     const productDetailsDiv = document.getElementById("product-details-div");
