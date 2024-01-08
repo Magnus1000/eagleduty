@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const goCheckoutButton = document.getElementById('goCheckout');
         if (goCheckoutButton) {
             goCheckoutButton.click();
+            console.log('Clicked goCheckout button');
         }
 
         // Store the selected order value in local storage as eagledutyPlan
