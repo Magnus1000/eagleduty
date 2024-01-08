@@ -237,6 +237,7 @@ function processChatData(data, countryOfOrigin, value, importnumber) {
 
     // Get the country name
     const countryName = getCountryName(countryOfOrigin, countries);
+    console.log('countryName:', countryName);
 
     // Check if the Country of Origin enjoys a special duty rate
     const specialJson = JSON.parse(fields.special_json);
@@ -292,9 +293,9 @@ function processChatData(data, countryOfOrigin, value, importnumber) {
     if (penaltyRate && penaltyType && penaltyCountry) {
         let penaltySentence = '';
         if (penaltyType === 'additional') {
-            penaltySentence = `<span class="product-details-text">• This product has an additional penalty rate of ${penaltyRate} when imported from ${countryName}.</span><br>`;
+            penaltySentence = `<span class="product-details-text">• This product has an additional penalty rate of ${penaltyRate} when imported from ${countryName}.</span>`;
         } else if (penaltyType === 'in_lieu') {
-            penaltySentence = `<span class="product-details-text">• This product has a penalty rate of ${penaltyRate} in lieu of the general rate when imported from ${countryName}.</span><br>`;
+            penaltySentence = `<span class="product-details-text">• This product has a penalty rate of ${penaltyRate} in lieu of the general rate when imported from ${countryName}.</span>`;
         }
         productDetails += penaltySentence;
     }
