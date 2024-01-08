@@ -232,12 +232,14 @@ function processChatData(data, countryOfOrigin, value, importnumber) {
 
     // Function to get the country name from the ISO code
     function getCountryName(countryOfOrigin, countries) {
-        const countryName = countries.find(country => country.iso_code === countryOfOrigin)?.country_name;
+        // Directly access the country name using the ISO code as the key
+        const countryName = countries[countryOfOrigin];
         return countryName;
     }
-    // Get the country name
+
+    // Example usage
     const countryName = getCountryName(countryOfOrigin, countries);
-    console.log('countryName:', countryName);
+    console.log('countryName:', countryName); // Should log 'United States'
 
     // Check if the Country of Origin enjoys a special duty rate
     const specialJson = JSON.parse(fields.special_json);
