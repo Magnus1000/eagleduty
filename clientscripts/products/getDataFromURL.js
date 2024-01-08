@@ -114,20 +114,26 @@ function processChatData(data, countryOfOrigin, value, importnumber) {
         recommendationText = `Since the value of your import is less than $US2500, we recommend an HTS Code Assessment to ensure you're not overpaying on import duties and avoid import fines.`;
         const recommendationTextDiv = document.getElementById("product-recommendation-div-1");
         const productWrapperDiv = document.getElementById("product-column-wrapper-1");
+        const recommendedTextHeader = document.getElementById("recommended-text-1");
         recommendationTextDiv.innerHTML = recommendationText;
         productWrapperDiv.classList.add("recommended");
+        recommendedTextHeader.classList.add("recommended");
     } else if (value != "under2500" && importnumber === "yes") {
         recommendationText = `Since the value of your import is greater than $US2500, and you have an Import Number, we recommend getting a Duty Ruling. This will protect you from import penalties and potential import delays.`;
         const recommendationTextDiv = document.getElementById("product-recommendation-div-2");
         const productWrapperDiv = document.getElementById("product-column-wrapper-2");
+        const recommendedTextHeader = document.getElementById("recommended-text-2");
         recommendationTextDiv.innerHTML = recommendationText;
         productWrapperDiv.classList.add("recommended");
+        recommendedTextHeader.classList.add("recommended");
     } else if (value != "under2500" && importnumber === "no") {
         recommendationText = `Since the value of your import is greater than $US2500, and you don't have an Import Number, we recommend a consultation with one of our expert Customs Specialists. They'll help you understand the requirements for your import.`;
         const recommendationTextDiv = document.getElementById("product-recommendation-div-3");
         const productWrapperDiv = document.getElementById("product-column-wrapper-3");
+        const recommendedTextHeader = document.getElementById("recommended-text-3");
         recommendationTextDiv.innerHTML = recommendationText;
         productWrapperDiv.classList.add("recommended");
+        recommendedTextHeader.classList.add("recommended");
     }
 }
 
