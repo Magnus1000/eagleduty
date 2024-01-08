@@ -25,16 +25,17 @@ async function fetchData() {
 }
 
 function processChatData(data, countryOfOrigin, value) {
+    console.log('data:', data);
     const record = data.record; // Assuming there is only one record
     const fields = record.fields;
-
+    
+    // Check if the Country of Origin enjoys a special duty rate
     const specialJson = JSON.parse(fields.special_json);
     console.log('specialJson:', specialJson);
     const specialValue = specialJson && specialJson[countryOfOrigin];
     console.log('specialValue:', specialValue);
 
-    console.log('data:', data);
-
+    // Check if the Country of Origin has a penalty rate
     const json99 = fields["99_json"];
     console.log('json99:', json99);
     let penaltyRate = null;
@@ -62,17 +63,27 @@ function processChatData(data, countryOfOrigin, value) {
         }
     }
 
+    // Create the product details string
     let productDetails = '';
 
     const generalDutyRate = `• The general duty rate for your product is ${fields.general_V2}.<br>`;
     productDetails += generalDutyRate;
 
     if (specialValue !== undefined) {
-        productDetails += `• The special value for country ${countryOfOrigin} is ${specialValue}.<br>`;
+        const tradeAgreement = tradeAgreements.find(agreement => agreement.countryCode === countryOfOrigin);
+        if (tradeAgreement) {
+            productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the ${tradeAgreement.tradeAgreement}. To qualify for the special rate, you'll need a valid Certificate of Origin.<br>`;
+        }
     }
 
     if (penaltyRate && penaltyType && penaltyCountry) {
-        productDetails += `• This product has a penalty rate of ${penaltyRate} ${penaltyType} when imported from ${penaltyCountry}.<br>`;
+        let penaltySentence = '';
+        if (penaltyType === 'additional') {
+            penaltySentence = `• This product has an additional penalty rate of ${penaltyRate} when imported from ${penaltyCountry}.<br>`;
+        } else if (penaltyType === 'in_lieu') {
+            penaltySentence = `• This product has a penalty rate of ${penaltyRate} in lieu of the general rate when imported from ${penaltyCountry}.<br>`;
+        } 
+        productDetails += penaltySentence;
     }
 
     if (value === "under2500") {
@@ -87,3 +98,106 @@ function processChatData(data, countryOfOrigin, value) {
         console.log('productDetailsDiv:', productDetailsDiv);
     }
 }
+
+const tradeAgreements [
+    {
+        "countryCode": "AU",
+        "countryName": "Australia",
+        "tradeAgreement": "United States-Australia Free Trade Agreement (AUSFTA)"
+    },
+    {
+        "countryCode": "BH",
+        "countryName": "Bahrain",
+        "tradeAgreement": "United States-Bahrain Free Trade Agreement (USBFTA)"
+    },
+    {
+        "countryCode": "CA",
+        "countryName": "Canada",
+        "tradeAgreement": "United States-Mexico-Canada Agreement (USMCA), previously known as the North American Free Trade Agreement (NAFTA)"
+    },
+    {
+        "countryCode": "CL",
+        "countryName": "Chile",
+        "tradeAgreement": "United States-Chile Free Trade Agreement (USCFTA)"
+    },
+    {
+        "countryCode": "CO",
+        "countryName": "Colombia",
+        "tradeAgreement": "United States-Colombia Trade Promotion Agreement (CTPA)"
+    },
+    {
+        "countryCode": "CR",
+        "countryName": "Costa Rica",
+        "tradeAgreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR), which also includes other Central American countries"
+    },
+    {
+        "countryCode": "DO",
+        "countryName": "Dominican Republic",
+        "tradeAgreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"
+    },
+    {
+        "countryCode": "SV",
+        "countryName": "El Salvador",
+        "tradeAgreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"
+    },
+    {
+        "countryCode": "GT",
+        "countryName": "Guatemala",
+        "tradeAgreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"
+    },
+    {
+        "countryCode": "HN",
+        "countryName": "Honduras",
+        "tradeAgreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"
+    },
+    {
+        "countryCode": "IL",
+        "countryName": "Israel",
+        "tradeAgreement": "United States-Israel Free Trade Agreement (USIFTA)"
+    },
+    {
+        "countryCode": "JO",
+        "countryName": "Jordan",
+        "tradeAgreement": "United States-Jordan Free Trade Agreement (USJFTA)"
+    },
+    {
+        "countryCode": "KR",
+        "countryName": "Korea, Republic of",
+        "tradeAgreement": "United States-Korea Free Trade Agreement (KORUS FTA)"
+    },
+    {
+        "countryCode": "MX",
+        "countryName": "Mexico",
+        "tradeAgreement": "United States-Mexico-Canada Agreement (USMCA)"
+    },
+    {
+        "countryCode": "MA",
+        "countryName": "Morocco",
+        "tradeAgreement": "United States-Morocco Free Trade Agreement (USMFTA)"
+    },
+    {
+        "countryCode": "NI",
+        "countryName": "Nicaragua",
+        "tradeAgreement": "Dominican Republic-Central America-United States Free Trade Agreement (CAFTA-DR)"
+    },
+    {
+        "countryCode": "OM",
+        "countryName": "Oman",
+        "tradeAgreement": "United States-Oman Free Trade Agreement (USOFTA)"
+    },
+    {
+        "countryCode": "PA",
+        "countryName": "Panama",
+        "tradeAgreement": "United States-Panama Trade Promotion Agreement (PATPA)"
+    },
+    {
+        "countryCode": "PE",
+        "countryName": "Peru",
+        "tradeAgreement": "United States-Peru Trade Promotion Agreement (PTPA)"
+    },
+    {
+        "countryCode": "SG",
+        "countryName": "Singapore",
+        "tradeAgreement": "United States-Singapore Free Trade Agreement (USSFTA)"
+    }
+]
