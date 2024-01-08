@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const select = document.querySelector('select[data-custom-buy-now="select"]');
         if (select) {
             select.value = value;
+            console.log(`Set select value to ${value}`);
             // Trigger change event in case there are any listeners
             const event = new Event('change');
             select.dispatchEvent(event);
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     buttons.forEach(button => {
         button.addEventListener('click', function() {
             const value = this.getAttribute('data-order-value');
+            console.log(`Clicked button with data-order-value: ${value}`)
             setSelectValue(value, this);
         });
     });
