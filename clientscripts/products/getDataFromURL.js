@@ -73,9 +73,9 @@ function processChatData(data, countryOfOrigin, value) {
         const tradeAgreement = tradeAgreements.find(agreement => agreement.countryCode === countryOfOrigin);
         if (tradeAgreement) {
             if (specialValue === 0) {
-                productDetails += `<span class="product-details-text">• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.</span><br>`;
+                productDetails += `<span class="product-details-text">• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.</span>`;
             } else {
-                productDetails += `<span class="product-details-text">• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.</span><br>`;
+                productDetails += `<span class="product-details-text">• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.</span>`;
             }
         }
     }
