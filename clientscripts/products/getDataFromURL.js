@@ -18,14 +18,14 @@ async function fetchData() {
         const data = await response.json();
 
         if (product === 'chat') {
-            processChatData(data, countryOfOrigin, value);
+            processChatData(data, countryOfOrigin, value, importnumber);
         }
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-function processChatData(data, countryOfOrigin, value) {
+function processChatData(data, countryOfOrigin, value, importnumber) {
     console.log('data:', data);
     const record = data.record; // Assuming there is only one record
     const fields = record.fields;
