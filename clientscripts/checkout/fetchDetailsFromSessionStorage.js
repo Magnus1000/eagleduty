@@ -4,7 +4,7 @@ function setSessionStorageValues() {
     const description = sessionStorage.getItem("description");
     const uuid = localStorage.getItem('uuid');
 
-    const hsProductDescriptionElement = document.getElementById("hsDescription");
+    const hsProductDescriptionElement = document.getElementById("wf-ecom-notes");
     const hsCodeElement = document.getElementById("hsCode");
     const hsDescriptionElement = document.getElementById("hsDescription");
     const searchResultsCheckoutElement = document.getElementById("searchResultsCheckout");
