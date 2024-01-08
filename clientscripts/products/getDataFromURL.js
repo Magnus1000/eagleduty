@@ -73,9 +73,9 @@ function processChatData(data, countryOfOrigin, value) {
         const tradeAgreement = tradeAgreements.find(agreement => agreement.countryCode === countryOfOrigin);
         if (tradeAgreement) {
             if (specialValue === 0) {
-                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the ${tradeAgreement.tradeAgreement}. To qualify for the special rate, you'll need a valid Certificate of Origin.<br>`;
+                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue}% (i.e. there is no duty) due to the ${tradeAgreement.tradeAgreement}. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.<br>`;
             } else {
-                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the **${tradeAgreement.tradeAgreement}**. To qualify for the special rate, you'll need a valid Certificate of Origin.<br>`;
+                productDetails += `• When imported from ${countryOfOrigin}, this product enjoys a special duty rate of ${specialValue} due to the <strong>${tradeAgreement.tradeAgreement}</strong>. To qualify for the special rate, you'll need a valid <strong>Certificate of Origin</strong>.<br>`;
             }
         }
     }
@@ -93,7 +93,7 @@ function processChatData(data, countryOfOrigin, value) {
     if (value === "under2500") {
         productDetails += "• Because the value of your import is less than $US2500, you don't need a Customs Bond.<br>";
     } else {
-        productDetails += "• Since the total import value is greater than $US2500, you’ll need to submit a Customs Bond.<br>";
+        productDetails += "• Since the total import value is greater than $US2500, you’ll need to submit a <strong>Customs Bond</strong>.<br>";
     }
 
     const productDetailsDiv = document.getElementById("product-details-div");
