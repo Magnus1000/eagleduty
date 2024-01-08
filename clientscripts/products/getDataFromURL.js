@@ -95,6 +95,11 @@ function processChatData(data, countryOfOrigin, value) {
     } else {
         productDetails += `<span class="product-details-text">• Since the total import value is greater than $US2500, you’ll need to submit a <strong>Customs Bond</strong>.</span>`;
     }
+    
+    const regulationSentence = fields.regulation_text;
+    if (regulationSentence) {
+        productDetails += `<span class="product-details-text">${regulationSentence}</span>`;
+    }
 
     const productDetailsDiv = document.getElementById("product-details-div");
     if (productDetailsDiv) {
