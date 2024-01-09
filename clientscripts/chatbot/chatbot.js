@@ -354,7 +354,7 @@ function ChatComponent() {
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState(false); // Error state
-    const isButtonDisabled = inputText.length < 10 || isLoading;
+    const isButtonDisabled = inputText.length < 2 || isLoading;
     const chatSearchRef = React.useRef(null);
 
     const handleInputChange = (event) => {
