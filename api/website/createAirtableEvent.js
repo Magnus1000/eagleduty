@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
         console.log('Inside the serverless function...');
 
         corsHandler(req, res, async () => {
-            const { uuid, event_content } = req.body;
+            const { uuid, event_content, event_type, event_page } = req.body;
 
             // Generate event time in ISO format
             const event_time = new Date().toISOString();
@@ -25,8 +25,8 @@ module.exports = async (req, res) => {
                             uuid,
                             event_content,
                             event_time,
-                            event_type: 'chat_form_submission',
-                            event_page: 'https://www.eagleduty.io/chatbot', // Set the event_page field to 'https://www.eagleduty.io/chatbot'
+                            event_type,
+                            event_page
                         },
                     },
                 ]);
