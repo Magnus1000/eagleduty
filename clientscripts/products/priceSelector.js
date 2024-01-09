@@ -50,10 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const event_type = 'price_selected';
         const event_page = window.location.href;
 
-        // Store the htsno and description in session storage
-        sessionStorage.setItem("htsno", selectedItemData.htsno);
-        sessionStorage.setItem("description", selectedItemData.description);
-
         fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
             method: 'POST',
             body: JSON.stringify({ uuid, event_content: eventContent, event_type, event_page }),
