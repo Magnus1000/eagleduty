@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const descriptionDivs = document.querySelectorAll('.example-description-div');
-    const chatSearch = document.getElementById('chatSearch');
 
     descriptionDivs.forEach(function(div) {
         div.addEventListener('click', function() {
-            chatSearch.value = div.textContent;
+            const chatSearch = document.getElementById('chatSearch');
+            if (chatSearch) {
+                chatSearch.value = div.textContent;
+            }
         });
     });
 });
