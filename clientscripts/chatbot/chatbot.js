@@ -404,7 +404,6 @@ function ChatComponent() {
             }
             // Set the error message and provide a retry function
             setError(message);
-            setRetryFunction(() => handleSend);
         })
         .finally(() => {
             setIsLoading(false);
