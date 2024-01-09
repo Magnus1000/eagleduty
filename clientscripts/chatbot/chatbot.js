@@ -366,7 +366,7 @@ function ChatComponent() {
         setChatResults([]);
         setIsLoading(true);
         setSelectedItem(null);
-        setShowError(false); // Reset showError state
+        setError(false); // Reset showError state
         const uuid = localStorage.getItem('uuid');
         sessionStorage.setItem("query", inputText);
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
