@@ -3,27 +3,18 @@ window.addEventListener('load', function() {
     const event_type = 'page_view';
     const event_page = window.location.href;
 
-    fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
-        method: 'POST',
-        body: JSON.stringify({ uuid, event_type, event_page }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Airtable event created successfully');
-        } else {
-            console.error('Failed to create Airtable event');
-        }
-    })
-    .catch(error => {
-        console.error('Error creating Airtable event:', error);
-    });
+    // Debounce function
+    function debounce(func, delay) {
+        let timeoutId;
+        return function() {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(func, delay);
+        };
+    }
 
     // Add event listener to the form field
     const emailField = document.getElementById('wf-ecom-email');
-    const emailInputHandler = function() {
+    const emailInputHandler = debounce(function() {
         const emailStartedEvent = {
             uuid,
             event_content: '',
@@ -50,12 +41,13 @@ window.addEventListener('load', function() {
         .catch(error => {
             console.error('Error creating email started event:', error);
         });
-    };
+    }, 500); // Adjust the delay as needed
+
     emailField.addEventListener('input', emailInputHandler);
 
     // Add event listener to the form field
     const customerName = document.getElementById('wf-ecom-billing-name');
-    const addressInputHandler = function() {
+    const addressInputHandler = debounce(function() {
         const detailsStartedEvent = {
             uuid,
             event_content: '',
@@ -82,6 +74,7 @@ window.addEventListener('load', function() {
         .catch(error => {
             console.error('Error creating address started event:', error);
         });
-    };
+    }, 500); // Adjust the delay as needed
+
     customerName.addEventListener('input', addressInputHandler);
 });
