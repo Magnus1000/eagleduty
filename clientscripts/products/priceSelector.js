@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.head.appendChild(style);
 
+        // Prepare the event data
         const uuid = localStorage.getItem('uuid');
         let eventContent;
 
