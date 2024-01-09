@@ -23,7 +23,7 @@ window.addEventListener('load', function() {
 
     // Add event listener to the form field
     const emailField = document.getElementById('wf-ecom-email');
-    emailField.addEventListener('input', function() {
+    const emailInputHandler = function() {
         const emailStartedEvent = {
             uuid,
             event_content: '',
@@ -50,36 +50,38 @@ window.addEventListener('load', function() {
         .catch(error => {
             console.error('Error creating email started event:', error);
         });
-    });
+    };
+    emailField.addEventListener('input', emailInputHandler);
 
     // Add event listener to the form field
-    const cardNumberField = document.querySelector('[data-wf-stripe-element-type="cardNumber"]');
-    cardNumberField.addEventListener('input', function cardNumberInputHandler() {
-        const cardNumberStartedEvent = {
+    const customerName = document.getElementById('wf-ecom-billing-name');
+    const addressInputHandler = function() {
+        const detailsStartedEvent = {
             uuid,
             event_content: '',
-            event_type: 'cardNumber_started',
+            event_type: 'address_started',
             event_page,
         };
 
         fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
             method: 'POST',
-            body: JSON.stringify(cardNumberStartedEvent),
+            body: JSON.stringify(detailsStartedEvent),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(response => {
             if (response.ok) {
-                console.log('Card number started event created successfully');
+                console.log('Address started event created successfully');
                 // Remove the event listener after it has been triggered once
-                cardNumberField.removeEventListener('input', cardNumberInputHandler);
+                customerName.removeEventListener('input', addressInputHandler);
             } else {
-                console.error('Failed to create card number started event');
+                console.error('Failed to create address started event');
             }
         })
         .catch(error => {
-            console.error('Error creating card number started event:', error);
+            console.error('Error creating address started event:', error);
         });
-    });
+    };
+    customerName.addEventListener('input', addressInputHandler);
 });
