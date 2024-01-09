@@ -372,13 +372,14 @@ function ChatComponent() {
         setSelectedItem(null);
         setError(false); // Reset showError state
         const uuid = localStorage.getItem('uuid');
+        const event_page = window.location.href;
         sessionStorage.setItem("query", inputText);
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ product_description: inputText, uuid }),
+            body: JSON.stringify({ product_description: inputText, uuid, event_type: 'chat_completion', event_page }),
         })
             .then((response) => {
                 if (!response.ok) {
