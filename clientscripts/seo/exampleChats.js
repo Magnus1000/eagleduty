@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const chatSearch = document.getElementById('chatSearch');
             if (chatSearch) {
                 chatSearch.value = div.textContent;
+                const inputEvent = new Event('input');
+                chatSearch.dispatchEvent(inputEvent);
             }
         });
     });
