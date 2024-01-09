@@ -335,11 +335,25 @@ function ImportForm({ chatResults, selectedItem, setChatResults }) {
     );
 }
 
+function ErrorComponent({ errorMessage, onRetry }) {
+    return (
+        <div className="error-component" role="alert">
+            <p>{errorMessage}</p>
+            {onRetry && (
+                <button onClick={onRetry} aria-label="Retry request">
+                    Retry
+                </button>
+            )}
+        </div>
+    );
+}
+
 function ChatComponent() {
     const [inputText, setInputText] = React.useState('');
     const [chatResults, setChatResults] = React.useState([]);
-    const [selectedItem, setSelectedItem] = React.useState(null); // Track the selected item
+    const [selectedItem, setSelectedItem] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [error, setError] = React.useState(false); // Error state
     const isButtonDisabled = inputText.length < 10 || isLoading;
     const chatSearchRef = React.useRef(null);
 
@@ -348,10 +362,10 @@ function ChatComponent() {
     };
 
     const handleSend = () => {
-        console.log('Loading div revealed'); // Add log statement
-        setChatResults([]); // Clear the chat results
+        console.log('Loading div revealed');
+        setChatResults([]);
         setIsLoading(true);
-        setSelectedItem(null); // Clear the selected item
+        setSelectedItem(null);
         const uuid = localStorage.getItem('uuid');
         sessionStorage.setItem("query", inputText);
         fetch('https://hook.us1.make.com/hx1aw3ym6zmstgfresiudsxv8d8y9t2c', {
@@ -361,18 +375,41 @@ function ChatComponent() {
             },
             body: JSON.stringify({ product_description: inputText, uuid }),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Response:', data);
-            setChatResults(data);
-        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Webhook request failed');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Response:', data);
+                if (data.length === 0) {
+                    throw new Error('No results found');
+                }
+                setChatResults(data);
+            })
         .catch((error) => {
             console.error('Error:', error);
+            let message;
+            if (error.message === 'Webhook request failed') {
+                message = 'An error occurred while processing your request. Please try again later.';
+            } else if (error.message === 'No results found') {
+                message = 'No results found for your query.';
+                // In this case, we don't want to provide a retry option
+                setError(message);
+                return;
+            } else {
+                message = 'An unknown error occurred.';
+            }
+            // Set the error message and provide a retry function
+            setError(message);
+            setRetryFunction(() => handleSend);
         })
         .finally(() => {
             setIsLoading(false);
         });
     };
+
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -417,6 +454,12 @@ function ChatComponent() {
                     </button>
                 </div>
             </div>
+            {error && (
+                <ErrorComponent
+                    errorMessage={error} 
+                    onRetry={handleSend} 
+                />
+            )}
             {isLoading && (
                 <div className="loading-div">
                     <div className="loading-content">
@@ -466,4 +509,3 @@ function ChatComponent() {
 console.log('Rendering ReactDOM');
 
 ReactDOM.render(React.createElement(ChatComponent), document.getElementById('root'));
-
