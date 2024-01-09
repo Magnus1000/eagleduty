@@ -33,6 +33,47 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.head.appendChild(style);
 
+        const uuid = localStorage.getItem('uuid');
+        let eventContent;
+
+        if (value === 'a27265b4b3a928e9950bb0c7d580a659') {
+            eventContent = 'Basic';
+        } else if (value === '9fff0556c26eed38379dfe94e4b90aeb') {
+            eventContent = 'Plus';
+        } else if (value === '023d5410f566bee8336708b46f235ae7') {
+            eventContent = 'Premium';
+        } else {
+            // Handle the case when value doesn't match any of the specified values
+            eventContent = 'Unknown';
+        }
+        const event_type = 'price_selected';
+        const event_page = window.location.href;
+
+        // Store the htsno and description in session storage
+        sessionStorage.setItem("htsno", selectedItemData.htsno);
+        sessionStorage.setItem("description", selectedItemData.description);
+
+        fetch('https://eagleduty-magnus1000team.vercel.app/api/website/createAirtableEvent.js', {
+            method: 'POST',
+            body: JSON.stringify({ uuid, event_content: eventContent, event_type, event_page }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle successful response
+                console.log('Event created successfully');
+            } else {
+                // Handle error response
+                console.error('Failed to create event');
+            }
+        })
+        .catch(error => {
+            // Handle network error
+            console.error('Network error:', error);
+        });
+
         // Wait for 3 seconds before clicking the goCheckout button
         setTimeout(() => {
             // Click the goCheckout button
